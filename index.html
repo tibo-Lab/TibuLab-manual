@@ -1,0 +1,955 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TibuLab User Manual</title>
+<meta name="description" content="Step-by-step TibuLab guide with screenshots: billing, samples, results, reports, radiology, cash, insurance, stock, accounts, HR and payroll.">
+<style>
+:root {
+    --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8;
+    --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --bg: #f4f6f8; --card: #ffffff; --code: #f1f5f9;
+    --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6;
+    --radius: 14px; --on-primary: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+        --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+        --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+        --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+    }
+}
+:root[data-theme="dark"] {
+    --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+    --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+    --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+    --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--primary-2); }
+header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+.logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-size: 15px; }
+.search { flex: 1; max-width: 420px; margin-left: auto; }
+.search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
+.tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.menu-btn { display: none; }
+.layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
+nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
+nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 15px; }
+nav.toc a:hover, nav.toc a.active { background: var(--primary-soft); color: var(--primary); }
+main { padding: 28px 32px 80px; min-width: 0; }
+section.doc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px; }
+section.doc.hidden { display: none; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 0 0 6px; }
+h3 { font-size: 18px; margin: 26px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 6px; }
+.where { display: inline-block; margin: 2px 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 600; }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 12px 44px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.b { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.tip, .warn { border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.tip { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0; }
+.flow span { padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; }
+.flow i { color: var(--muted); font-style: normal; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+.cards a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--text); background: var(--bg); }
+.cards a:hover { border-color: var(--primary-2); }
+.cards b { display: block; color: var(--primary); }
+.cards small { color: var(--muted); }
+figure { margin: 14px 0 20px; }
+figure a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+figure img { display: block; width: 100%; height: auto; }
+figure.half { max-width: 560px; }
+figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.shots figure { margin: 0; }
+.noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
+mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; position: fixed; inset: 65px 0 0 0; z-index: 15; background: var(--card); height: auto; border: 0; }
+    nav.toc.open { display: block; }
+    .menu-btn { display: inline-block; }
+    main { padding: 18px 16px 60px; }
+    section.doc { padding: 20px 16px; }
+    .search { max-width: none; }
+    .brand span.name { display: none; }
+    table { display: block; overflow-x: auto; }
+}
+@media print {
+    header.top, nav.toc { display: none; }
+    .layout { display: block; }
+    body { background: #fff; }
+    section.doc { border: 0; padding: 0 0 12px; }
+    section.doc.hidden { display: block; }
+    figure { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
+    <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab User Manual</span></a>
+    <div class="search"><input id="q" type="search" placeholder="Search the manual… (e.g. refund, verify, payroll)" aria-label="Search the manual"></div>
+    <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+    <div class="grp">Start</div>
+    <a href="#start">Welcome</a>
+    <a href="#roles">Who does what</a>
+    <a href="#login">Login and the top bar</a>
+    <a href="#dashboard">Dashboard</a>
+    <div class="grp">Reception &amp; POS</div>
+    <a href="#register">Open the cash register</a>
+    <a href="#newbill">New Bill (POS)</a>
+    <a href="#payments">Taking payment</a>
+    <a href="#posextra">Recent bills, return, expense</a>
+    <a href="#patients">Patients</a>
+    <a href="#queue">Token queue &amp; home collection</a>
+    <div class="grp">Laboratory</div>
+    <a href="#worklist">Lab worklist &amp; samples</a>
+    <a href="#results">Entering results</a>
+    <a href="#reportentry">Report entry &amp; printing</a>
+    <a href="#share">Sharing a report</a>
+    <a href="#critical">Critical &amp; outsourced tests</a>
+    <a href="#tests">Tests &amp; normal ranges</a>
+    <div class="grp">Radiology</div>
+    <a href="#radworklist">Worklist &amp; scanning</a>
+    <a href="#radschedule">Schedule &amp; appointments</a>
+    <a href="#radreport">Reporting</a>
+    <div class="grp">Billing &amp; cash</div>
+    <a href="#bills">Bills, payments, cancel</a>
+    <a href="#shifts">Shifts &amp; cash book</a>
+    <a href="#expenses">Expenses &amp; day closing</a>
+    <a href="#doctors">Doctors &amp; payouts</a>
+    <div class="grp">Other departments</div>
+    <a href="#insurance">Insurance &amp; Sehat Card</a>
+    <a href="#inventory">Lab Inventory</a>
+    <a href="#accounts">Accounts</a>
+    <a href="#reportsmenu">Reports</a>
+    <div class="grp">HR &amp; Payroll</div>
+    <a href="#hrdash">HR dashboard</a>
+    <a href="#employees">Employees</a>
+    <a href="#profile">Employee profile</a>
+    <a href="#requests">Requests &amp; approvals</a>
+    <a href="#attendance">Attendance</a>
+    <a href="#shiftschedule">Shift schedule</a>
+    <a href="#leaves">Leaves &amp; planner</a>
+    <a href="#loans">Loans</a>
+    <a href="#payroll">Payroll (5 steps)</a>
+    <a href="#hrsettings">HR settings</a>
+    <div class="grp">Owner / Admin</div>
+    <a href="#setup">First-time setup</a>
+    <a href="#settings">Settings screens</a>
+    <a href="#help">Problems &amp; fixes</a>
+</nav>
+
+<main>
+<div class="noresult" id="noresult">Nothing found. Try another word.</div>
+
+<!-- ============ START ============ -->
+<section class="doc" id="start">
+    <h1>TibuLab User Manual</h1>
+    <p class="lead">Step-by-step help, with pictures of the real screens, for everyone in the lab: reception, sample collection, technicians, pathologists, radiology, cashiers, accounts and HR. The pictures come from a demo lab with made-up patients.</p>
+    <p>Pick your job to jump to your part:</p>
+    <div class="cards">
+        <a href="#newbill"><b>Receptionist / Cashier</b><small>Register, New Bill, payments, returns</small></a>
+        <a href="#worklist"><b>Sample Collector</b><small>Collect samples, print labels</small></a>
+        <a href="#results"><b>Lab Technician</b><small>Enter results, report entry</small></a>
+        <a href="#results"><b>Pathologist</b><small>Verify, critical results, share</small></a>
+        <a href="#radworklist"><b>Radiology</b><small>Worklist, scan, reporting</small></a>
+        <a href="#accounts"><b>Accountant</b><small>Cash book, ledger, statements</small></a>
+        <a href="#employees"><b>HR</b><small>Employees, attendance, payroll</small></a>
+        <a href="#setup"><b>Owner / Admin</b><small>Setup, users, settings</small></a>
+    </div>
+    <div class="tip"><b>Tip:</b> you only see the menus your role and your lab's plan allow. If a screen in this manual is missing for you, ask your lab owner. Click any picture to open it full size.</div>
+</section>
+
+<section class="doc" id="roles">
+    <h2>Who does what</h2>
+    <p class="lead">Every lab starts with these roles. The owner changes what each role may do in <b>Settings › Roles &amp; Permissions</b>.</p>
+    <table>
+        <tr><th>Role</th><th>Main work</th></tr>
+        <tr><td>Owner, Administrator</td><td>Everything</td></tr>
+        <tr><td>Branch Manager</td><td>Everything in the branch; discount up to 25%</td></tr>
+        <tr><td>Receptionist</td><td>New Bill, patients, payments, own cash register; discount up to 10%</td></tr>
+        <tr><td>Sample Collector</td><td>Collect samples, print labels</td></tr>
+        <tr><td>Lab Technician</td><td>Enter results, analyzers, QC</td></tr>
+        <tr><td>Pathologist</td><td>Verify results, critical results</td></tr>
+        <tr><td>Radiographer / Technologist</td><td>Radiology worklist, scanning, films</td></tr>
+        <tr><td>Radiologist</td><td>Radiology reports</td></tr>
+        <tr><td>Accountant</td><td>Cash book, expenses, accounts, reports</td></tr>
+        <tr><td>Rider</td><td>Home sample collection</td></tr>
+    </table>
+</section>
+
+<section class="doc" id="login">
+    <h2>Login and the top bar</h2>
+    <span class="where">Your lab's address, e.g. citylab.tibulab.com</span>
+    <ol class="steps">
+        <li>Open your lab's address in Chrome or Edge. If you only know your lab code (like <b>TL001</b>), open <b>tibulab.com</b>, click <span class="b">Login</span>, type the code and click <span class="b">Continue</span>.</li>
+        <li>Type your <b>Email</b> and <b>Password</b>. Leave <b>Keep me signed in</b> ticked on your own PC, and click <span class="b">Sign in</span>.</li>
+        <li>"Email or password is incorrect." means a typing mistake. After many wrong tries you must wait a minute.</li>
+    </ol>
+    <figure class="half"><a href="img/login.jpg" target="_blank"><img loading="lazy" src="img/login.jpg" alt="Sign in to your lab"></a><figcaption>The lab login page.</figcaption></figure>
+    <h3>The top bar (on every screen)</h3>
+    <table>
+        <tr><th>Part</th><th>What it does</th></tr>
+        <tr><td>Branch (e.g. "Main Lab")</td><td>Shows your branch. If you work in more than one, click it to switch.</td></tr>
+        <tr><td>Search box</td><td>Type a name, phone, MRN or CNIC and press Enter to find a patient.</td></tr>
+        <tr><td><span class="b">Help</span></td><td>Opens this manual.</td></tr>
+        <tr><td>Full screen, moon / sun</td><td>Full screen, and dark / light mode.</td></tr>
+        <tr><td>Bell</td><td>Reminders (contracts ending, documents expiring…). Click one to open it; <b>Mark all read</b> clears the count.</td></tr>
+        <tr><td>Your name</td><td>Your email and <b>Sign out</b>.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/topbar-bell.jpg" target="_blank"><img loading="lazy" src="img/topbar-bell.jpg" alt="Notifications"></a><figcaption>The bell with its notifications.</figcaption></figure>
+        <figure><a href="img/topbar-user-menu.jpg" target="_blank"><img loading="lazy" src="img/topbar-user-menu.jpg" alt="User menu"></a><figcaption>Your name menu with Sign out.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="dashboard">
+    <h2>Dashboard</h2>
+    <span class="where">Dashboard</span>
+    <p>Today at a glance: <b>Patients today</b>, <b>Sales today</b>, <b>Collected today</b> and <b>Pending dues</b>. <b>Work status</b> counts samples waiting at each step (collection, result entry, verification, critical results) and radiology work; click a line to open that list. <b>Recent bills</b> shows today's bills, and <span class="b">New Bill</span> opens the POS.</p>
+    <figure><a href="img/dashboard.jpg" target="_blank"><img loading="lazy" src="img/dashboard.jpg" alt="Dashboard"></a><figcaption>The dashboard.</figcaption></figure>
+    <div class="flow"><span>Open register</span><i>→</i><span>New Bill</span><i>→</i><span>Collect samples</span><i>→</i><span>Enter results</span><i>→</i><span>Verify</span><i>→</i><span>Print / share</span><i>→</i><span>Close register</span><i>→</i><span>Day closing</span></div>
+</section>
+
+<!-- ============ RECEPTION / POS ============ -->
+<section class="doc" id="register">
+    <h2>Open the cash register (start of every shift)</h2>
+    <span class="where">Reception › New Bill</span>
+    <p>Money is only taken on an <b>open</b> register. When you open <b>New Bill</b> and your register is closed, the <b>Open Cash Register</b> box appears by itself.</p>
+    <ol class="steps">
+        <li>Choose your <b>Counter</b>.</li>
+        <li>Enter the <b>Cash in hand</b>: the cash already in the drawer.</li>
+        <li>Click <span class="b">Open register</span>. The top of the POS turns green with your counter name and the time it opened.</li>
+    </ol>
+    <figure class="half"><a href="img/pos-open-register.jpg" target="_blank"><img loading="lazy" src="img/pos-open-register.jpg" alt="Open Cash Register"></a><figcaption>Open Cash Register.</figcaption></figure>
+    <div class="warn">"No counter is set up for you" means the admin must first add a counter in <b>Billing › Cash Registers</b>.</div>
+</section>
+
+<section class="doc" id="newbill">
+    <h2>New Bill (POS): register and bill a patient</h2>
+    <span class="where">Reception › New Bill</span>
+    <p class="lead">One bill can hold lab tests, radiology exams and services. The POS opens full screen.</p>
+    <figure><a href="img/pos-empty.jpg" target="_blank"><img loading="lazy" src="img/pos-empty.jpg" alt="Empty POS"></a><figcaption>The POS, ready for a patient.</figcaption></figure>
+    <h3>1. Find or add the patient</h3>
+    <ol class="steps">
+        <li>Type in <b>Enter name / phone / MRN</b>. A full mobile number lists everyone who uses that number, so family members appear together. Pick the right person.</li>
+        <li>Not found? Click the blue <b>+</b> (New patient) and fill in Title, Name, Gender, Age, Phone, CNIC and City, then save.</li>
+        <li>Adding a family member on someone else's number asks for the <b>Relation to owner</b>.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/pos-people-on-phone.jpg" target="_blank"><img loading="lazy" src="img/pos-people-on-phone.jpg" alt="People on one phone"></a><figcaption>Everyone on one phone number.</figcaption></figure>
+        <figure><a href="img/pos-new-patient.jpg" target="_blank"><img loading="lazy" src="img/pos-new-patient.jpg" alt="New patient"></a><figcaption>New patient form.</figcaption></figure>
+        <figure><a href="img/pos-family-new.jpg" target="_blank"><img loading="lazy" src="img/pos-family-new.jpg" alt="Family member"></a><figcaption>Adding a family member on the same number.</figcaption></figure>
+    </div>
+    <h3>2. Doctor, sample source, tests</h3>
+    <ol class="steps">
+        <li><b>Ref by (doctor)</b>: the doctor who sent the patient (this is how commission is counted).</li>
+        <li>Sample source: <b>Taking in lab</b>, Home collection, Sample from outside, OPD, IPD / Ward, Emergency, Referred lab.</li>
+        <li>Press <b>F2</b> or click <b>Search test (F2)</b> and type 2+ letters. One match is added at once; otherwise pick from the list and press Enter. Radiology exams and services come from the same box. The same test can't be added twice.</li>
+        <li>Remove a line with the red <b>×</b>.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/pos-search-test.jpg" target="_blank"><img loading="lazy" src="img/pos-search-test.jpg" alt="Search test"></a><figcaption>Searching a test.</figcaption></figure>
+        <figure><a href="img/pos-radiology-item.jpg" target="_blank"><img loading="lazy" src="img/pos-radiology-item.jpg" alt="Radiology exam on bill"></a><figcaption>A radiology exam on the same bill.</figcaption></figure>
+    </div>
+    <figure><a href="img/pos-with-items.jpg" target="_blank"><img loading="lazy" src="img/pos-with-items.jpg" alt="POS with tests"></a><figcaption>A bill with three tests: Total Payable at the bottom.</figcaption></figure>
+    <h3>3. Insurance and discount</h3>
+    <ul>
+        <li><b>Paid by</b>: choose the insurer (panel / Sehat Card) and type the card number. The screen shows <b>Insurer pays</b> and <b>Patient pays</b>.</li>
+        <li><b>Discount (-)</b>: click the pencil, enter the amount and a reason. Each role has a limit (Receptionist 10%, Manager 25%).</li>
+        <li>An <b>Old due</b> bar appears if the patient owes from earlier bills; <span class="b">Pay due</span> takes that money.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/pos-insurance.jpg" target="_blank"><img loading="lazy" src="img/pos-insurance.jpg" alt="Insurance on bill"></a><figcaption>Insurer and patient share.</figcaption></figure>
+        <figure><a href="img/pos-with-discount.jpg" target="_blank"><img loading="lazy" src="img/pos-with-discount.jpg" alt="Discount"></a><figcaption>Bill with a discount.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="payments">
+    <h2>Taking payment</h2>
+    <span class="where">Bottom bar of the POS</span>
+    <table>
+        <tr><th>Button (key)</th><th>What happens</th></tr>
+        <tr><td><span class="b">Cash</span> (F8)</td><td>Whole amount in cash. Saved and printed at once, no questions.</td></tr>
+        <tr><td><span class="b">Card</span> (F9)</td><td>Card details box: card no., holder name, transaction no. → <b>Finalize Payment</b>. Only the last 4 digits are kept.</td></tr>
+        <tr><td><span class="b">Multiple Pay</span> (F10)</td><td>Split between Cash, Card, JazzCash, Easypaisa, Bank transfer, Cheque. <b>Add Payment Row</b> for each, then <b>Finalize Payment</b>.</td></tr>
+        <tr><td><span class="b">Credit Sale</span></td><td>Nothing paid now; the whole bill stays due. Only users allowed credit see it.</td></tr>
+        <tr><td><span class="b">Cancel</span></td><td>Clears the screen (nothing is saved).</td></tr>
+    </table>
+    <p>After saving you see <b>Bill saved …</b>, the invoice prints by itself, and the screen clears for the next patient. Tube labels are printed later on the Lab screen.</p>
+    <div class="shots">
+        <figure><a href="img/pos-card-details.jpg" target="_blank"><img loading="lazy" src="img/pos-card-details.jpg" alt="Card details"></a><figcaption>Card details.</figcaption></figure>
+        <figure><a href="img/pos-multiple-pay.jpg" target="_blank"><img loading="lazy" src="img/pos-multiple-pay.jpg" alt="Multiple Pay"></a><figcaption>Multiple Pay: part cash, part card.</figcaption></figure>
+        <figure><a href="img/pos-credit-confirm.jpg" target="_blank"><img loading="lazy" src="img/pos-credit-confirm.jpg" alt="Credit sale"></a><figcaption>Credit Sale asks to confirm.</figcaption></figure>
+        <figure><a href="img/pos-partial-confirm.jpg" target="_blank"><img loading="lazy" src="img/pos-partial-confirm.jpg" alt="Paid less"></a><figcaption>Paying less than the total leaves the rest due.</figcaption></figure>
+        <figure><a href="img/pos-bill-saved.jpg" target="_blank"><img loading="lazy" src="img/pos-bill-saved.jpg" alt="Bill saved"></a><figcaption>Bill saved.</figcaption></figure>
+    </div>
+    <div class="warn">"Select or add the patient first" or "Add at least one test" means something is missing. If the register is closed, the Open register box appears instead of taking money.</div>
+</section>
+
+<section class="doc" id="posextra">
+    <h2>Recent bills, sell return, register details, expense</h2>
+    <span class="where">POS toolbar (top right) and bottom bar</span>
+    <h3>Reprint, payments, cancel</h3>
+    <p><span class="b">Recent Transactions</span> lists bills with Invoice, Patient, Time, Total, Due and Status. Each row has <b>Print</b> (reprint), <b>View payments</b>, <b>Add payment</b> (while money is due) and <b>Cancel bill</b>.</p>
+    <figure><a href="img/pos-recent.jpg" target="_blank"><img loading="lazy" src="img/pos-recent.jpg" alt="Recent transactions"></a><figcaption>Recent Transactions.</figcaption></figure>
+    <h3>Sell return (refund at the counter)</h3>
+    <ol class="steps">
+        <li>Click the red ↺ <b>Sell return</b> icon, type the <b>Invoice No.</b> and click <span class="b">Send</span>.</li>
+        <li>The <b>Cancel bill</b> box opens for that bill. Type the <b>Reason for cancelling</b>. It shows the <b>Money to give back</b>; choose how (Cash comes from your open register).</li>
+        <li>Click <span class="b">Cancel bill</span> and confirm. The lab and radiology work of that bill stops and the accounts are reversed.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/pos-sell-return-invoice.jpg" target="_blank"><img loading="lazy" src="img/pos-sell-return-invoice.jpg" alt="Sell return invoice"></a><figcaption>Type the invoice number.</figcaption></figure>
+        <figure><a href="img/pos-sell-return-cancel.jpg" target="_blank"><img loading="lazy" src="img/pos-sell-return-cancel.jpg" alt="Cancel bill"></a><figcaption>Cancel bill with the money to give back.</figcaption></figure>
+    </div>
+    <h3>Register details, calculator, expense</h3>
+    <ul>
+        <li><b>Register details</b> (briefcase icon): your sales, payments, refunds, credit sales, expenses, cash by method and tests sold. Print it on A4, A5 or the 80 mm printer; <b>Close register</b> is here too.</li>
+        <li><b>Calculator</b> icon for quick sums.</li>
+        <li><span class="b">Add Expense</span>: money paid out of your drawer (see <a href="#expenses">Expenses</a>).</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/pos-register-details.jpg" target="_blank"><img loading="lazy" src="img/pos-register-details.jpg" alt="Register details"></a><figcaption>Register details.</figcaption></figure>
+        <figure><a href="img/pos-calculator.jpg" target="_blank"><img loading="lazy" src="img/pos-calculator.jpg" alt="Calculator"></a><figcaption>Calculator.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="patients">
+    <h2>Patients</h2>
+    <span class="where">Reception › Patients</span>
+    <p>Everyone registered at the lab, with MRN, Name, Gender, Age, Phone and Last visit. Search by name, phone, MRN or CNIC. <span class="b">Add</span> registers a patient, the edit icon changes details, and the New Bill icon opens the POS with that patient already chosen. Patients can't be deleted.</p>
+    <figure><a href="img/reception-patients.jpg" target="_blank"><img loading="lazy" src="img/reception-patients.jpg" alt="Patients"></a><figcaption>Patients list.</figcaption></figure>
+</section>
+
+<section class="doc" id="queue">
+    <h2>Token queue and home collection</h2>
+    <span class="where">Reception › Token Queue · Reception › Home Collection</span>
+    <h3>Token queue</h3>
+    <p><span class="b">Issue token</span>: choose the Counter (Reception, Sampling, Report collection, Cash), the patient or a walk-in name, and tick Priority for elderly or emergency (token starts with <b>P-</b>). Then use <span class="b">Call</span>, <span class="b">Serving</span>, <span class="b">Done</span> or <span class="b">Skip</span>. Status: Waiting → Called → Serving → Done.</p>
+    <div class="shots">
+        <figure><a href="img/reception-token-form.jpg" target="_blank"><img loading="lazy" src="img/reception-token-form.jpg" alt="Issue token"></a><figcaption>Issue token.</figcaption></figure>
+        <figure><a href="img/reception-queue.jpg" target="_blank"><img loading="lazy" src="img/reception-queue.jpg" alt="Token queue"></a><figcaption>The queue.</figcaption></figure>
+    </div>
+    <h3>Home collection</h3>
+    <p><span class="b">Book collection</span>: patient, date &amp; time, phone, address, tests requested, rider and charges. Status moves Booked → Assigned → On the way → Collected → Received at lab (or Cancelled with a reason). After that the sample follows the normal lab steps.</p>
+    <div class="shots">
+        <figure><a href="img/reception-home-form.jpg" target="_blank"><img loading="lazy" src="img/reception-home-form.jpg" alt="Book collection"></a><figcaption>Booking a home collection.</figcaption></figure>
+        <figure><a href="img/reception-home-list.jpg" target="_blank"><img loading="lazy" src="img/reception-home-list.jpg" alt="Home collections"></a><figcaption>Home collections list.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ LAB ============ -->
+<section class="doc" id="worklist">
+    <h2>Lab worklist and sample collection</h2>
+    <span class="where">Laboratory › Lab Worklist (also Sample Collection, Result Entry, Verification, Lab Reports)</span>
+    <p>One screen with four tabs: <b>To collect</b>, <b>Enter results</b>, <b>To verify</b> and <b>Done</b>. Each lab menu item opens it on its tab. Each row shows the Lab #, the patient, progress (e.g. "0/2 verified") and the date.</p>
+    <figure><a href="img/lab-tab-to-collect.jpg" target="_blank"><img loading="lazy" src="img/lab-tab-to-collect.jpg" alt="To collect"></a><figcaption>To collect: Collect samples, Print labels, Open.</figcaption></figure>
+    <ol class="steps">
+        <li>On <b>To collect</b>, find the patient (search or scan) and click <span class="b">Collect samples</span>. The sample barcodes are shown and the <b>tube labels print by themselves</b>. Stick them on the tubes.</li>
+        <li><span class="b">Print labels</span> prints again (and collects any sample not yet collected).</li>
+        <li>The order moves to <b>Enter results</b>. Results can't be typed before the sample is collected.</li>
+    </ol>
+    <figure><a href="img/lab-collect-done.jpg" target="_blank"><img loading="lazy" src="img/lab-collect-done.jpg" alt="Samples collected"></a><figcaption>Samples collected, with their barcodes.</figcaption></figure>
+    <div class="shots">
+        <figure><a href="img/lab-tab-enter-results.jpg" target="_blank"><img loading="lazy" src="img/lab-tab-enter-results.jpg" alt="Enter results tab"></a><figcaption>Enter results tab.</figcaption></figure>
+        <figure><a href="img/lab-tab-to-verify.jpg" target="_blank"><img loading="lazy" src="img/lab-tab-to-verify.jpg" alt="To verify tab"></a><figcaption>To verify tab.</figcaption></figure>
+        <figure><a href="img/lab-tab-done.jpg" target="_blank"><img loading="lazy" src="img/lab-tab-done.jpg" alt="Done tab"></a><figcaption>Done tab, with Share.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="results">
+    <h2>Entering and verifying results</h2>
+    <span class="where">Lab Worklist › Open</span>
+    <ol class="steps">
+        <li>Click <span class="b">Open</span> on an order. You see the patient, the sample barcodes and one card per test.</li>
+        <li>Type each <b>Result</b>. The normal range for the patient's gender and age is shown, and the <b>Flag</b> fills in by itself: Normal, Low, High, Critical low, Critical high or Abnormal. Calculated values (marked "auto") fill in on their own.</li>
+        <li>Add <b>Comments</b> if needed and click <span class="b">Save</span>. The test becomes <b>Entered</b>.</li>
+        <li>The pathologist checks it and clicks <span class="b">Verify</span>. Only verified tests print or are shared.</li>
+    </ol>
+    <figure><a href="img/lab-results-entered-2.jpg" target="_blank"><img loading="lazy" src="img/lab-results-entered-2.jpg" alt="Results"></a><figcaption>Test cards with Save and Verify; status "Entered".</figcaption></figure>
+    <figure><a href="img/lab-results-critical.jpg" target="_blank"><img loading="lazy" src="img/lab-results-critical.jpg" alt="Critical result"></a><figcaption>A critical value is flagged in red ("Critical high").</figcaption></figure>
+    <div class="warn">Changing a result that is already verified needs special permission and a <b>Reason for changing a verified result</b>. It is recorded.</div>
+</section>
+
+<section class="doc" id="reportentry">
+    <h2>Report entry and printing</h2>
+    <span class="where">Laboratory › Report Entry</span>
+    <ol class="steps">
+        <li>Type the invoice number in <b>Enter invoice no.</b>. The tests of that bill are listed with tick boxes.</li>
+        <li>Enter or check results as above. If the sample isn't collected yet, use <span class="b">Collect samples</span> here.</li>
+        <li>Print: <span class="b">Print</span> prints the ticked tests, <span class="b">Auto Print</span> prints all verified tests, and <span class="b">Continuous Print</span> prints without a new page for each department.</li>
+    </ol>
+    <figure><a href="img/lab-report-entry.jpg" target="_blank"><img loading="lazy" src="img/lab-report-entry.jpg" alt="Report entry"></a><figcaption>Report Entry.</figcaption></figure>
+    <figure><a href="img/lab-printed-report.jpg" target="_blank"><img loading="lazy" src="img/lab-printed-report.jpg" alt="Printed report"></a><figcaption>The printed report: abnormal values are bold with H / L.</figcaption></figure>
+</section>
+
+<section class="doc" id="share">
+    <h2>Sharing a report with the patient</h2>
+    <span class="where">Lab Worklist › Share, or Report Entry › Share</span>
+    <ol class="steps">
+        <li>Click <span class="b">Share</span>. Choose how long the link works: 1, 3, 7 or 30 days. Click <span class="b">Create link</span>.</li>
+        <li><span class="b">Copy</span> the link, <span class="b">Send on WhatsApp</span>, or use <b>SMS text</b>. Only verified tests are in it.</li>
+        <li>The list shows each link and how many times it was opened. <span class="b">Stop link</span> stops it at once.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/lab-share-link.jpg" target="_blank"><img loading="lazy" src="img/lab-share-link.jpg" alt="Share link"></a><figcaption>Share report: link created.</figcaption></figure>
+        <figure><a href="img/public-shared-report.jpg" target="_blank"><img loading="lazy" src="img/public-shared-report.jpg" alt="Patient view"></a><figcaption>What the patient sees (no login), with Print / Save PDF.</figcaption></figure>
+        <figure><a href="img/public-shared-expired.jpg" target="_blank"><img loading="lazy" src="img/public-shared-expired.jpg" alt="Expired link"></a><figcaption>An expired or stopped link.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="critical">
+    <h2>Critical results and outsourced tests</h2>
+    <span class="where">Laboratory › Critical Results · Laboratory › Outsourced Tests</span>
+    <p><b>Critical Results</b> lists every dangerous value (time, patient, test, value, doctor, informed). Inform the doctor or patient at once. <span class="b">Open order</span> goes to the results.</p>
+    <figure><a href="img/lab-critical.jpg" target="_blank"><img loading="lazy" src="img/lab-critical.jpg" alt="Critical results"></a><figcaption>Critical Results.</figcaption></figure>
+    <p><b>Outsourced Tests</b> (tests sent to another lab): on <b>Waiting to send</b>, pick the reference lab, tick the tests, enter the courier and click <span class="b">Send to lab</span> (the dispatch list prints). In <b>Sent batches</b>, mark them <b>Received</b>, attach their report and enter the result.</p>
+    <figure><a href="img/lab-outsource.jpg" target="_blank"><img loading="lazy" src="img/lab-outsource.jpg" alt="Outsourced tests"></a><figcaption>Outsourced Tests.</figcaption></figure>
+</section>
+
+<section class="doc" id="tests">
+    <h2>Tests, prices and normal ranges</h2>
+    <span class="where">Laboratory › Setup › Tests · Test Particulars</span>
+    <p>Every lab starts with a full list of tests with their parameters and normal ranges. The owner or lab in-charge adjusts it:</p>
+    <ul>
+        <li><b>Tests</b>: category, code, name, short name for labels, sample, tube, report type, <b>price</b>, report time, method. The row action <b>Parameters &amp; ranges</b> opens its parameters.</li>
+        <li><b>Test Particulars</b>: each value on the report with unit, result type (Number, Text, Pick list, Formula) and <b>Male / Female / Child range</b>. Ranges can be typed like <code>13 - 17</code>, <code>&lt; 200</code> or <code>Negative</code>. <b>Age-wise ranges</b> sets ranges by age and critical limits.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/lab-setup-tests.jpg" target="_blank"><img loading="lazy" src="img/lab-setup-tests.jpg" alt="Tests"></a><figcaption>Tests.</figcaption></figure>
+        <figure><a href="img/lab-setup-particulars.jpg" target="_blank"><img loading="lazy" src="img/lab-setup-particulars.jpg" alt="Particulars"></a><figcaption>Test Particulars and ranges.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ RADIOLOGY ============ -->
+<section class="doc" id="radworklist">
+    <h2>Radiology worklist and scanning</h2>
+    <span class="where">Radiology › Radiology Worklist</span>
+    <div class="flow"><span>Bill exam</span><i>→</i><span>Arrived</span><i>→</i><span>Start</span><i>→</i><span>Scan done</span><i>→</i><span>Report</span><i>→</i><span>Sign &amp; verify</span><i>→</i><span>Print</span></div>
+    <p>Tabs: <b>Waiting</b>, <b>Arrived / scanning</b>, <b>To report</b>, <b>Verified</b>, <b>Cancelled</b>, <b>All</b>. Filter by date, modality and room.</p>
+    <figure><a href="img/rad-worklist-waiting.jpg" target="_blank"><img loading="lazy" src="img/rad-worklist-waiting.jpg" alt="Radiology waiting"></a><figcaption>Waiting: Book a time, or mark Arrived.</figcaption></figure>
+    <ol class="steps">
+        <li>When the patient comes, click <span class="b">Arrived</span>. (<span class="b">Book</span> gives them a time slot instead.)</li>
+        <li>In <b>Arrived / scanning</b>, click <span class="b">Start</span>, do the scan, then <span class="b">Scan done</span>: choose room / machine and technician, film size, films printed, films wasted and why, and notes for the radiologist. Click <b>Mark scanned</b>.</li>
+        <li>The exam moves to <b>To report</b> for the radiologist.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/rad-worklist-arrived.jpg" target="_blank"><img loading="lazy" src="img/rad-worklist-arrived.jpg" alt="Arrived"></a><figcaption>Arrived / scanning.</figcaption></figure>
+        <figure><a href="img/rad-scan-done.jpg" target="_blank"><img loading="lazy" src="img/rad-scan-done.jpg" alt="Scan done"></a><figcaption>Scan done: films and notes.</figcaption></figure>
+        <figure><a href="img/rad-worklist-to-report.jpg" target="_blank"><img loading="lazy" src="img/rad-worklist-to-report.jpg" alt="To report"></a><figcaption>To report.</figcaption></figure>
+    </div>
+    <p><b>Film Usage</b> lists films used and wasted per exam.</p>
+    <figure class="half"><a href="img/rad-film-usage.jpg" target="_blank"><img loading="lazy" src="img/rad-film-usage.jpg" alt="Film usage"></a><figcaption>Film Usage.</figcaption></figure>
+</section>
+
+<section class="doc" id="radschedule">
+    <h2>Radiology schedule and appointments</h2>
+    <span class="where">Radiology › Schedule · Reception › Appointments</span>
+    <p>The schedule shows rooms and booked slots by day or week. <span class="b">Book appointment</span>: choose the day, the room / machine and a free slot. Appointments can be marked <b>Arrived</b>, moved, or cancelled with a reason.</p>
+    <div class="shots">
+        <figure><a href="img/rad-schedule.jpg" target="_blank"><img loading="lazy" src="img/rad-schedule.jpg" alt="Schedule"></a><figcaption>Schedule board.</figcaption></figure>
+        <figure><a href="img/rad-book-slot.jpg" target="_blank"><img loading="lazy" src="img/rad-book-slot.jpg" alt="Book slot"></a><figcaption>Choosing a free slot.</figcaption></figure>
+        <figure><a href="img/reception-appointments.jpg" target="_blank"><img loading="lazy" src="img/reception-appointments.jpg" alt="Appointments"></a><figcaption>Reception › Appointments.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="radreport">
+    <h2>Radiology reporting (radiologist)</h2>
+    <span class="where">Radiology › Reporting</span>
+    <ol class="steps">
+        <li>Pick a patient from the <b>To report</b> queue on the left.</li>
+        <li>Click <b>Template</b> to start from a ready report, then edit <b>Findings</b>, <b>Impression</b> and <b>Recommendation</b>. Tick <b>Critical finding</b> and note who was informed when needed.</li>
+        <li><span class="b">Save draft</span> (Ctrl+S) any time. <span class="b">Sign &amp; verify</span> finalises it; after that it can only be changed with <span class="b">Amend</span> and a reason.</li>
+        <li>Print from here or from <b>Radiology Reports</b>.</li>
+    </ol>
+    <figure><a href="img/rad-reporting-editor.jpg" target="_blank"><img loading="lazy" src="img/rad-reporting-editor.jpg" alt="Reporting"></a><figcaption>The report editor.</figcaption></figure>
+    <div class="shots">
+        <figure><a href="img/rad-sign-confirm.jpg" target="_blank"><img loading="lazy" src="img/rad-sign-confirm.jpg" alt="Sign"></a><figcaption>Sign &amp; verify asks to confirm.</figcaption></figure>
+        <figure><a href="img/rad-reporting-signed.jpg" target="_blank"><img loading="lazy" src="img/rad-reporting-signed.jpg" alt="Signed"></a><figcaption>A signed report.</figcaption></figure>
+        <figure><a href="img/rad-reports.jpg" target="_blank"><img loading="lazy" src="img/rad-reports.jpg" alt="Radiology reports"></a><figcaption>Radiology Reports, with Print.</figcaption></figure>
+        <figure><a href="img/rad-templates.jpg" target="_blank"><img loading="lazy" src="img/rad-templates.jpg" alt="Templates"></a><figcaption>Setup › Report Templates.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ BILLING ============ -->
+<section class="doc" id="bills">
+    <h2>Bills: payments and cancelling</h2>
+    <span class="where">Billing › Bills</span>
+    <p>Every bill with Total, Paid now, Due and status (Due, Partly paid, Paid, Refunded, Cancelled). Cancelled bills are shown crossed out.</p>
+    <figure><a href="img/billing-bills.jpg" target="_blank"><img loading="lazy" src="img/billing-bills.jpg" alt="Bills"></a><figcaption>Bills.</figcaption></figure>
+    <ul>
+        <li><b>Add payment</b> (patient pays a balance): method, date, amount (it shows the most that can be paid) and reference.</li>
+        <li><b>View payments</b>: every payment of the bill.</li>
+        <li><b>Cancel bill</b>: reason required (at least 3 letters); if money was paid it shows the amount to give back and how. Cash refunds need your register open.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/billing-add-payment.jpg" target="_blank"><img loading="lazy" src="img/billing-add-payment.jpg" alt="Add payment"></a><figcaption>Add payment.</figcaption></figure>
+        <figure><a href="img/billing-view-payments.jpg" target="_blank"><img loading="lazy" src="img/billing-view-payments.jpg" alt="View payments"></a><figcaption>View payments.</figcaption></figure>
+        <figure><a href="img/billing-cancel-bill.jpg" target="_blank"><img loading="lazy" src="img/billing-cancel-bill.jpg" alt="Cancel bill"></a><figcaption>Cancel bill.</figcaption></figure>
+    </div>
+    <p><b>Receipts</b> and <b>Refunds</b> are read-only lists of money in and out (today by default).</p>
+    <div class="shots">
+        <figure><a href="img/billing-receipts.jpg" target="_blank"><img loading="lazy" src="img/billing-receipts.jpg" alt="Receipts"></a><figcaption>Receipts.</figcaption></figure>
+        <figure><a href="img/billing-refunds.jpg" target="_blank"><img loading="lazy" src="img/billing-refunds.jpg" alt="Refunds"></a><figcaption>Refunds.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="shifts">
+    <h2>Shifts (close register) and cash book</h2>
+    <span class="where">Billing › Shifts (Open / Close) · Cash Book · Cash Transfers</span>
+    <p><b>Shifts</b> lists every register session: opened, closed, counter, user, cash in hand, expected cash, cash counted and short / excess. Registers are opened from the POS; closing can be done from the POS or here (a supervisor can close a shift someone left open).</p>
+    <figure><a href="img/billing-shifts.jpg" target="_blank"><img loading="lazy" src="img/billing-shifts.jpg" alt="Shifts"></a><figcaption>Shifts.</figcaption></figure>
+    <ol class="steps">
+        <li>Click <span class="b">Close register</span>. <b>Total Cash</b> is filled in; enter card slips and cheques.</li>
+        <li>Count the notes in <b>Cash Denominations</b> (count × note). The box shows <b>Short</b>, <b>Excess</b> or <b>Balanced</b>.</li>
+        <li>Add a closing note and close. If cash does not match it asks to confirm.</li>
+    </ol>
+    <p><b>Cash Book</b>: every cash in / out with running balance. <b>Cash Transfers</b>: <b>Hand over cash</b> to another counter or make a <b>Bank deposit</b>; the receiver presses Receive (or Reject with a reason).</p>
+    <div class="shots">
+        <figure><a href="img/billing-cash-book.jpg" target="_blank"><img loading="lazy" src="img/billing-cash-book.jpg" alt="Cash book"></a><figcaption>Cash Book.</figcaption></figure>
+        <figure><a href="img/billing-cash-transfers.jpg" target="_blank"><img loading="lazy" src="img/billing-cash-transfers.jpg" alt="Cash transfers"></a><figcaption>Cash Transfers.</figcaption></figure>
+        <figure><a href="img/billing-cash-registers.jpg" target="_blank"><img loading="lazy" src="img/billing-cash-registers.jpg" alt="Cash registers"></a><figcaption>Cash Registers (counters, set up by admin).</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="expenses">
+    <h2>Expenses and day closing</h2>
+    <span class="where">Billing › Expenses · Billing › Day Closing</span>
+    <p><b>Expenses</b>: money paid out (tea, courier, repairs). Choose Category, Date, Amount, Payment method, Paid to and details. Cash comes from your open register. Deleting asks for a reason.</p>
+    <div class="shots">
+        <figure><a href="img/billing-expense-form.jpg" target="_blank"><img loading="lazy" src="img/billing-expense-form.jpg" alt="Expense form"></a><figcaption>New expense.</figcaption></figure>
+        <figure><a href="img/billing-expenses.jpg" target="_blank"><img loading="lazy" src="img/billing-expenses.jpg" alt="Expenses"></a><figcaption>Expenses list.</figcaption></figure>
+    </div>
+    <h3>Day closing (manager)</h3>
+    <ol class="steps">
+        <li>Make sure every cashier has closed their register.</li>
+        <li>Open <b>Day Closing</b>, pick the date and check the figures: sales, cash / card / online received, refunds, expenses, doctor payouts, dues, insurer credit and short / excess per counter.</li>
+        <li>Write closing notes and click <b>Close</b> for that date. If registers are still open it warns you. A closed day can be printed on A4 or re-opened with a reason.</li>
+    </ol>
+</section>
+
+<section class="doc" id="doctors">
+    <h2>Referring doctors, commission and payouts</h2>
+    <span class="where">Billing › Referring Doctors · Commissions · Doctor Payouts</span>
+    <p>Add doctors with their commission rate. Every bill with a doctor adds a line to <b>Commissions</b> (Unpaid / Paid).</p>
+    <ol class="steps">
+        <li><span class="b">New payout</span>: choose the doctor and the bill dates, withholding tax and any adjustment, then <b>Save draft</b>.</li>
+        <li><span class="b">Pay</span>: choose how (cash from your open register, bank, cheque, JazzCash, Easypaisa) and <b>Mark paid</b>.</li>
+        <li><b>Slip</b> prints a payout slip for the doctor to sign.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/billing-doctors.jpg" target="_blank"><img loading="lazy" src="img/billing-doctors.jpg" alt="Doctors"></a><figcaption>Referring Doctors.</figcaption></figure>
+        <figure><a href="img/billing-commissions.jpg" target="_blank"><img loading="lazy" src="img/billing-commissions.jpg" alt="Commissions"></a><figcaption>Commissions.</figcaption></figure>
+        <figure><a href="img/billing-payout-new.jpg" target="_blank"><img loading="lazy" src="img/billing-payout-new.jpg" alt="New payout"></a><figcaption>New payout.</figcaption></figure>
+        <figure><a href="img/billing-payouts.jpg" target="_blank"><img loading="lazy" src="img/billing-payouts.jpg" alt="Payouts"></a><figcaption>Doctor Payouts.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ OTHER DEPARTMENTS ============ -->
+<section class="doc" id="insurance">
+    <h2>Insurance, panels and Sehat Card</h2>
+    <span class="where">Insurance</span>
+    <ol class="steps">
+        <li><b>Insurance Providers</b>: the company, its rate list, discount, credit limit, payment days, co-payment and whether an authorization number is needed.</li>
+        <li><b>Coverage</b>: what it pays for (a whole lab department, one test, a radiology modality or one exam). Nothing listed = covers everything.</li>
+        <li><b>Insurance Cards</b>: the patient's card. Cards typed in the POS are saved here by themselves.</li>
+        <li>Bill the patient in New Bill with <b>Paid by</b> = the insurer. The bill appears in <b>Insured Bills</b>.</li>
+        <li><b>Claims</b> › New claim: provider and date range. When money arrives, <b>Receive payment</b> (amount, cheque no., tax withheld). Status: Sent → Partial → Paid.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/ins-providers.jpg" target="_blank"><img loading="lazy" src="img/ins-providers.jpg" alt="Providers"></a><figcaption>Insurance Providers.</figcaption></figure>
+        <figure><a href="img/ins-coverage.jpg" target="_blank"><img loading="lazy" src="img/ins-coverage.jpg" alt="Coverage"></a><figcaption>Coverage.</figcaption></figure>
+        <figure><a href="img/ins-cards.jpg" target="_blank"><img loading="lazy" src="img/ins-cards.jpg" alt="Cards"></a><figcaption>Insurance Cards.</figcaption></figure>
+        <figure><a href="img/ins-bills.jpg" target="_blank"><img loading="lazy" src="img/ins-bills.jpg" alt="Insured bills"></a><figcaption>Insured Bills.</figcaption></figure>
+        <figure><a href="img/ins-claims.jpg" target="_blank"><img loading="lazy" src="img/ins-claims.jpg" alt="Claims"></a><figcaption>Claims.</figcaption></figure>
+        <figure><a href="img/ins-payments.jpg" target="_blank"><img loading="lazy" src="img/ins-payments.jpg" alt="Insurer payments"></a><figcaption>Insurer Payments.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="inventory">
+    <h2>Lab Inventory (reagents, kits, tubes, films)</h2>
+    <span class="where">Lab Inventory</span>
+    <div class="flow"><span>Purchase Order</span><i>→</i><span>Receive goods (GRN)</span><i>→</i><span>Pay supplier</span><i>→</i><span>Use / count</span></div>
+    <ol class="steps">
+        <li><b>Items</b> and <b>Suppliers</b>: set them up once.</li>
+        <li><b>Purchase Orders</b> › New purchase order: supplier, dates, items. <b>Save draft</b> or <b>Save as ordered</b>. From the order, <b>Receive goods</b>.</li>
+        <li><b>Purchases</b> › Receive goods (GRN): supplier bill no., items with lot and expiry, discount, freight, and anything paid now. Stock goes up and the supplier balance grows.</li>
+        <li><b>Supplier Payments</b> › Pay supplier: amount, how, and which bills (oldest first or choose). Cash comes from your open register.</li>
+        <li><b>Purchase Returns</b>: send back goods by lot with a reason.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/inv-items.jpg" target="_blank"><img loading="lazy" src="img/inv-items.jpg" alt="Items"></a><figcaption>Items.</figcaption></figure>
+        <figure><a href="img/inv-po-new.jpg" target="_blank"><img loading="lazy" src="img/inv-po-new.jpg" alt="New PO"></a><figcaption>New purchase order.</figcaption></figure>
+        <figure><a href="img/inv-po-detail.jpg" target="_blank"><img loading="lazy" src="img/inv-po-detail.jpg" alt="PO detail"></a><figcaption>Purchase order detail.</figcaption></figure>
+        <figure><a href="img/inv-grn-new.jpg" target="_blank"><img loading="lazy" src="img/inv-grn-new.jpg" alt="GRN"></a><figcaption>Receive goods (GRN).</figcaption></figure>
+        <figure><a href="img/inv-purchases.jpg" target="_blank"><img loading="lazy" src="img/inv-purchases.jpg" alt="Purchases"></a><figcaption>Purchases.</figcaption></figure>
+        <figure><a href="img/inv-pay-supplier.jpg" target="_blank"><img loading="lazy" src="img/inv-pay-supplier.jpg" alt="Pay supplier"></a><figcaption>Pay supplier.</figcaption></figure>
+    </div>
+    <h3>Stock and stock count</h3>
+    <p><b>Stock</b> shows on hand, average cost, value, reorder level and nearest expiry, with badges Low, Out, Near expiry and Expired lot. <b>Consumption</b> lists every stock movement.</p>
+    <ol class="steps">
+        <li><b>Stock Count</b> › Start count: date and items. <b>Print sheet</b> to count on paper.</li>
+        <li>Enter the <b>Counted</b> amounts and <b>Save count</b>. <b>Only differences</b> shows what doesn't match.</li>
+        <li><b>Post adjustments</b> (with a reason) corrects the stock.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/inv-stock.jpg" target="_blank"><img loading="lazy" src="img/inv-stock.jpg" alt="Stock"></a><figcaption>Stock.</figcaption></figure>
+        <figure><a href="img/inv-count-sheet.jpg" target="_blank"><img loading="lazy" src="img/inv-count-sheet.jpg" alt="Count sheet"></a><figcaption>Stock count sheet.</figcaption></figure>
+        <figure><a href="img/inv-consumption.jpg" target="_blank"><img loading="lazy" src="img/inv-consumption.jpg" alt="Consumption"></a><figcaption>Consumption.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="accounts">
+    <h2>Accounts</h2>
+    <span class="where">Accounts</span>
+    <p>Bills, payments, refunds, expenses, purchases, supplier payments and payroll go into the accounts <b>by themselves</b>. You only enter other transactions.</p>
+    <ol class="steps">
+        <li><b>Fiscal Years</b>: create the current year first. A banner reminds you, with a button to create it (1 July – 30 June).</li>
+        <li><b>Journal Entries</b> › New voucher: date, type (Journal, Payment, Receipt, Opening balance), narration, then lines of Account / Debit / Credit. It saves only when <b>Balanced</b> (debit = credit).</li>
+        <li><b>Ledger</b>: choose an account and dates and click <b>Run</b>. <b>Post billing to ledger</b> sends any missing billing entries (safe to repeat).</li>
+        <li><b>Trial Balance</b>, <b>Profit &amp; Loss</b> and <b>Balance Sheet</b> for any date, with CSV and Print.</li>
+    </ol>
+    <figure><a href="img/accounts-fy-banner.jpg" target="_blank"><img loading="lazy" src="img/accounts-fy-banner.jpg" alt="Fiscal year banner"></a><figcaption>The banner when no fiscal year exists.</figcaption></figure>
+    <div class="shots">
+        <figure><a href="img/acc-voucher-new.jpg" target="_blank"><img loading="lazy" src="img/acc-voucher-new.jpg" alt="New voucher"></a><figcaption>New voucher.</figcaption></figure>
+        <figure><a href="img/acc-journal.jpg" target="_blank"><img loading="lazy" src="img/acc-journal.jpg" alt="Journal"></a><figcaption>Journal Entries.</figcaption></figure>
+        <figure><a href="img/acc-ledger.jpg" target="_blank"><img loading="lazy" src="img/acc-ledger.jpg" alt="Ledger"></a><figcaption>Ledger.</figcaption></figure>
+        <figure><a href="img/acc-trial-balance.jpg" target="_blank"><img loading="lazy" src="img/acc-trial-balance.jpg" alt="Trial balance"></a><figcaption>Trial Balance.</figcaption></figure>
+        <figure><a href="img/acc-profit-loss.jpg" target="_blank"><img loading="lazy" src="img/acc-profit-loss.jpg" alt="Profit and loss"></a><figcaption>Profit &amp; Loss.</figcaption></figure>
+        <figure><a href="img/acc-balance-sheet.jpg" target="_blank"><img loading="lazy" src="img/acc-balance-sheet.jpg" alt="Balance sheet"></a><figcaption>Balance Sheet.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="reportsmenu">
+    <h2>Reports</h2>
+    <span class="where">Reports</span>
+    <p>Sales, Collections, Test-wise, Radiology-wise, Doctor-wise, Branch-wise, Discounts, Turnaround Time and Profit per Test. Choose a period (Today, Yesterday, Last 7 days, This month or your own dates) and branch, click <span class="b">Show</span>, then <b>Excel (CSV)</b> or <b>Print</b>.</p>
+    <div class="shots">
+        <figure><a href="img/report-sales.jpg" target="_blank"><img loading="lazy" src="img/report-sales.jpg" alt="Sales"></a><figcaption>Sales.</figcaption></figure>
+        <figure><a href="img/report-test-wise.jpg" target="_blank"><img loading="lazy" src="img/report-test-wise.jpg" alt="Test-wise"></a><figcaption>Test-wise.</figcaption></figure>
+        <figure><a href="img/report-doctor-wise.jpg" target="_blank"><img loading="lazy" src="img/report-doctor-wise.jpg" alt="Doctor-wise"></a><figcaption>Doctor-wise.</figcaption></figure>
+        <figure><a href="img/report-tat.jpg" target="_blank"><img loading="lazy" src="img/report-tat.jpg" alt="Turnaround"></a><figcaption>Turnaround Time.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ HR ============ -->
+<section class="doc" id="hrdash">
+    <h2>HR dashboard</h2>
+    <span class="where">HR &amp; Payroll › HR Dashboard</span>
+    <p>Staff numbers, who is on leave, contracts due, requests waiting and the payroll of the month at a glance.</p>
+    <figure><a href="img/hr-dashboard.jpg" target="_blank"><img loading="lazy" src="img/hr-dashboard.jpg" alt="HR dashboard"></a><figcaption>HR Dashboard.</figcaption></figure>
+</section>
+
+<section class="doc" id="employees">
+    <h2>Employees: adding staff</h2>
+    <span class="where">HR &amp; Payroll › Employees</span>
+    <p>The <b>Employee List</b> shows cards for Total, Active, Inactive, Outsourced, On Probation, On Notice and On Leave, and the staff table.</p>
+    <figure><a href="img/hr-employees.jpg" target="_blank"><img loading="lazy" src="img/hr-employees.jpg" alt="Employee list"></a><figcaption>Employee List.</figcaption></figure>
+    <ol class="steps">
+        <li>Click <span class="b">Add Employee</span>. The form has 11 sections on the left; sections marked <b>Required</b> must be filled.</li>
+        <li><b>Name</b>: title, first / middle / last name, relation and father / husband name.</li>
+        <li><b>Employment Information</b>: employee no., date of joining, department, section, position, contract.</li>
+        <li><b>CNIC &amp; Documents</b>, <b>Personal Information</b> (gender, date of birth…), <b>Contact &amp; Access</b> (mobile, email, app login).</li>
+        <li><b>Salary &amp; Payment</b>: basic salary, salary type and payment method (bank details). <b>EOBI &amp; Income Tax</b>: EOBI number and tax settings.</li>
+        <li><b>Reporting</b> (direct manager), <b>Additional</b>, <b>Upload</b> and <b>Approval Overrides</b>, then click <span class="b">Add Employee</span>.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/hr-employee-form-1.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-1.jpg" alt="Add employee"></a><figcaption>Add Employee: the 11 sections.</figcaption></figure>
+        <figure><a href="img/hr-employee-form-employment.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-employment.jpg" alt="Employment"></a><figcaption>Employment Information.</figcaption></figure>
+        <figure><a href="img/hr-employee-form-personal.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-personal.jpg" alt="Personal"></a><figcaption>Personal Information.</figcaption></figure>
+        <figure><a href="img/hr-employee-form-contact.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-contact.jpg" alt="Contact"></a><figcaption>Contact &amp; Access.</figcaption></figure>
+        <figure><a href="img/hr-employee-form-salary.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-salary.jpg" alt="Salary"></a><figcaption>Salary &amp; Payment.</figcaption></figure>
+        <figure><a href="img/hr-employee-form-eobi.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-eobi.jpg" alt="EOBI"></a><figcaption>EOBI &amp; Income Tax.</figcaption></figure>
+    </div>
+    <div class="tip">If employee numbers are set to <b>Sequential</b> in HR Settings › Preferences, the next number fills in by itself.</div>
+</section>
+
+<section class="doc" id="profile">
+    <h2>Employee profile</h2>
+    <span class="where">Employees › click a name</span>
+    <p>The profile has tabs: <b>General</b>, <b>Employment</b>, <b>Compensation</b>, <b>Attendance</b>, <b>Leaves</b>, <b>Requests</b>, <b>Records</b> (documents, assets), <b>Performance</b>, <b>Transfer</b>, <b>End of Service</b>, <b>Roles</b> and <b>Dependents</b>.</p>
+    <figure><a href="img/hr-profile-general.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-general.jpg" alt="Profile general"></a><figcaption>Profile › General.</figcaption></figure>
+    <div class="shots">
+        <figure><a href="img/hr-profile-employment.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-employment.jpg" alt="Employment tab"></a><figcaption>Employment: contracts.</figcaption></figure>
+        <figure><a href="img/hr-profile-compensation.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-compensation.jpg" alt="Compensation"></a><figcaption>Compensation: salary and allowances.</figcaption></figure>
+        <figure><a href="img/hr-profile-attendance.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-attendance.jpg" alt="Attendance tab"></a><figcaption>Attendance.</figcaption></figure>
+        <figure><a href="img/hr-profile-leaves.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-leaves.jpg" alt="Leaves tab"></a><figcaption>Leaves and balances.</figcaption></figure>
+        <figure><a href="img/hr-profile-records.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-records.jpg" alt="Records"></a><figcaption>Records: documents and assets.</figcaption></figure>
+        <figure><a href="img/hr-profile-end-of-service.jpg" target="_blank"><img loading="lazy" src="img/hr-profile-end-of-service.jpg" alt="End of service"></a><figcaption>End of Service.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="requests">
+    <h2>Requests and approvals</h2>
+    <span class="where">HR &amp; Payroll › Requests</span>
+    <p>Staff requests: Leave, Loan, Salary advance, Overtime, Short leave permit, Letter, Missing punch and Other.</p>
+    <ol class="steps">
+        <li>Click <span class="b">Add Request</span>. Step 1 <b>Select Type</b>, step 2 <b>Fill Details</b>, step 3 <b>Review &amp; Submit</b>.</li>
+        <li>The request goes to its approvers in order. Each approver opens it and clicks <span class="b">Approve</span> (comments optional) or <span class="b">Reject</span> (reason required).</li>
+        <li>Status: Pending → Approved / Rejected (or Cancelled).</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/hr-request-step1.jpg" target="_blank"><img loading="lazy" src="img/hr-request-step1.jpg" alt="Add request"></a><figcaption>Add Request: Fill Details for a loan.</figcaption></figure>
+        <figure><a href="img/hr-request-letter-review.jpg" target="_blank"><img loading="lazy" src="img/hr-request-letter-review.jpg" alt="Review"></a><figcaption>Review &amp; Submit.</figcaption></figure>
+        <figure><a href="img/hr-request-approve.jpg" target="_blank"><img loading="lazy" src="img/hr-request-approve.jpg" alt="Approve"></a><figcaption>Approving a request.</figcaption></figure>
+        <figure><a href="img/hr-requests.jpg" target="_blank"><img loading="lazy" src="img/hr-requests.jpg" alt="Requests"></a><figcaption>Requests list.</figcaption></figure>
+    </div>
+    <div class="tip">Who approves, and in what order, is set in <b>HR Settings › Request Settings › Approval Sequence</b> (one after another, or all at the same time). With no approvers set, HR approves.</div>
+</section>
+
+<section class="doc" id="attendance">
+    <h2>Attendance</h2>
+    <span class="where">HR &amp; Payroll › Attendance Records</span>
+    <ol class="steps">
+        <li>Choose the month.</li>
+        <li><span class="b">Download template file</span>, fill it from your attendance machine, then <span class="b">Import attendance</span> (.csv).</li>
+        <li>Click <span class="b">Calculate</span>. The cards show absences, late arrivals, overtime and missed check-outs with their amounts.</li>
+        <li>On the <b>Attendance Summary</b> tab tick the rows and click <span class="b">Post to payroll</span>. (The month's payroll must be generated first: Payroll step 1.) <span class="b">Unpost</span> undoes it.</li>
+    </ol>
+    <figure><a href="img/hr-attendance-records.jpg" target="_blank"><img loading="lazy" src="img/hr-attendance-records.jpg" alt="Attendance records"></a><figcaption>Attendance Records.</figcaption></figure>
+    <div class="shots">
+        <figure><a href="img/hr-attendance-import.jpg" target="_blank"><img loading="lazy" src="img/hr-attendance-import.jpg" alt="Import"></a><figcaption>Import attendance.</figcaption></figure>
+        <figure><a href="img/hr-attendance.jpg" target="_blank"><img loading="lazy" src="img/hr-attendance.jpg" alt="Daily attendance"></a><figcaption>HR &amp; Payroll › Attendance (daily records).</figcaption></figure>
+    </div>
+    <p>Day status can be Present, Late, Absent, Half Day, Leave, Holiday, Day off or Missed Check-out. If <b>Mark absent automatically</b> is on, working days with no attendance are marked absent each night.</p>
+</section>
+
+<section class="doc" id="shiftschedule">
+    <h2>Shift schedule</h2>
+    <span class="where">HR &amp; Payroll › Shift Schedule</span>
+    <p>A weekly grid of who works which shift. Click an empty day (or <span class="b">Assign Shift</span>) to give a shift; click a shift to change it. <b>Quick shift</b>, <b>Print</b> and <b>Shift history</b> are at the top.</p>
+    <div class="shots">
+        <figure><a href="img/hr-shift-schedule.jpg" target="_blank"><img loading="lazy" src="img/hr-shift-schedule.jpg" alt="Shift schedule"></a><figcaption>Shift Schedule.</figcaption></figure>
+        <figure><a href="img/hr-assign-shift.jpg" target="_blank"><img loading="lazy" src="img/hr-assign-shift.jpg" alt="Assign shift"></a><figcaption>Assign Shift.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="leaves">
+    <h2>Leaves and the leave planner</h2>
+    <span class="where">HR &amp; Payroll › Leaves · Leave Planner</span>
+    <ol class="steps">
+        <li><span class="b">New Request</span>: employee, leave type, start and end date, reason → <b>Submit</b>.</li>
+        <li>The approver clicks <span class="b">Approve</span> or <span class="b">Reject</span>, adds remarks if wanted, and confirms.</li>
+        <li><b>Leave Planner</b> shows who is off when, by day, week or month; <b>Export</b> saves it.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/hr-leave-new.jpg" target="_blank"><img loading="lazy" src="img/hr-leave-new.jpg" alt="New leave"></a><figcaption>New leave request.</figcaption></figure>
+        <figure><a href="img/hr-leave-approve.jpg" target="_blank"><img loading="lazy" src="img/hr-leave-approve.jpg" alt="Approve leave"></a><figcaption>Approving a leave.</figcaption></figure>
+        <figure><a href="img/hr-leaves.jpg" target="_blank"><img loading="lazy" src="img/hr-leaves.jpg" alt="Leaves"></a><figcaption>Leaves.</figcaption></figure>
+        <figure><a href="img/hr-leave-chart.jpg" target="_blank"><img loading="lazy" src="img/hr-leave-chart.jpg" alt="Leave chart"></a><figcaption>Leave Planner › Leave Chart.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="loans">
+    <h2>Loans and advances</h2>
+    <span class="where">HR &amp; Payroll › Loans</span>
+    <p><span class="b">Add Loan / Advance</span>: employee, amount, monthly installment, loan date and the month recovery starts. The installment is cut from each salary when payroll is posted. Open a loan to see its <b>Payment Schedule</b>, edit the installment, or print. Status: Active → Fully Repaid (or Terminated).</p>
+    <div class="shots">
+        <figure><a href="img/hr-loans.jpg" target="_blank"><img loading="lazy" src="img/hr-loans.jpg" alt="Loans"></a><figcaption>Loans.</figcaption></figure>
+        <figure><a href="img/hr-loan-details.jpg" target="_blank"><img loading="lazy" src="img/hr-loan-details.jpg" alt="Loan details"></a><figcaption>Loan details and schedule.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="payroll">
+    <h2>Payroll: the 5 steps</h2>
+    <span class="where">HR &amp; Payroll › Payroll</span>
+    <div class="flow"><span>1 Select Period</span><i>→</i><span>2 Process Attendance</span><i>→</i><span>3 Review Payroll</span><i>→</i><span>4 Approval</span><i>→</i><span>5 Posting</span></div>
+    <p><b>Payroll History</b> (top right) shows past months.</p>
+    <h3>Step 1: Select Period</h3>
+    <p>The month is shown with its dates. Tick the departments and sections to include (<b>Select All</b> / <b>Deselect All</b>) and generate the payroll to continue.</p>
+    <figure><a href="img/hr-payroll-step1.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step1.jpg" alt="Step 1"></a><figcaption>Step 1: Select Payroll Period and Departments.</figcaption></figure>
+    <h3>Step 2: Process Attendance</h3>
+    <p>Check each person's attendance days, absences, late minutes and overtime. Click <span class="b">Calculate</span>, then post the summaries to the payroll and continue.</p>
+    <figure><a href="img/hr-payroll-step2.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step2.jpg" alt="Step 2"></a><figcaption>Step 2: Attendance Processing.</figcaption></figure>
+    <h3>Step 3: Review Payroll</h3>
+    <p>Totals at the top (employees, entitlements, deductions, net salary) and every employee's basic, allowances, deductions and net. Open a <b>Payslip</b> to check one person. Then click <span class="b">Finish &amp; Submit for Approval</span>.</p>
+    <figure><a href="img/hr-payroll-step3.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step3.jpg" alt="Step 3"></a><figcaption>Step 3: Review Payroll.</figcaption></figure>
+    <figure class="half"><a href="img/hr-payslip.jpg" target="_blank"><img loading="lazy" src="img/hr-payslip.jpg" alt="Payslip"></a><figcaption>A payslip.</figcaption></figure>
+    <h3>Step 4: Approval</h3>
+    <p>Preview the payroll summary, download Excel, print payslips, add a note for the approver and click <span class="b">Submit for Approval</span>. Each approver clicks <b>Approve Step</b> or <b>Reject</b> (with a reason); after a rejection, fix it and resubmit. With no payroll approvers set, the owner (or a user allowed to approve payroll) approves in one step.</p>
+    <div class="shots">
+        <figure><a href="img/hr-payroll-step4.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step4.jpg" alt="Step 4"></a><figcaption>Step 4: Submit for Approval.</figcaption></figure>
+        <figure><a href="img/hr-payroll-step4-approved.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step4-approved.jpg" alt="Approved"></a><figcaption>Approved.</figcaption></figure>
+    </div>
+    <h3>Step 5: Posting</h3>
+    <p>Pay the approved payroll from a <b>Cash register</b> or a <b>Bank</b> account: choose where it's paid from, the cheque / transfer reference and the date, then post. Loan installments are recovered, the salary voucher (with EOBI) goes to the accounts, and the month is closed.</p>
+    <div class="shots">
+        <figure><a href="img/hr-payroll-step5.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-step5.jpg" alt="Step 5"></a><figcaption>Step 5: Payroll Posting.</figcaption></figure>
+        <figure><a href="img/hr-payroll-posted.jpg" target="_blank"><img loading="lazy" src="img/hr-payroll-posted.jpg" alt="Posted"></a><figcaption>Posted payroll.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="hrsettings">
+    <h2>HR settings</h2>
+    <span class="where">HR &amp; Payroll › HR Settings (its own menu; "Back to app" returns)</span>
+    <table>
+        <tr><th>Group</th><th>Screens</th></tr>
+        <tr><td>Attendance Settings</td><td>Locations, Session Settings (shift times)</td></tr>
+        <tr><td>Request Settings</td><td>Leave Settings, Loan Settings, Overtime Request Settings, Letters, Approval Sequence</td></tr>
+        <tr><td>Payroll Settings</td><td>Payroll Settings, Benefits, Deductions, Leave Settlement, Final Settlement, Payroll Approvers, Payroll Report</td></tr>
+        <tr><td>EOBI &amp; Tax</td><td>EOBI / PESSI, FBR Income Tax Slabs</td></tr>
+        <tr><td>Permissions</td><td>Roles and what each may see and do</td></tr>
+        <tr><td>General Settings</td><td>Preferences, Assign Direct Manager, Departments, Sections, Positions, Cost Centers, Banks, Documents, Asset Categories, Evaluations, Countries … Currencies, Notifications</td></tr>
+    </table>
+    <figure><a href="img/hr-settings-menu.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-menu.jpg" alt="HR settings"></a><figcaption>HR Settings menu (Permissions shown).</figcaption></figure>
+    <h3>General › Preferences</h3>
+    <ul>
+        <li><b>Employee numbers</b>: sequential (with a format such as <code>EMP-{0000}</code>) or typed by hand.</li>
+        <li><b>Contract expiry alert days</b> for the HR dashboard; <b>Show outsourced staff</b>.</li>
+        <li><b>Mark absent automatically</b> and <b>Return to work automatically</b> (run each night).</li>
+        <li><b>Allow back-dated requests</b>.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/hr-settings-preferences.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-preferences.jpg" alt="Preferences"></a><figcaption>Preferences.</figcaption></figure>
+        <figure><a href="img/hr-settings-notifications.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-notifications.jpg" alt="Notifications"></a><figcaption>Notifications: reminders in the bell.</figcaption></figure>
+        <figure><a href="img/hr-settings-approval-sequence.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-approval-sequence.jpg" alt="Approval sequence"></a><figcaption>Approval Sequence.</figcaption></figure>
+        <figure><a href="img/hr-settings-tax-slabs.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-tax-slabs.jpg" alt="Tax slabs"></a><figcaption>FBR Income Tax Slabs.</figcaption></figure>
+        <figure><a href="img/hr-settings-sessions.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-sessions.jpg" alt="Sessions"></a><figcaption>Session Settings (shifts).</figcaption></figure>
+        <figure><a href="img/hr-settings-leave.jpg" target="_blank"><img loading="lazy" src="img/hr-settings-leave.jpg" alt="Leave settings"></a><figcaption>Leave Settings.</figcaption></figure>
+    </div>
+    <p>Reminders in the bell: Contract End, Probation End, Notice Period End, Leave Return, Document Expiry, CNIC Expiry and Payroll Closing.</p>
+</section>
+
+<!-- ============ OWNER ============ -->
+<section class="doc" id="setup">
+    <h2>First-time setup (owner)</h2>
+    <p class="lead">Do these once, in this order, before the lab starts billing.</p>
+    <ol class="steps">
+        <li><b>Settings › Lab Profile</b>: name, phone, address, NTN, licence no., logo, header and footer text.</li>
+        <li><b>Settings › Report Layout</b> and <b>Signatures</b>: letterhead, paper size, and the pathologist's / radiologist's signature.</li>
+        <li><b>Settings › Branches</b> and <b>Billing › Cash Registers</b> (one per counter).</li>
+        <li><b>Settings › Users</b>: one login per person, each with a role.</li>
+        <li><b>Laboratory › Setup › Tests</b>: check prices.</li>
+        <li><b>Billing › Referring Doctors</b> with commission rates.</li>
+        <li><b>Accounts › Fiscal Years</b>: create the current year.</li>
+        <li><b>Insurance › Insurance Providers</b>: Sehat Card and your panels.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/set-lab-profile.jpg" target="_blank"><img loading="lazy" src="img/set-lab-profile.jpg" alt="Lab profile"></a><figcaption>Lab Profile.</figcaption></figure>
+        <figure><a href="img/set-report-layout.jpg" target="_blank"><img loading="lazy" src="img/set-report-layout.jpg" alt="Report layout"></a><figcaption>Report Layout.</figcaption></figure>
+        <figure><a href="img/set-signatures.jpg" target="_blank"><img loading="lazy" src="img/set-signatures.jpg" alt="Signatures"></a><figcaption>Signatures.</figcaption></figure>
+        <figure><a href="img/set-users.jpg" target="_blank"><img loading="lazy" src="img/set-users.jpg" alt="Users"></a><figcaption>Users.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="settings">
+    <h2>Settings screens</h2>
+    <span class="where">Settings</span>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Users</td><td>Name, email, password, role, home branch, own discount limit, active / inactive. Make leavers inactive instead of deleting.</td></tr>
+        <tr><td>Roles &amp; Permissions</td><td>What each role can do, and its discount limit.</td></tr>
+        <tr><td>Invoice layouts</td><td>Invoice design (80 mm, 58 mm, A4, A5) with live preview. Each branch picks one.</td></tr>
+        <tr><td>Barcode labels</td><td>Tube label size and design, and a test print.</td></tr>
+        <tr><td>Numbering</td><td>Prefix and next number of bills, receipts… Numbers only move forward.</td></tr>
+        <tr><td>Recycle Bin</td><td>Everything deleted, by whom and why. <b>Restore</b> brings it back.</td></tr>
+        <tr><td>Activity Log</td><td>Who changed what, and when.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/set-roles.jpg" target="_blank"><img loading="lazy" src="img/set-roles.jpg" alt="Roles"></a><figcaption>Roles &amp; Permissions.</figcaption></figure>
+        <figure><a href="img/set-invoice-layouts.jpg" target="_blank"><img loading="lazy" src="img/set-invoice-layouts.jpg" alt="Invoice layouts"></a><figcaption>Invoice layouts.</figcaption></figure>
+        <figure><a href="img/set-barcode-labels.jpg" target="_blank"><img loading="lazy" src="img/set-barcode-labels.jpg" alt="Barcode labels"></a><figcaption>Barcode labels.</figcaption></figure>
+        <figure><a href="img/set-numbering.jpg" target="_blank"><img loading="lazy" src="img/set-numbering.jpg" alt="Numbering"></a><figcaption>Numbering.</figcaption></figure>
+        <figure><a href="img/set-recycle-bin.jpg" target="_blank"><img loading="lazy" src="img/set-recycle-bin.jpg" alt="Recycle bin"></a><figcaption>Recycle Bin.</figcaption></figure>
+        <figure><a href="img/set-activity-log.jpg" target="_blank"><img loading="lazy" src="img/set-activity-log.jpg" alt="Activity log"></a><figcaption>Activity Log.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="help">
+    <h2>Problems and fixes</h2>
+    <table>
+        <tr><th>Problem</th><th>What to do</th></tr>
+        <tr><td>Can't take payment</td><td>Your register is closed. Open it in New Bill.</td></tr>
+        <tr><td>"No counter is set up for you"</td><td>Admin adds a counter in Billing › Cash Registers.</td></tr>
+        <tr><td>Discount refused</td><td>It's above your limit. Ask the manager.</td></tr>
+        <tr><td>Can't type results</td><td>Collect the sample first.</td></tr>
+        <tr><td>Test missing from the report or share link</td><td>It isn't verified yet.</td></tr>
+        <tr><td>Patient owes money</td><td>Pay due in the POS, or Add payment in Billing › Bills.</td></tr>
+        <tr><td>Need to give money back</td><td>Sell return in the POS, or Cancel bill in Billing › Bills.</td></tr>
+        <tr><td>Attendance won't post</td><td>Generate the month's payroll first (Payroll step 1).</td></tr>
+        <tr><td>A menu is missing</td><td>Your role or the lab's plan doesn't include it. Ask the owner.</td></tr>
+        <tr><td>"Page expired" at login</td><td>Refresh the page and log in again.</td></tr>
+        <tr><td>Deleted something by mistake</td><td>Owner: Settings › Recycle Bin › Restore.</td></tr>
+    </table>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('manual-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark'
+            || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('manual-theme', next); } catch (e) {}
+    });
+
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.doc'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+
+    function clearMarks(node) {
+        Array.prototype.slice.call(node.querySelectorAll('mark')).forEach(function (m) {
+            m.replaceWith(document.createTextNode(m.textContent));
+        });
+        node.normalize();
+    }
+    function highlight(node, q) {
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null), hits = [], n;
+        while ((n = walker.nextNode())) { if (n.nodeValue.toLowerCase().indexOf(q) !== -1) hits.push(n); }
+        hits.forEach(function (t) {
+            var i = t.nodeValue.toLowerCase().indexOf(q);
+            var rest = t.splitText(i); rest.splitText(q.length);
+            var m = document.createElement('mark'); m.textContent = rest.nodeValue;
+            rest.parentNode.replaceChild(m, rest);
+        });
+    }
+    document.getElementById('q').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        sections.forEach(function (s) {
+            clearMarks(s);
+            var hit = !q || s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.classList.toggle('hidden', !hit);
+            if (hit) { shown++; if (q) highlight(s, q); }
+        });
+        document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    });
+
+    links.forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav.toc').classList.remove('open'); }); });
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        sections.forEach(function (s) { io.observe(s); });
+    }
+})();
+</script>
+</body>
+</html>
