@@ -70,6 +70,8 @@ th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-s
 .cards b { display: block; color: var(--primary); }
 .cards small { color: var(--muted); }
 figure { margin: 14px 0 20px; }
+figure > a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+figure > a > img { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
 .noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
 mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
@@ -264,6 +266,7 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <div class="grp">Printing &amp; TV</div>
     <a href="#printers">Printers and labels</a>
     <a href="#tv">Queue and doctor TVs</a>
+    <a href="#tv-slides">TV pictures &amp; videos</a>
     <div class="grp">Daily care</div>
     <a href="#backup">Backups</a>
     <a href="#updates">Updates</a>
@@ -470,7 +473,8 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
         <li>On the Main PC, read the link in the tray menu: <b>Other PCs / phones: http://IP:8080</b>.</li>
         <li>On every other PC, open that link in Chrome or Edge. Add it to the bookmarks bar.</li>
         <li>On phones and tablets (on the hospital Wi-Fi), open the same link and choose <b>Add to Home screen</b>.</li>
-        <li>Each person signs in with their own email and password. Their role decides which screens they see (see <a href="#staff">Staff, roles and portals</a>).</li>
+        <li>Each person signs in with their own email and password. Their role decides which screens they see (see <a href="#staff">Staff, roles and portals</a>).
+            <figure><a href="img/install-otherpcs-step4.jpg" target="_blank"><img loading="lazy" src="img/install-otherpcs-step4.jpg" alt="TibuLab sign in page"></a><figcaption>Step 4: the sign-in page every PC and phone sees.</figcaption></figure></li>
     </ol>
     <div class="warn">The link works only inside the hospital network. Phones on mobile data cannot reach it.</div>
 </section>
@@ -480,8 +484,10 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <h2>First sign-in</h2>
     <ol class="steps">
         <li>Right-click the tray icon and choose <b>First sign-in details</b>. Notepad shows the link, the email (<code>admin@tibulab.local</code>) and a one-time password of 12 letters and numbers.</li>
-        <li>Choose <b>Open TibuLab</b> and sign in with them.</li>
-        <li>Go to <b>Settings › Users</b>. Open your user, give a real email and a <b>new password</b>, and save.</li>
+        <li>Choose <b>Open TibuLab</b> and sign in with them.
+            <figure><a href="img/install-firstlogin-step2.jpg" target="_blank"><img loading="lazy" src="img/install-firstlogin-step2.jpg" alt="Sign in with the first sign-in email and password"></a><figcaption>Step 2: sign in with the email and the one-time password (example values).</figcaption></figure></li>
+        <li>Go to <b>Settings › Users</b>. Open your user, give a real email and a <b>new password</b>, and save.
+            <figure><a href="img/install-firstlogin-step3.jpg" target="_blank"><img loading="lazy" src="img/install-firstlogin-step3.jpg" alt="Edit user with Email and Password"></a><figcaption>Step 3: Edit · User: a real email and a new password.</figcaption></figure></li>
         <li>Delete the file <code>FIRST-LOGIN.txt</code> from the data folder. After that, the tray says "The first sign-in details were already removed".</li>
     </ol>
     <div class="warn">Anyone who reads <code>FIRST-LOGIN.txt</code> can sign in as the owner. Change the password and delete the file on the first day.</div>
@@ -491,11 +497,16 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <h2>Hospital, locations and counters</h2>
     <p class="lead">Do these once, in this order, before the first patient. TibuLab is set up as <b>Business</b> → <b>Locations</b> (branches) → labs, pharmacies, radiology rooms and counters inside each location.</p>
     <ol class="steps">
-        <li><b>Settings › Business</b>: hospital name, phone, address, NTN, licence number, logo, header and footer text.</li>
-        <li><b>Settings › Locations</b>: one per building or branch. Open a location to add its labs (on each floor), pharmacies, radiology rooms and counters.</li>
-        <li><b>Counters</b> (reception, cash, sample collection, pharmacy) are added on the location page, or in <b>Billing › Cash Registers</b>. Money is taken only on an open counter.</li>
-        <li><b>Settings › Report Layout</b> and <b>Signatures</b>: letterhead, paper size and the pathologist's / radiologist's signature.</li>
-        <li><b>Settings › Numbering</b>: the start numbers of bills and receipts (only if you continue from an old system).</li>
+        <li><b>Settings › Business</b>: hospital name, phone, address, NTN, licence number, logo, header and footer text.
+            <figure><a href="img/install-hospital-step1.jpg" target="_blank"><img loading="lazy" src="img/install-hospital-step1.jpg" alt="Settings Business"></a><figcaption>Step 1: Settings › Business.</figcaption></figure></li>
+        <li><b>Settings › Locations</b>: one per building or branch. Open a location to add its labs (on each floor), pharmacies, radiology rooms and counters.
+            <figure><a href="img/install-hospital-step2.jpg" target="_blank"><img loading="lazy" src="img/install-hospital-step2.jpg" alt="A location page with its labs"></a><figcaption>Step 2: a location's page: details, labs (Add lab) and more below.</figcaption></figure></li>
+        <li><b>Counters</b> (reception, cash, sample collection, pharmacy) are added on the location page, or in <b>Billing › Cash Registers</b>. Money is taken only on an open counter.
+            <figure><a href="img/install-hospital-step3.jpg" target="_blank"><img loading="lazy" src="img/install-hospital-step3.jpg" alt="Billing Cash Registers"></a><figcaption>Step 3: Billing › Cash Registers.</figcaption></figure></li>
+        <li><b>Settings › Report Layout</b> and <b>Signatures</b>: letterhead, paper size and the pathologist's / radiologist's signature.
+            <figure><a href="img/install-hospital-step4.jpg" target="_blank"><img loading="lazy" src="img/install-hospital-step4.jpg" alt="Settings Report Layout"></a><figcaption>Step 4: Settings › Report Layout.</figcaption></figure></li>
+        <li><b>Settings › Numbering</b>: the start numbers of bills and receipts (only if you continue from an old system).
+            <figure><a href="img/install-hospital-step5.jpg" target="_blank"><img loading="lazy" src="img/install-hospital-step5.jpg" alt="Settings Numbering"></a><figcaption>Step 5: Settings › Numbering.</figcaption></figure></li>
     </ol>
     <p>The User Manual has pictures of these screens: <a href="index.html#setup">First-time setup</a>.</p>
 </section>
@@ -526,8 +537,10 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <h3>One record per doctor</h3>
     <p>A doctor is an <b>HR employee</b> with the Doctor section filled in. Add doctors in <b>Billing › Referring Doctors</b> (outside doctors) or <b>OPD › Setup › Doctors</b> (staff and visiting consultants). Both open the same employee form.</p>
     <ol class="steps">
-        <li>Add the doctor (name, PMDC no., speciality, fees and shares).</li>
-        <li>For a doctor who signs in, make a user with the role <b>doctor</b> in <b>Settings › Users</b>, and link that user account on the doctor's employee form.</li>
+        <li>Add the doctor (name, PMDC no., speciality, fees and shares).
+            <figure><a href="img/install-doctors-step1.jpg" target="_blank"><img loading="lazy" src="img/install-doctors-step1.jpg" alt="Add Employee form for a doctor"></a><figcaption>Step 1: Add Doctor opens the employee form (step by step: <a href="hospital.html#add-doctor">Add a doctor</a>).</figcaption></figure></li>
+        <li>For a doctor who signs in, make a user with the role <b>doctor</b> in <b>Settings › Users</b>, and link that user account on the doctor's employee form.
+            <figure><a href="img/install-doctors-step2.jpg" target="_blank"><img loading="lazy" src="img/install-doctors-step2.jpg" alt="Add user with the Doctor role"></a><figcaption>Step 2: Add · User with the Doctor role (or the form's own Login &amp; Password step).</figcaption></figure></li>
     </ol>
     <h3>Duty roster for nurses and doctors</h3>
     <span class="where">Duty roster › Monthly roster</span>
@@ -671,9 +684,11 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     </figure>
     <h3>Connect a machine, step by step</h3>
     <ol class="steps">
-        <li><b>Switch on the Device Hub</b> (once). Open <b>Laboratory › Machines › Analyzer Status</b>. If it says "Device Hub is not running on the lab server", ask TibuLab support to switch it on. They add the line <code>TIBULAB_DEVICE_HUB=true</code> to the <code>.env</code> file in the data folder and use <b>Restart services</b>. The scheduler then keeps the hub running.</li>
+        <li><b>Switch on the Device Hub</b> (once). Open <b>Laboratory › Machines › Analyzer Status</b>. If it says "Device Hub is not running on the lab server", ask TibuLab support to switch it on. They add the line <code>TIBULAB_DEVICE_HUB=true</code> to the <code>.env</code> file in the data folder and use <b>Restart services</b>. The scheduler then keeps the hub running.
+            <figure><a href="img/install-analysers-step1.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step1.jpg" alt="Analyzer Status with the Device Hub warning"></a><figcaption>Step 1: Analyzer Status; the yellow box means the Device Hub is not running yet.</figcaption></figure></li>
         <li><b>Cable.</b> Connect the analyser as in the drawing above. Give a network analyser (or the adapter) a fixed IP, for example <code>192.168.1.50</code>.</li>
-        <li><b>Add the analyser in TibuLab.</b> <b>Laboratory › Machines › Analyzers › Add</b>. Pick the <b>Model preset</b> first (for example Sysmex XN, Sysmex XP-100, Mindray BC-5000, Mindray BS-200, Roche c311, Erba XL-200, Maglumi, Bio-Rad D-10…). It fills the protocol, connection and serial settings. Then give the code, name, location and lab section.</li>
+        <li><b>Add the analyser in TibuLab.</b> <b>Laboratory › Machines › Analyzers › Add</b>. Pick the <b>Model preset</b> first (for example Sysmex XN, Sysmex XP-100, Mindray BC-5000, Mindray BS-200, Roche c311, Erba XL-200, Maglumi, Bio-Rad D-10…). It fills the protocol, connection and serial settings. Then give the code, name, location and lab section.
+            <figure><a href="img/install-analysers-step3.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step3.jpg" alt="Add Analyzer with the Model preset list open"></a><figcaption>Step 3: Add · Analyzer › Model preset.</figcaption></figure></li>
         <li><b>TibuLab's settings.</b> Check the <b>Protocol</b> (ASTM, LIS2-A2, HL7, CSV file, Sysmex K) and the <b>Connection</b>:
             <table>
                 <tr><th>Connection</th><th>Fill in</th></tr>
@@ -682,17 +697,23 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
                 <tr><td>Serial (COM / USB)</td><td>The adapter's <b>IP address</b> and <b>TCP port</b> (often 4001), and the baud rate, data bits, parity, stop bits of the analyser.</td></tr>
                 <tr><td>Shared folder</td><td>The <b>Folder path</b> as the Main PC sees it. Set the file layout under Hub options on the Mappings screen.</td></tr>
             </table>
+            <figure><a href="img/install-analysers-step4.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step4.jpg" alt="Protocol and Connection filled by the preset"></a><figcaption>Step 4: Protocol, Connection, IP address and TCP port (here filled by the Mindray BC-5000 preset).</figcaption></figure>
         </li>
-        <li><b>The machine's host settings.</b> On the analyser, open its Host / LIS / Communication menu (the preset's "How to connect this model" box tells you where). Set the same protocol, the <b>host IP = the Main PC's fixed IP</b> and the same port. For serial, the speed and settings must match on both sides. If the analyser can ask for tests by barcode (host query), switch that on, and switch on <b>Answer host queries (send ordered tests)</b> in TibuLab.</li>
-        <li><b>Is it online?</b> <b>Analyzer Status</b> shows each machine: Online, Waiting for analyzer, Connecting, Offline or Error, with the last message and errors today.</li>
-        <li><b>Tests on this machine.</b> In the Analyzers list, use <b>Tests on this machine</b> on the row. Link each test with the code the analyser orders it by (main or backup machine).</li>
-        <li><b>Map the result codes.</b> Open <b>Analyzer Status › Mappings</b>. Each machine code (WBC, HGB, GLU…) is linked to a TibuLab parameter. Use <b>Apply suggested mappings</b> from the preset, then check them. A unit change is done with value × multiplier + offset.</li>
+        <li><b>The machine's host settings.</b> On the analyser, open its Host / LIS / Communication menu (the preset's "How to connect this model" box tells you where). Set the same protocol, the <b>host IP = the Main PC's fixed IP</b> and the same port. For serial, the speed and settings must match on both sides. If the analyser can ask for tests by barcode (host query), switch that on, and switch on <b>Answer host queries (send ordered tests)</b> in TibuLab.
+            <figure><a href="img/install-analysers-step5.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step5.jpg" alt="How to connect this model box on the Mappings screen"></a><figcaption>Step 5: the "How to connect this model" box (top of the Mappings screen) and Hub options below.</figcaption></figure></li>
+        <li><b>Is it online?</b> <b>Analyzer Status</b> shows each machine: Online, Waiting for analyzer, Connecting, Offline or Error, with the last message and errors today.
+            <figure><a href="img/install-analysers-step6.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step6.jpg" alt="Analyzer Status row"></a><figcaption>Step 6: the machine's status, link, last message and errors today.</figcaption></figure></li>
+        <li><b>Tests on this machine.</b> In the Analyzers list, use <b>Tests on this machine</b> on the row. Link each test with the code the analyser orders it by (main or backup machine).
+            <figure><a href="img/install-analysers-step7.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step7.jpg" alt="Analyzers list"></a><figcaption>Step 7: Laboratory › Analyzers: Tests on this machine is the first button on the row.</figcaption></figure></li>
+        <li><b>Map the result codes.</b> Open <b>Analyzer Status › Mappings</b>. Each machine code (WBC, HGB, GLU…) is linked to a TibuLab parameter. Use <b>Apply suggested mappings</b> from the preset, then check them. A unit change is done with value × multiplier + offset.
+            <figure><a href="img/install-analysers-step8.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step8.jpg" alt="Analyzer Mappings screen"></a><figcaption>Step 8: Analyzer Mappings: unmapped codes seen, the mappings, Add mapping.</figcaption></figure></li>
         <li><b>Test run.</b> Bill a test patient, collect the sample, print the label and run it on the analyser. Then:
             <ul>
                 <li><b>Laboratory › Machines › Machine Message Log</b> shows every message (Received, Processed, Error) with Raw and Parsed views.</li>
                 <li><b>Unmapped codes seen</b> on the Mappings screen lists codes not mapped yet. Map them: the results of the last 14 days are taken in again. <b>Replay</b> in the log parses a message again after a fix.</li>
                 <li>Compare the values on <b>Result Entry</b> with the analyser's own printout. Go live only when they match.</li>
             </ul>
+            <figure><a href="img/install-analysers-step9.jpg" target="_blank"><img loading="lazy" src="img/install-analysers-step9.jpg" alt="Machine Message Log"></a><figcaption>Step 9: Machine Message Log (empty here: the demo analyser has sent nothing yet).</figcaption></figure>
         </li>
     </ol>
     <div class="tip"><b>Safety:</b> machine values never go on a report by themselves. They wait on Result Entry until the technician checks and saves them, and the pathologist verifies them.</div>
@@ -790,25 +811,29 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
         <p><b>Sysmex KX-21 / KX-21N</b> <a href="#m-sysmex_kx21">(card)</a></p>
         <ol class="steps">
             <li>Serial only: null-modem cable from the RS-232C host port to the adapter (TCP server, port 4001).</li>
-            <li>TibuLab: Model preset Sysmex KX-21 / KX-21N, Connection Serial (COM / USB), adapter IP, port 4001. Protocol: Sysmex K.</li>
+            <li>TibuLab: Model preset Sysmex KX-21 / KX-21N, Connection Serial (COM / USB), adapter IP, port 4001. Protocol: Sysmex K.
+                <figure><a href="img/install-connect-kx21-step2.jpg" target="_blank"><img loading="lazy" src="img/install-connect-kx21-step2.jpg" alt="Add Analyzer with the Sysmex KX-21 preset"></a><figcaption>Step 2: the Sysmex KX-21 / KX-21N preset.</figcaption></figure></li>
             <li>One-way: type or scan the TibuLab barcode as the <b>Sample No.</b> on the analyser.</li>
         </ol>
         <p><b>Sysmex XP-100 / XP-300</b> <a href="#m-sysmex_xp100">(card)</a></p>
         <ol class="steps">
             <li>LAN (preferred): network cable, fixed IP on the analyser. TibuLab: Model preset Sysmex XP-100 (or XP-300), then change Connection to <b>TCP – machine connects</b> with a free port (e.g. 5002); on the analyser host = the Main PC's IP and that port; open the port in the firewall.</li>
-            <li>Or serial + adapter: the preset as it is (Serial (COM / USB), adapter IP, port 4001).</li>
+            <li>Or serial + adapter: the preset as it is (Serial (COM / USB), adapter IP, port 4001).
+                <figure><a href="img/install-connect-xp-step2.jpg" target="_blank"><img loading="lazy" src="img/install-connect-xp-step2.jpg" alt="Add Analyzer with the Sysmex XP-100 preset"></a><figcaption>Step 2: the Sysmex XP-100 preset as it is (serial).</figcaption></figure></li>
             <li>One-way: type or scan the TibuLab barcode as the <b>Sample No.</b>. Check which host format (Sysmex K or ASTM) the unit sends over LAN: TibuLab accepts both.</li>
         </ol>
         <p><b>Sysmex XN-series</b> <a href="#m-sysmex_xn">(card)</a></p>
         <ol class="steps">
             <li>LAN cable to the IPU PC. On the IPU: Settings › Host computer: ASTM, TCP/IP, host = the Main PC's IP, port 5001.</li>
-            <li>TibuLab: Model preset Sysmex XN-series, Connection TCP – machine connects, port 5001. Open port 5001 in the firewall.</li>
+            <li>TibuLab: Model preset Sysmex XN-series, Connection TCP – machine connects, port 5001. Open port 5001 in the firewall.
+                <figure><a href="img/install-connect-xn-step2.jpg" target="_blank"><img loading="lazy" src="img/install-connect-xn-step2.jpg" alt="Add Analyzer with the Sysmex XN preset"></a><figcaption>Step 2: the Sysmex XN-series preset (TCP – machine connects).</figcaption></figure></li>
             <li>Two-way: the XN reads the tube barcode and asks TibuLab for the tests. Switch on <b>Answer host queries</b>.</li>
         </ol>
         <p><b>Boule Medonic M32 / M51</b> <a href="#m-boule_medonic_m32">(card)</a> <span class="badge b-warn">Not yet tested on a real machine: check on site the first time</span></p>
         <ol class="steps">
             <li>LAN: network cable from the Medonic's LAN port, fixed IP. In the instrument's settings switch on LIS / HIS communication (<b>HL7</b>), server IP = the Main PC's IP, port 5160 (M51: 5161).</li>
-            <li>TibuLab: Model preset Boule Medonic M32 or M51, Connection TCP – machine connects, the same port. Open the port in the firewall.</li>
+            <li>TibuLab: Model preset Boule Medonic M32 or M51, Connection TCP – machine connects, the same port. Open the port in the firewall.
+                <figure><a href="img/install-connect-medonic-step2.jpg" target="_blank"><img loading="lazy" src="img/install-connect-medonic-step2.jpg" alt="Add Analyzer with the Boule Medonic M32 preset"></a><figcaption>Step 2: the Boule Medonic M32 preset (HL7, TCP – machine connects).</figcaption></figure></li>
             <li>Type or scan the TibuLab barcode as the <b>sample ID</b>. Run one sample, map the HL7 codes it sends, and check every value against the printout before going live. M51: confirm on site that it also has LAN / HL7.</li>
         </ol>
         <p class="src"><b>Sources:</b> Sysmex XP-300 brochure, LIS transfer "via LAN (TCP/IP) or Serial Port (RS-232C)": <a href="https://www.sysmex.com/US/en/brochures/xp-300%20brochure_mkt-10-1195.pdf">sysmex.com (XP-300 brochure)</a>. XP-100: listed with LAN, barcode, serial and printer ports. Boule Medonic M32: 1 LAN port, LIS / HIS communication through HL7: <a href="https://boule.com/?p=4376">boule.com (Medonic M32)</a>. Sysmex KX-21 / KX-21N: RS-232C only.</p>
@@ -1273,7 +1298,8 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <h3>A) Without the real machine: the simulator</h3>
     <p>The simulator plays the analyser against the running Device Hub: it sends a host query (unless told not to), then the results, in the machine's own protocol. TibuLab support usually runs it. You need an analyser added in TibuLab (its <b>code</b>, e.g. <code>HEM-01</code>) and a <b>collected</b> sample with its barcode.</p>
     <ol class="steps">
-        <li>The Device Hub must be running. On the Main PC the scheduler keeps it running once it is switched on (Analyzer Status says "Device Hub is running"). Elsewhere: <code>php artisan tibulab:device-hub</code>.</li>
+        <li>The Device Hub must be running. On the Main PC the scheduler keeps it running once it is switched on (Analyzer Status says "Device Hub is running"). Elsewhere: <code>php artisan tibulab:device-hub</code>.
+            <figure><a href="img/install-testmachine-step1.jpg" target="_blank"><img loading="lazy" src="img/install-testmachine-step1.jpg" alt="Analyzer Status with the Device Hub line"></a><figcaption>Step 1: Analyzer Status tells whether the Device Hub runs (here: not yet).</figcaption></figure></li>
         <li>On the Main PC, open a Command Prompt and run TibuLab's own PHP from the program folder (use your data folder):
 <pre class="cmd">cd "C:\Program Files\TibuLab\app"
 set TIBULAB_DATA_PATH=D:\TibuLabData
@@ -1293,9 +1319,12 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
 
     <h3>B) With the real machine</h3>
     <ol class="steps">
-        <li><b>Status light.</b> <b>Laboratory › Machines › Analyzer Status</b>: Online, Waiting for analyzer, Connecting, Offline or Error, with Last message, Messages today, Errors today and Last error. The Analyzers list shows the same in its <b>Link</b> column.</li>
-        <li><b>Message log.</b> <b>Laboratory › Machines › Machine Message Log</b>: every message Received / Sent, its status (Received, Processed, Error), and <b>Raw</b> / <b>Parsed</b> views.</li>
-        <li><b>Unmapped codes.</b> On <b>Analyzer Status › Mappings</b>, <b>Unmapped codes seen</b> lists the codes the machine sent that are not mapped. Click <b>Map</b> (or <b>Add mapping</b> on <b>Tests on this machine</b>). Waiting values of the last 14 days are taken in again by themselves. Then press <b>Replay</b> on the message in the Message Log: it parses it again; values already stored are not stored twice, and nothing is sent to the analyser.</li>
+        <li><b>Status light.</b> <b>Laboratory › Machines › Analyzer Status</b>: Online, Waiting for analyzer, Connecting, Offline or Error, with Last message, Messages today, Errors today and Last error. The Analyzers list shows the same in its <b>Link</b> column.
+            <figure><a href="img/install-testmachine2-step1.jpg" target="_blank"><img loading="lazy" src="img/install-testmachine2-step1.jpg" alt="Analyzer Status"></a><figcaption>Step 1: Analyzer Status.</figcaption></figure></li>
+        <li><b>Message log.</b> <b>Laboratory › Machines › Machine Message Log</b>: every message Received / Sent, its status (Received, Processed, Error), and <b>Raw</b> / <b>Parsed</b> views.
+            <figure><a href="img/install-testmachine2-step2.jpg" target="_blank"><img loading="lazy" src="img/install-testmachine2-step2.jpg" alt="Machine Message Log"></a><figcaption>Step 2: Machine Message Log with its filters.</figcaption></figure></li>
+        <li><b>Unmapped codes.</b> On <b>Analyzer Status › Mappings</b>, <b>Unmapped codes seen</b> lists the codes the machine sent that are not mapped. Click <b>Map</b> (or <b>Add mapping</b> on <b>Tests on this machine</b>). Waiting values of the last 14 days are taken in again by themselves. Then press <b>Replay</b> on the message in the Message Log: it parses it again; values already stored are not stored twice, and nothing is sent to the analyser.
+            <figure><a href="img/install-testmachine2-step3.jpg" target="_blank"><img loading="lazy" src="img/install-testmachine2-step3.jpg" alt="Unmapped codes seen on the Mappings screen"></a><figcaption>Step 3: Mappings › Unmapped codes seen.</figcaption></figure></li>
         <li><b>Compare and go live.</b> Compare every value on Result Entry with the machine's own printout. Fix the multiplier, offset or decimals if a unit differs. When all match, use it for patients.</li>
     </ol>
 </section>
@@ -1347,10 +1376,14 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
     <p>Drawing 4. The X-ray flow: patient → bill → worklist → console → image → TibuLab → radiologist report → print.</p>
     <h3>Set up the PACS (DICOM)</h3>
     <ol class="steps">
-        <li><b>Radiology › Setup › PACS › Add PACS</b>: Name, PACS software, <b>PACS AE title</b>, <b>PACS IP / host</b> (the Main PC's IP), <b>DICOM port</b> (Orthanc's default is 4242), Web API address (e.g. <code>http://192.168.1.10:8042</code>) with its user:password, and the Viewer link.</li>
-        <li>For the worklist: the <b>Worklist folder</b> and tick <b>Send patient list (modality worklist) to machines</b>.</li>
-        <li><b>Delete images after (days)</b>: empty keeps them forever. Click <span class="b">Test connection</span>.</li>
-        <li>For each room / machine (<b>Rooms &amp; Machines</b> and the Machines list on the PACS page): the <b>Machine AE title</b>, <b>Machine IP</b> and <b>Port</b> exactly as set on the machine, <b>Sends images to</b>, <b>Reads patient list (worklist)</b>.</li>
+        <li><b>Radiology › Setup › PACS › Add PACS</b>: Name, PACS software, <b>PACS AE title</b>, <b>PACS IP / host</b> (the Main PC's IP), <b>DICOM port</b> (Orthanc's default is 4242), Web API address (e.g. <code>http://192.168.1.10:8042</code>) with its user:password, and the Viewer link.
+            <figure><a href="img/install-xray-step1.jpg" target="_blank"><img loading="lazy" src="img/install-xray-step1.jpg" alt="Add PACS form"></a><figcaption>Step 1: Add PACS.</figcaption></figure></li>
+        <li>For the worklist: the <b>Worklist folder</b> and tick <b>Send patient list (modality worklist) to machines</b>.
+            <figure><a href="img/install-xray-step2.jpg" target="_blank"><img loading="lazy" src="img/install-xray-step2.jpg" alt="Worklist folder and the worklist switch"></a><figcaption>Step 2: Worklist folder and "Send patient list (modality worklist) to machines" (bottom left).</figcaption></figure></li>
+        <li><b>Delete images after (days)</b>: empty keeps them forever. Click <span class="b">Test connection</span>.
+            <figure><a href="img/install-xray-step3.jpg" target="_blank"><img loading="lazy" src="img/install-xray-step3.jpg" alt="Delete images after days"></a><figcaption>Step 3: Delete images after (days); Test connection is on the saved PACS.</figcaption></figure></li>
+        <li>For each room / machine (<b>Rooms &amp; Machines</b> and the Machines list on the PACS page): the <b>Machine AE title</b>, <b>Machine IP</b> and <b>Port</b> exactly as set on the machine, <b>Sends images to</b>, <b>Reads patient list (worklist)</b>.
+            <figure><a href="img/install-xray-step4.jpg" target="_blank"><img loading="lazy" src="img/install-xray-step4.jpg" alt="Rooms and Machines"></a><figcaption>Step 4: Radiology › Setup › Rooms &amp; Machines.</figcaption></figure></li>
         <li>On the machine or console: add the PACS as a DICOM destination with the same AE title, IP and port. Allow the DICOM port in the Windows Firewall of the PACS PC.</li>
     </ol>
     <h3>Machines without DICOM: image folders</h3>
@@ -1358,8 +1391,10 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
     <p>For machines that save JPG, PDF or DICOM files to a folder (ultrasound, ECG, some X-ray consoles). Works on the Main PC only, not in the cloud.</p>
     <ol class="steps">
         <li>Share the machine's export folder on the network.</li>
-        <li>Add an image folder: <b>Name</b>, <b>Folder path</b> as the Main PC sees it (for example <code>D:\ecg\out</code> or <code>\\US-PC\export</code>), <b>Files to take</b> (<code>*.jpg,*.pdf,*.dcm</code>), <b>After import</b> (move to "imported", delete, or leave) and <b>Scan every (seconds)</b>.</li>
-        <li>The accession number must be in the file: in the DICOM tag, the file name or the folder name. Other files wait in Unmatched Studies.</li>
+        <li>Add an image folder: <b>Name</b>, <b>Folder path</b> as the Main PC sees it (for example <code>D:\ecg\out</code> or <code>\\US-PC\export</code>), <b>Files to take</b> (<code>*.jpg,*.pdf,*.dcm</code>), <b>After import</b> (move to "imported", delete, or leave) and <b>Scan every (seconds)</b>.
+            <figure><a href="img/install-xray2-step2.jpg" target="_blank"><img loading="lazy" src="img/install-xray2-step2.jpg" alt="Add Image folder form"></a><figcaption>Step 2: Add · Image folder.</figcaption></figure></li>
+        <li>The accession number must be in the file: in the DICOM tag, the file name or the folder name. Other files wait in Unmatched Studies.
+            <figure><a href="img/install-xray2-step3.jpg" target="_blank"><img loading="lazy" src="img/install-xray2-step3.jpg" alt="Unmatched Studies"></a><figcaption>Step 3: Radiology › Unmatched Studies.</figcaption></figure></li>
     </ol>
     <h3>Upload by hand</h3>
     <p>On any exam, <b>Add images / files</b> takes JPG, PNG, PDF or DICOM files (a photo of the film, a scanned page). Tick <b>Key image (printed on the report)</b> on the pictures that should be printed on the report.</p>
@@ -1450,12 +1485,18 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
     </table>
     <h3>Set up</h3>
     <ol class="steps">
-        <li>The Device Hub must be on (see <a href="#analysers">Lab analysers</a>, step 1).</li>
-        <li><b>ICU Monitoring › Setup › Central stations</b>: code, name, vendor, model, connection, host, port.</li>
-        <li><b>Devices</b>: each monitor, and the <b>bed</b> it stands at. The patient is taken from the bed's current admission.</li>
-        <li><b>Alarm limits</b>: the low / high limits and how long a value must stay out before it is an alarm (default 30 seconds).</li>
-        <li><b>Code map</b>: the station's codes to TibuLab's (HR, SpO₂, NIBP, RR, Temp…).</li>
-        <li><b>Settings</b>: escalate after N minutes (default 5), the ICU on-call users, and SMS on escalation (if the hospital has SMS).</li>
+        <li>The Device Hub must be on (see <a href="#analysers">Lab analysers</a>, step 1).
+            <figure><a href="img/install-icu-step1.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step1.jpg" alt="Analyzer Status with the Device Hub line"></a><figcaption>Step 1: Laboratory › Machines › Analyzer Status shows whether the Device Hub runs.</figcaption></figure></li>
+        <li><b>ICU Monitoring › Setup › Central stations</b>: code, name, vendor, model, connection, host, port.
+            <figure><a href="img/install-icu-step2.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step2.jpg" alt="Central stations"></a><figcaption>Step 2: Central stations.</figcaption></figure></li>
+        <li><b>Devices</b>: each monitor, and the <b>bed</b> it stands at. The patient is taken from the bed's current admission.
+            <figure><a href="img/install-icu-step3.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step3.jpg" alt="ICU devices and their beds"></a><figcaption>Step 3: Devices and their beds.</figcaption></figure></li>
+        <li><b>Alarm limits</b>: the low / high limits and how long a value must stay out before it is an alarm (default 30 seconds).
+            <figure><a href="img/install-icu-step4.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step4.jpg" alt="Alarm limits"></a><figcaption>Step 4: Alarm limits.</figcaption></figure></li>
+        <li><b>Code map</b>: the station's codes to TibuLab's (HR, SpO₂, NIBP, RR, Temp…).
+            <figure><a href="img/install-icu-step5.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step5.jpg" alt="Code map"></a><figcaption>Step 5: Code map.</figcaption></figure></li>
+        <li><b>Settings</b>: escalate after N minutes (default 5), the ICU on-call users, and SMS on escalation (if the hospital has SMS).
+            <figure><a href="img/install-icu-step6.jpg" target="_blank"><img loading="lazy" src="img/install-icu-step6.jpg" alt="ICU monitoring settings"></a><figcaption>Step 6: ICU monitoring settings.</figcaption></figure></li>
     </ol>
     <h3>Alarm and escalation</h3>
     <ol class="vflow" aria-label="ICU alarm and escalation flow">
@@ -1478,7 +1519,8 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
     <p class="lead">Receipts, tube barcode labels and reports print from the browser on each counter PC.</p>
     <ol class="steps">
         <li>Install the printer on the counter PC (USB or network) with its Windows driver: receipt printer (80 mm or 58 mm), label printer, and an A4/A5 printer for reports.</li>
-        <li>Choose the paper size and design in TibuLab: <b>Settings › Print designs</b>, <b>Barcode labels</b> (with a test print) and <b>Report Layout</b>.</li>
+        <li>Choose the paper size and design in TibuLab: <b>Settings › Print designs</b>, <b>Barcode labels</b> (with a test print) and <b>Report Layout</b>.
+            <figure><a href="img/install-printers-step2.jpg" target="_blank"><img loading="lazy" src="img/install-printers-step2.jpg" alt="Settings Print designs"></a><figcaption>Step 2: Settings › Print designs.</figcaption></figure></li>
         <li>Print once from Chrome and choose the right printer. Chrome remembers the last printer.</li>
     </ol>
     <h3>TibuLab Print Helper</h3>
@@ -1490,21 +1532,56 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
 <section class="doc" id="tv">
     <h2>Queue and doctor TVs</h2>
     <span class="where">Settings › TV screens</span>
-    <p>TV screens show the tokens: a doctor's door, a waiting hall with several doctors, or the lab hall (sample collection calls, reports ready). They can call in English and Urdu, and show pictures and videos when the queue is quiet.</p>
+    <p>TV screens show the tokens: a doctor's door, a waiting hall with several doctors, or the lab hall (sample collection calls, reports ready). They can call in English and Urdu, and show pictures and videos (see <a href="#tv-slides">TV pictures &amp; videos</a>).</p>
     <h3>A smart TV or a TV with its own small PC: pairing</h3>
     <ol class="steps">
-        <li>Add the screen in <b>Settings › TV screens</b> (type, doctor, language, voice).</li>
-        <li>Click <span class="b">Pair TV</span> and open that link on the TV once, full screen (F11). It keeps working without a login.</li>
-        <li>Pairing again stops the old TV.</li>
+        <li>Add the screen in <b>Settings › TV screens</b> (type, doctor, language, voice).
+            <figure><a href="img/install-tv-step1.jpg" target="_blank"><img loading="lazy" src="img/install-tv-step1.jpg" alt="Add TV screen form"></a><figcaption>Step 1: Add · TV screen.</figcaption></figure></li>
+        <li>Click <span class="b">Pair TV</span> and open that link on the TV once, full screen (F11). It keeps working without a login.
+            <figure><a href="img/install-tv-step2.jpg" target="_blank"><img loading="lazy" src="img/install-tv-step2.jpg" alt="Pair TV link button on a screen's row"></a><figcaption>Step 2: Pair TV is the link button on the screen's row.</figcaption></figure></li>
+        <li>Pairing again stops the old TV.
+            <figure><a href="img/install-tv-step3.jpg" target="_blank"><img loading="lazy" src="img/install-tv-step3.jpg" alt="Pair TV button again"></a><figcaption>Step 3: the same Pair TV button makes a new link; the old TV stops.</figcaption></figure></li>
     </ol>
     <h3>A TV on a PC's HDMI second screen: "Show on this PC's TV"</h3>
     <ol class="steps">
         <li>Connect the TV to the PC with an HDMI cable. Press <b>Windows + P</b> and choose <b>Extend</b>.</li>
         <li>Install the <b>TibuLab Print Helper</b> on that PC.</li>
-        <li>In TibuLab click <span class="b">Show on this PC's TV</span> (in Settings › TV screens, or the doctor's TV button on his OPD screen).</li>
+        <li>In TibuLab click <span class="b">Show on this PC's TV</span> (in Settings › TV screens, or the doctor's TV button on his OPD screen).
+            <figure><a href="img/install-tv2-step3.jpg" target="_blank"><img loading="lazy" src="img/install-tv2-step3.jpg" alt="Show on this PC's TV button"></a><figcaption>Step 3: Show on this PC's TV is the screen button on the row.</figcaption></figure></li>
         <li>The TV shows the queue, with sound. It opens by itself every time the PC starts. Nothing else to do. <span class="b">Stop TV on this PC</span> turns it off.</li>
     </ol>
     <div class="tip">Without the Print Helper it still works in Chrome or Edge, but the TV opens with your first click in TibuLab each day, and you must click once on the TV for sound. Allow pop-ups for TibuLab if the browser blocks the TV window.</div>
+</section>
+
+<section class="doc" id="tv-slides">
+    <h2>TV pictures &amp; videos (slides)</h2>
+    <span class="where">Settings › TV screens › a screen's <b>Slides</b></span>
+    <p class="lead">Health tips and your own adverts on the waiting-hall TV. Add them per screen with <span class="b">Add picture / video</span>.</p>
+    <h3>Where a slide shows</h3>
+    <ul>
+        <li><b>Nobody waiting:</b> the slide fills the <b>whole screen</b>.</li>
+        <li><b>While calling:</b> the slide shows in a <b>tall strip of about one third</b> of the screen, beside the token board.</li>
+        <li>The picture is <b>never cut</b>: it is made smaller to fit, and the empty space around it is black.</li>
+    </ul>
+    <h3>Best sizes</h3>
+    <table>
+        <tr><th>What</th><th>Best</th></tr>
+        <tr><td>Picture for the whole screen</td><td><b>1920 × 1080</b> pixels, landscape (16:9), like the TV.</td></tr>
+        <tr><td>Picture for the strip beside the token board</td><td><b>1080 × 1920</b> (portrait) fills the strip. With a landscape picture keep the main text large and in the middle.</td></tr>
+        <tr><td>File size of a picture</td><td>Under <b>2 MB</b> (JPG or WEBP), so the TV loads it fast.</td></tr>
+        <tr><td>Video</td><td><b>MP4 (H.264)</b> or <b>WEBM</b>, 1920 × 1080 or 1280 × 720, <b>10–60 seconds</b>. It plays muted, to the end, then the next slide comes.</td></tr>
+        <tr><td>Text on a slide</td><td>At least <b>60 px</b> high on a 1920 × 1080 picture, so it can be read from the waiting chairs.</td></tr>
+        <tr><td>Files allowed</td><td>PNG, JPG, WEBP, MP4, WEBM, up to <b>40 MB</b>.</td></tr>
+    </table>
+    <h3>"How it looks on the TV"</h3>
+    <ol class="steps">
+        <li>Open <b>Settings › TV screens</b> and press <span class="b">Slides</span> on the screen. The <b>Best size</b> box on the page repeats the sizes above.
+            <figure><a href="img/tv-slides-step1.jpg" target="_blank"><img loading="lazy" src="img/tv-slides-step1.jpg" alt="Slides page with the Best size box"></a><figcaption>Step 1: the Slides page with Add picture / video and the Best size box.</figcaption></figure></li>
+        <li>Click <span class="b">Add picture / video</span> and choose the file. Then click a picture in the list: the <b>How it looks on the TV</b> preview shows it on a small TV, over the whole screen and beside the token board.
+            <figure><a href="img/tv-slides-step2.jpg" target="_blank"><img loading="lazy" src="img/tv-slides-step2.jpg" alt="TV preview with a 1920 by 1080 slide"></a><figcaption>Step 2: a 1920 × 1080 picture in the preview: full screen, and in the strip beside the tokens.</figcaption></figure></li>
+    </ol>
+    <p><span class="b">Hide</span> / <span class="b">Show</span> takes a slide off the TV without deleting it; the trash button removes it.</p>
+    <div class="tip"><b>After an update on the server</b>, if the TV still shows an old picture (or a broken picture address), press <b>Ctrl+F5</b> on the TV page once.</div>
 </section>
 
 <!-- ============ DAILY CARE ============ -->
@@ -1524,7 +1601,8 @@ set TIBULAB_DATA_PATH=D:\TibuLabData
 <section class="doc" id="updates">
     <h2>Updates</h2>
     <ol class="steps">
-        <li><b>Back up first:</b> Admin › System health › <span class="b">Back up now</span>. Do updates after working hours.</li>
+        <li><b>Back up first:</b> Admin › System health › <span class="b">Back up now</span>. Do updates after working hours.
+            <figure><a href="img/install-updates-step1.jpg" target="_blank"><img loading="lazy" src="img/install-updates-step1.jpg" alt="System health with Back up now"></a><figcaption>Step 1: Admin › System health › Back up now.</figcaption></figure></li>
         <li>Run the new <code>TibuLab-Main-PC-Setup-&lt;version&gt;.exe</code> over the old one, as administrator. It finds the same install and data folders by itself.</li>
         <li>The setup stops TibuLab (the database shuts down cleanly) and replaces the program and its runtime. The data folder and the settings are kept.</li>
         <li>On the next start the tray shows <b>"Updating the database…"</b>. When the dot is green, the update is done.</li>

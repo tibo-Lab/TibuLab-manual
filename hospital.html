@@ -149,6 +149,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <div class="grp">Patients come in</div>
     <a href="#opd">OPD</a>
     <a href="#add-doctor">Add a doctor</a>
+    <a href="#opd-fees">OPD fees: every rule</a>
     <a href="#er">Emergency (ER)</a>
     <a href="#ambulance">Ambulance</a>
     <div class="grp">Admitted patients</div>
@@ -287,6 +288,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <figure><a href="img/mod-opd-queue.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-queue.jpg" alt="Token queue"></a><figcaption>Token queue.</figcaption></figure>
         <figure><a href="img/mod-opd-doctors.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-doctors.jpg" alt="Doctors"></a><figcaption>OPD setup › Doctors.</figcaption></figure>
     </div>
+    <div class="tip"><b>Fees:</b> how the front desk works out a visit's fee (main fee, follow-ups, surcharges, discounts) is in <a href="#opd-fees">OPD fees: every rule explained</a>.</div>
     <div class="tip"><b>Online booking:</b> patients book at <code>/book</code> on your address (doctor, day, free time, name, mobile and an SMS code). Switch it on in OPD tools › Online booking page.</div>
 </section>
 
@@ -316,8 +318,9 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
             <figure><a href="img/add-doctor-step4.png" target="_blank"><img loading="lazy" src="img/add-doctor-step4.png" alt="Login and Password card"></a><figcaption>Step 4: his login and password.</figcaption></figure></li>
         <li><b>OPD › Setup › Doctor schedules</b> → <span class="b">Set week</span> on his row. Tick his days, pick <b>From</b> and <b>To</b> with the time picker (hour, minutes, <b>AM / PM</b>, then <span class="b">Done</span>), minutes per patient, most patients and room. <span class="b">Copy Monday to Tue–Fri</span> saves typing. <span class="b">Save week</span>.
             <figure><a href="img/add-doctor-step5.png" target="_blank"><img loading="lazy" src="img/add-doctor-step5.png" alt="Week editor with the AM PM time picker"></a><figcaption>Step 5: his week, with the AM / PM time picker.</figcaption></figure></li>
-        <li><b>OPD › Setup › Fee rules</b> → <span class="b">Add</span>: his consultation fee, follow-up free within N days, and so on. Leave <b>Doctor</b> empty for a rule for all doctors.
-            <figure><a href="img/add-doctor-step6.png" target="_blank"><img loading="lazy" src="img/add-doctor-step6.png" alt="Fee rules list"></a><figcaption>Step 6: fee rules.</figcaption></figure></li>
+        <li><b>OPD › Setup › Fee rules</b> → <span class="b">Add</span>. <b>First make a "Fee of a visit kind" rule</b>: Visit kind = <b>Consultation</b> (the new visit), Doctor = this doctor (or empty = all doctors), How = <b>Fixed amount</b>, Amount = his fee. <b>Without it the front desk shows no fee.</b> "Follow-up within N days", "Report review", after-hours, holiday, VIP and booking rules only <b>change that main fee</b>: for example follow-up within 7 days = Rs 1000 or Free. Every rule is explained in <a href="#opd-fees">OPD fees: every rule explained</a>.
+            <figure><a href="img/add-doctor-step6.png" target="_blank"><img loading="lazy" src="img/add-doctor-step6.png" alt="Fee rules list"></a><figcaption>Step 6: fee rules.</figcaption></figure>
+            <figure><a href="img/add-doctor-step6b.jpg" target="_blank"><img loading="lazy" src="img/add-doctor-step6b.jpg" alt="Add fee rule form with Rule Fee of a visit kind"></a><figcaption>Step 6: the Add form with Rule = "Fee of a visit kind" (the main fee, make it first).</figcaption></figure></li>
     </ol>
 
     <h3>Employment type: which one?</h3>
@@ -339,9 +342,12 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
 
     <h3>Change an existing doctor</h3>
     <ol>
-        <li>Open him (OPD › Setup › Doctors, or HR › Employees) and press <span class="b">Edit</span>.</li>
-        <li>Click <b>Doctor</b> in the left list (step 3), change the ticks, then <span class="b">Save Changes</span>.</li>
-        <li>New password or block his login: the last step <b>Login &amp; Password</b> of the same form (or Profile › Roles). See <a href="portals.html#account">Logins and passwords</a>.</li>
+        <li>Open him (OPD › Setup › Doctors, or HR › Employees) and press <span class="b">Edit</span>.
+            <figure><a href="img/add-doctor-change-step1.jpg" target="_blank"><img loading="lazy" src="img/add-doctor-change-step1.jpg" alt="Edit button on a doctor's row"></a><figcaption>Step 1: Edit on his row.</figcaption></figure></li>
+        <li>Click <b>Doctor</b> in the left list (step 3), change the ticks, then <span class="b">Save Changes</span>.
+            <figure><a href="img/add-doctor-change-step2.jpg" target="_blank"><img loading="lazy" src="img/add-doctor-change-step2.jpg" alt="Edit Employee with the Doctor step in the left list"></a><figcaption>Step 2: Edit Employee: Doctor in the left list, Save Changes at the bottom.</figcaption></figure></li>
+        <li>New password or block his login: the last step <b>Login &amp; Password</b> of the same form (or Profile › Roles). See <a href="portals.html#account">Logins and passwords</a>.
+            <figure><a href="img/add-doctor-change-step3.jpg" target="_blank"><img loading="lazy" src="img/add-doctor-change-step3.jpg" alt="Login and Password step of the form"></a><figcaption>Step 3: Login &amp; Password, the last step of the same form.</figcaption></figure></li>
     </ol>
 
     <h3>Problems</h3>
@@ -352,6 +358,124 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>No appointment slots on a day</td><td>No sitting that day in his week, or he is on leave / it is a holiday (HR leave blocks the day).</td></tr>
         <tr><td>He cannot sign in</td><td>No login yet, or it is blocked: form step <b>Login &amp; Password</b>.</td></tr>
         <tr><td>He sees the hospital sidebar instead of his portal</td><td>His login role is not <b>Doctor</b>: change the role in Profile › Roles.</td></tr>
+        <tr><td>The front desk shows no fee</td><td>There is only a follow-up rule: add a <b>"Fee of a visit kind"</b> rule (Visit kind Consultation, How Fixed amount, his fee). See <a href="#opd-fees">OPD fees</a>.</td></tr>
+    </table>
+</section>
+
+<!-- ============ OPD FEES ============ -->
+<section class="doc" id="opd-fees">
+    <h2>OPD fees: every rule explained</h2>
+    <span class="where">OPD › Setup › Fee rules</span>
+    <p class="lead">The front desk works out the fee of every OPD visit from the <b>fee rules</b>. One rule is the <b>main fee</b> ("Fee of a visit kind"); all other rules only <b>change</b> it: a follow-up makes it free or cheaper, a surcharge adds to it, a patient type takes a discount off.</p>
+
+    <h3>The order the fee is worked out in</h3>
+    <ol class="vflow" aria-label="OPD fee order">
+        <li class="r-rec"><div class="h"><b>1. Main fee</b><span class="who">Fee of a visit kind</span></div><p>The fee of the visit kind (Consultation, Teleconsultation…). No rule for that kind = the Consultation fee is used.</p></li>
+        <li class="r-doc"><div class="h"><b>2. Visit type</b><span class="who">Consultation only</span></div><p>The first that fits <b>replaces</b> the main fee: Follow-up within N days › Report review › Referred by a hospital doctor.</p></li>
+        <li class="r-lab"><div class="h"><b>3. Surcharges</b><span class="who">added on top</span></div><p>Emergency, After-hours, Sunday / holiday, Priority / VIP token, Phone / online booking fee, reschedule fee.</p></li>
+        <li class="r-rec"><div class="h"><b>4. Patient type</b><span class="who">one discount</span></div><p>Staff, Staff family, Senior citizen, Health card, Welfare / zakat (free), Doctor's free patient (free).</p></li>
+        <li class="r-ok"><div class="h"><b>5. Package, 6. Advance</b></div><p>A prepaid OPD package with visits left makes it free; an advance paid at booking is taken off.</p></li>
+    </ol>
+    <p>After all this, a user with the right permission can still type a different fee with a reason (the "override" on the front desk).</p>
+
+    <h3>Which rule wins</h3>
+    <table>
+        <tr><th>Rule made for</th><th>Doctor field</th><th>Department field</th><th>Used when</th></tr>
+        <tr><td><b>The doctor</b></td><td>the doctor</td><td>—</td><td>Always first, for that doctor.</td></tr>
+        <tr><td><b>His department</b></td><td>empty</td><td>the department</td><td>The doctor has no rule <b>of that kind</b>; his <b>clinical department</b> (Doctor section of his form) has one.</td></tr>
+        <tr><td><b>The hospital</b></td><td>empty</td><td>empty</td><td>Neither the doctor nor his department has a rule of that kind.</td></tr>
+    </table>
+    <div class="tip"><b>It is decided per kind of rule.</b> A doctor with his own main fee but no follow-up rule of his own gets <b>the hospital's</b> follow-up rule. A doctor with his own follow-up rule does <b>not</b> get the hospital's one too. <b>From date / To date</b> on a rule: outside those dates the rule does not exist. <b>Active</b> off: same.</div>
+
+    <h3>"Fee of a visit kind": the main fee (make it first)</h3>
+    <ul>
+        <li><b>Visit kind</b>: Consultation, Teleconsultation, Second opinion, Home visit, Certificate / report. Make at least <b>Consultation</b>; the other kinds use it when they have no rule of their own.</li>
+        <li><b>Amount</b>: type the fee on the rule. TibuLab keeps it in <b>Billing › Chargemaster</b> by itself (a consultation item, code CON-…), so Location prices and insurer / panel <b>price lists</b> apply to it. Changing the amount on the rule changes the chargemaster price.</li>
+        <li><b>Missing?</b> The front desk shows <b>no fee</b> (Rs 0), even when follow-up rules exist.</li>
+    </ul>
+    <figure><a href="img/opd-fees-base.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-base.jpg" alt="Add fee rule: Fee of a visit kind"></a><figcaption>Add › Rule "Fee of a visit kind": Visit kind, Doctor (empty = all), How, Amount.</figcaption></figure>
+
+    <h3>"Follow-up within N days"</h3>
+    <ul>
+        <li><b>How</b>: Free, Fixed amount (e.g. Rs 1000), or Percent of the base fee (e.g. 50%).</li>
+        <li><b>Within (days)</b>: days since the patient's last <b>new</b> (paid) visit <b>with the same doctor</b>.</li>
+        <li><b>At most (revisits)</b>: how many follow-ups that new visit gives. Empty = no limit.</li>
+        <li><b>It counts from the NEXT day.</b> A patient who comes back the <b>same day</b> is not a follow-up: he pays the main fee. For "came back today with the reports", use <b>Report review</b>.</li>
+        <li><b>Only with the same doctor.</b> A visit to another doctor is a new visit there.</li>
+        <li><b>Tiers</b>: make two rules, for example "Free within 7 days" and "50% within 14 days". The smallest window that still fits is used.</li>
+        <li>When no follow-up fits (too late or the revisits are used up), the visit is a new visit again and a new window starts from it.</li>
+    </ul>
+    <figure><a href="img/opd-fees-followup.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-followup.jpg" alt="Add fee rule: Follow-up within N days"></a><figcaption>Follow-up within N days: How, Within (days), At most (revisits).</figcaption></figure>
+    <p><b>Example</b> (main fee Rs 1500; follow-up Free within 7 days, at most 1 revisit):</p>
+    <table>
+        <tr><th>Visit</th><th>Fee</th><th>Why</th></tr>
+        <tr><td>Day 1, first visit</td><td>Rs 1500</td><td>New visit: the main fee.</td></tr>
+        <tr><td>Day 1 again (same day)</td><td>Rs 1500</td><td>The window starts the next day.</td></tr>
+        <tr><td>2 days later</td><td><b>Rs 0</b></td><td>Within 7 days, 1st revisit.</td></tr>
+        <tr><td>Another revisit in the same 7 days</td><td>Rs 1500</td><td>At most 1 revisit: used up. This is a new visit.</td></tr>
+        <tr><td>After 7 days</td><td>Rs 1500</td><td>Outside the window.</td></tr>
+        <tr><td>Another patient</td><td>Rs 1500</td><td>His own new visit.</td></tr>
+    </table>
+
+    <h3>"Report review within N days"</h3>
+    <p>Free or cheaper (How + Amount) when <b>this doctor</b> ordered lab tests or an X-ray for the patient, billed within the last N days. It also works <b>on the same day</b>. It is checked after the follow-up rules.</p>
+
+    <h3>Surcharges and other rules</h3>
+    <table>
+        <tr><th>Rule</th><th>Added when</th><th>How</th></tr>
+        <tr><td>Emergency surcharge</td><td>The visit comes from the emergency.</td><td>Fixed or % of the main fee</td></tr>
+        <tr><td>After-hours surcharge</td><td>The visit time is between <b>From</b> and <b>To</b> (picked with the time picker: hour, minutes, AM / PM). 10:00 PM to 08:00 AM works across midnight.</td><td>Fixed or %</td></tr>
+        <tr><td>Sunday / holiday surcharge</td><td>On a Sunday or a holiday of the HR holiday list.</td><td>Fixed or %</td></tr>
+        <tr><td>Priority / VIP token</td><td>"Priority" is ticked on the front desk.</td><td>Fixed or %</td></tr>
+        <tr><td>Phone / online booking fee</td><td>The appointment was booked by phone or online.</td><td>Fixed or %</td></tr>
+        <tr><td>Reschedule fee</td><td>The appointment was moved more often than the free reschedules of OPD settings. Its price is a chargemaster item named there.</td><td>Fixed</td></tr>
+        <tr><td>Referred by a hospital doctor</td><td>Another doctor of the hospital referred the patient. Replaces the main fee (like a follow-up).</td><td>Free, Fixed or %</td></tr>
+        <tr><td>Health card discount %</td><td>Patient type "Health card". The Amount is the % taken off.</td><td>%</td></tr>
+    </table>
+    <figure><a href="img/opd-fees-afterhours.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-afterhours.jpg" alt="After-hours rule with the time picker open"></a><figcaption>After-hours surcharge: From / To with the AM / PM time picker.</figcaption></figure>
+
+    <h3>Patient types, free quota, packages, booking advance</h3>
+    <table>
+        <tr><th>On the front desk</th><th>What happens</th></tr>
+        <tr><td>Cash</td><td>Full fee. A cash patient at or above the <b>senior age</b> of OPD settings gets the <b>senior citizen %</b> by himself (if the hospital gives one).</td></tr>
+        <tr><td>Panel / insurance</td><td>The main fee comes from that panel's price list on the chargemaster.</td></tr>
+        <tr><td>Staff / Staff family</td><td>The staff % / staff family % of OPD settings is taken off.</td></tr>
+        <tr><td>Health card</td><td>The % of the "Health card discount %" rule.</td></tr>
+        <tr><td>Welfare / zakat</td><td>Free; needs approval.</td></tr>
+        <tr><td>Doctor's free patient</td><td>Free, no doctor share; needs approval. Limited by the doctor's <b>free quota per month</b> (Doctor section of his form). When used up the desk says "The doctor's free patients for this month are used up".</td></tr>
+        <tr><td>OPD package</td><td>A prepaid package (Billing › Packages) of this doctor, his department or any doctor, with visits left: the consultation is free and one visit is taken.</td></tr>
+        <tr><td>Booking advance</td><td>An advance paid when the appointment was booked is taken off the fee at check-in.</td></tr>
+    </table>
+
+    <h3>A full example</h3>
+    <p>Rules: <b>hospital</b> main fee Rs 1000 and follow-up Free within 7 days (at most 1); <b>Cardiology department</b> main fee Rs 2000; <b>Dr Ahmed</b> (Cardiology) his own main fee Rs 3000 and his own follow-up 50% within 10 days; <b>Dr Sana</b> (Cardiology) no rules of her own; Sunday surcharge Rs 500 (hospital).</p>
+    <table>
+        <tr><th>Patient sees</th><th>Fee</th><th>From which rules</th></tr>
+        <tr><td>Dr Ahmed, new</td><td>Rs 3000</td><td>His own main fee.</td></tr>
+        <tr><td>Dr Ahmed, 5 days later</td><td>Rs 1500</td><td>His own follow-up (50% of 3000). The hospital's "free" follow-up is not used for him.</td></tr>
+        <tr><td>Dr Sana, new</td><td>Rs 2000</td><td>No rule of her own: the Cardiology department's.</td></tr>
+        <tr><td>Dr Sana, 3 days later</td><td>Rs 0</td><td>No follow-up rule of her own or of Cardiology: the hospital's (free within 7).</td></tr>
+        <tr><td>Dr Sana, new, on a Sunday</td><td>Rs 2500</td><td>Department fee + hospital Sunday surcharge.</td></tr>
+        <tr><td>A Medicine doctor with no rules, new</td><td>Rs 1000</td><td>Neither he nor Medicine has a main fee: the hospital's.</td></tr>
+    </table>
+
+    <h3>Where you see it</h3>
+    <ul>
+        <li><b>OPD › Front desk</b>: after patient and doctor, the fee box shows the fee with the name of the rule that made it. When more than one rule is used, the <b>breakdown</b> is listed under it: one line per rule (main fee, follow-up, surcharge, discount).</li>
+        <li><b>Printed as</b> on a rule is the text of its line on the breakdown and on the <b>slip</b> (e.g. "Follow-up within 7 days - free"). Empty = TibuLab's own words.</li>
+        <li><b>Appointments</b>: the fee is worked out when the patient is checked in at the front desk (booking fee and advance included). The <b>online booking page</b> shows each doctor's new-visit fee.</li>
+    </ul>
+    <figure><a href="img/opd-fees-desk.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-desk.jpg" alt="Front desk with the fee and its breakdown"></a><figcaption>Front desk: Dr Sana Iqbal's main fee Rs 2,000, patient type Staff, and the breakdown under it.</figcaption></figure>
+    <figure><a href="img/opd-fees-list.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-list.jpg" alt="Fee rules list"></a><figcaption>OPD › Setup › Fee rules.</figcaption></figure>
+
+    <h3>Problems</h3>
+    <table>
+        <tr><th>You see</th><th>Why / fix</th></tr>
+        <tr><td>No fee (Rs 0) on the front desk</td><td>No "Fee of a visit kind" rule for this doctor, his department or the hospital, or only follow-up rules; or the rule's From / To dates do not include today, or it is not Active. Add a main fee rule.</td></tr>
+        <tr><td>The follow-up is not free</td><td>Same day (the window starts the next day: use Report review); another doctor; the "At most" revisits are used up; more than N days since the last <b>new</b> visit; or the doctor has his own follow-up rule that is not free.</td></tr>
+        <tr><td>The wrong doctor's fee / the department fee instead of his</td><td>His rule has another doctor in the Doctor field, its From date is later, or it is not Active. A department fee comes from his <b>clinical department</b>: check it on his form.</td></tr>
+        <tr><td>A panel patient pays another price</td><td>The panel's price list on the chargemaster has its own price for this consultation.</td></tr>
+        <tr><td>"Free patients for this month are used up"</td><td>The doctor's free quota per month is reached: raise it on his form or choose another patient type.</td></tr>
     </table>
 </section>
 
