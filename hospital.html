@@ -148,6 +148,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <a href="#record">Patient record</a>
     <div class="grp">Patients come in</div>
     <a href="#opd">OPD</a>
+    <a href="#add-doctor">Add a doctor</a>
     <a href="#er">Emergency (ER)</a>
     <a href="#ambulance">Ambulance</a>
     <div class="grp">Admitted patients</div>
@@ -287,6 +288,60 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <figure><a href="img/mod-opd-doctors.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-doctors.jpg" alt="Doctors"></a><figcaption>OPD setup › Doctors.</figcaption></figure>
     </div>
     <div class="tip"><b>Online booking:</b> patients book at <code>/book</code> on your address (doctor, day, free time, name, mobile and an SMS code). Switch it on in OPD tools › Online booking page.</div>
+</section>
+
+<!-- ============ ADD A DOCTOR ============ -->
+<section class="doc" id="add-doctor">
+    <h2>Add a doctor (step by step)</h2>
+    <span class="where">OPD › Setup › Doctors › Add &nbsp;·&nbsp; or &nbsp;HR › Employees › Add</span>
+    <p class="lead">A doctor is <b>one employee record</b>: the same person is in HR (salary, attendance, leave) and in the OPD (queue, appointments, fees). Both menus open the <b>same form</b>. What decides where he shows up are the <b>employment type</b> and the <b>tick boxes</b> in the Doctor section.</p>
+
+    <ol class="vflow" aria-label="Add a doctor">
+        <li class="r-rec"><div class="h"><b>1. Add the doctor</b><span class="who">Admin / HR</span></div><p>OPD › Setup › Doctors › <span class="b">Add</span>. Name, employment type, "This person is a doctor".</p></li>
+        <li class="r-doc"><div class="h"><b>2. Doctor section: tick what he does</b></div><p>For the OPD: <b>Sees patients in the OPD</b>. Specialty, clinical department, PMDC.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Login &amp; Password</b></div><p>Last step of the same form: email or mobile, password, role <b>Doctor</b>. He opens the doctor portal.</p></li>
+        <li class="r-lab"><div class="h"><b>4. His week</b><span class="who">OPD › Setup › Doctor schedules</span></div><p><span class="b">Set week</span>: days, times, minutes per patient, room.</p></li>
+        <li class="r-ok"><div class="h"><b>5. His fee</b><span class="who">OPD › Setup › Fee rules</span></div><p>Consultation fee, follow-up free days, his share. Then he is in appointments, the token queue and the front desk.</p></li>
+    </ol>
+
+    <h3>Employment type: which one?</h3>
+    <table>
+        <tr><th>Type</th><th>Use it for</th><th>HR (payroll, attendance)</th><th>OPD</th></tr>
+        <tr><td><b>Staff</b></td><td>A salaried doctor of the hospital.</td><td>Yes</td><td>Yes, with the OPD tick</td></tr>
+        <tr><td><b>Visiting consultant</b></td><td>Comes for sittings, paid per patient / share.</td><td>No salary</td><td>Yes, with the OPD tick</td></tr>
+        <tr><td><b>Outside / referring doctor</b></td><td>Works elsewhere and <b>sends</b> patients for tests. Gets commission.</td><td>No</td><td>Normally no: tick only "Refers patients"</td></tr>
+    </table>
+
+    <h3>The tick boxes in the Doctor section</h3>
+    <table>
+        <tr><th>Tick</th><th>What it does</th></tr>
+        <tr><td>Refers patients (lab / radiology bills)</td><td>He can be chosen as "Referred by" on bills and earns commission.</td></tr>
+        <tr><td><b>Sees patients in the OPD</b></td><td><b>Without this he is NOT in Doctor schedules, Fee rules, Appointments, the token queue or the front desk.</b> Ticking it also shows OPD room, token prefix, prescription mode, free quota, own fee counter and his signature.</td></tr>
+        <tr><td>Admitting doctor / consultant</td><td>He can be the consultant of an admission (IPD).</td></tr>
+        <tr><td>Surgeon / Anaesthetist</td><td>He can be booked on OT cases.</td></tr>
+    </table>
+
+    <div class="shots">
+        <figure><a href="img/add-doctor-employment.png" target="_blank"><img loading="lazy" src="img/add-doctor-employment.png" alt="Employment type and This person is a doctor"></a><figcaption>Employment Information: <b>Employment Type</b> and <b>This person is a doctor</b>.</figcaption></figure>
+        <figure><a href="img/add-doctor-ticks.png" target="_blank"><img loading="lazy" src="img/add-doctor-ticks.png" alt="Doctor section tick boxes"></a><figcaption>Doctor section: tick <b>Sees patients in the OPD</b> for an OPD doctor.</figcaption></figure>
+    </div>
+
+    <h3>Change an existing doctor</h3>
+    <ol>
+        <li>Open him (OPD › Setup › Doctors, or HR › Employees) and press <span class="b">Edit</span>.</li>
+        <li>Click <b>Doctor</b> in the left list (step 3), change the ticks, then <span class="b">Save Changes</span>.</li>
+        <li>New password or block his login: the last step <b>Login &amp; Password</b> of the same form (or Profile › Roles). See <a href="portals.html#account">Logins and passwords</a>.</li>
+    </ol>
+
+    <h3>Problems</h3>
+    <table>
+        <tr><th>You see</th><th>Why / fix</th></tr>
+        <tr><td>Doctor list is empty in Fee rules, Doctor schedules or Appointments</td><td>No doctor has <b>Sees patients in the OPD</b> ticked. Edit the doctor, tick it, save.</td></tr>
+        <tr><td>Doctor schedules has no Add button</td><td>Its rows are the OPD doctors. Add the doctor (button <span class="b">Add doctor</span> at the top), tick OPD, then press <span class="b">Set week</span> on his row.</td></tr>
+        <tr><td>No appointment slots on a day</td><td>No sitting that day in his week, or he is on leave / it is a holiday (HR leave blocks the day).</td></tr>
+        <tr><td>He cannot sign in</td><td>No login yet, or it is blocked: form step <b>Login &amp; Password</b>.</td></tr>
+        <tr><td>He sees the hospital sidebar instead of his portal</td><td>His login role is not <b>Doctor</b>: change the role in Profile › Roles.</td></tr>
+    </table>
 </section>
 
 <!-- ============ ER ============ -->
