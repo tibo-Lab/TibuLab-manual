@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TibuLab Installation &amp; Setup</title>
+<meta name="description" content="Install TibuLab on the hospital's Main PC, connect PCs, phones, TVs, printers, lab analysers, the X-ray console and ICU monitors, and look after backups and updates.">
+<style>
+:root {
+    --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8;
+    --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --bg: #f4f6f8; --card: #ffffff; --code: #f1f5f9;
+    --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6;
+    --radius: 14px; --on-primary: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+        --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+        --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+        --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+    }
+}
+:root[data-theme="dark"] {
+    --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+    --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+    --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+    --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--primary-2); }
+header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+.logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-size: 15px; }
+.search { flex: 1; max-width: 420px; margin-left: auto; }
+.search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
+.tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.menu-btn { display: none; }
+.layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
+nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
+nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 15px; }
+nav.toc a:hover, nav.toc a.active { background: var(--primary-soft); color: var(--primary); }
+main { padding: 28px 32px 80px; min-width: 0; }
+section.doc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px; }
+section.doc.hidden { display: none; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 0 0 6px; }
+h3 { font-size: 18px; margin: 26px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 6px; }
+.where { display: inline-block; margin: 2px 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 600; }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 12px 44px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.b { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.tip, .warn { border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.tip { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0; }
+.flow span { padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; }
+.flow i { color: var(--muted); font-style: normal; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+.cards a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--text); background: var(--bg); }
+.cards a:hover { border-color: var(--primary-2); }
+.cards b { display: block; color: var(--primary); }
+.cards small { color: var(--muted); }
+figure { margin: 14px 0 20px; }
+figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
+mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
+
+/* ---------- install guide: diagrams and flows (no libraries, print and offline safe) ---------- */
+:root { --c-rec: #176bad; --c-lab: #7c3aed; --c-mac: #0f766e; --c-doc: #be123c; --c-sys: #475569; --soon: #94a3b8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4; --soon: #64748b; } }
+:root[data-theme="dark"] { --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4; --soon: #64748b; }
+code { padding: 1px 6px; border-radius: 5px; background: var(--code); font-size: 14px; overflow-wrap: anywhere; }
+.dia { margin: 16px 0 22px; padding: 0; }
+.dia .box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 14px; overflow-x: auto; }
+.dia svg { display: block; width: 100%; height: auto; min-width: 680px; }
+.dia .hint { display: none; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+svg text { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+svg .bx { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+svg .bx-soft { fill: var(--primary-soft); stroke: var(--primary-2); stroke-width: 1.5; }
+svg .bx-main { fill: var(--primary); stroke: var(--primary); }
+svg .bx-ok { fill: var(--ok-soft); stroke: var(--ok); stroke-width: 1.5; }
+svg .bx-warn { fill: var(--warn-soft); stroke: var(--warn); stroke-width: 1.5; }
+svg .bx-soon { fill: var(--card); stroke: var(--soon); stroke-width: 1.5; stroke-dasharray: 6 4; }
+svg .t { fill: var(--text); font-size: 15px; font-weight: 700; }
+svg .ts { fill: var(--muted); font-size: 12.5px; }
+svg .tm { fill: var(--on-primary); font-size: 16px; font-weight: 700; }
+svg .tms { fill: var(--on-primary); font-size: 12.5px; }
+svg .tl { fill: var(--primary-2); font-size: 12.5px; font-weight: 600; }
+svg .tw { fill: var(--warn); font-size: 12.5px; font-weight: 700; }
+svg .tsoon { fill: var(--muted); font-size: 12.5px; font-weight: 700; font-style: italic; }
+svg .ln { stroke: var(--primary-2); stroke-width: 2; fill: none; }
+svg .ln-m { stroke: var(--muted); stroke-width: 2; fill: none; }
+svg .ln-ok { stroke: var(--ok); stroke-width: 2.4; fill: none; }
+svg .ln-d { stroke-dasharray: 7 5; }
+svg .ln-soon { stroke: var(--soon); stroke-width: 2; fill: none; stroke-dasharray: 6 5; }
+svg .ah { fill: var(--primary-2); }
+svg .ah-m { fill: var(--muted); }
+svg .ah-ok { fill: var(--ok); }
+svg .ah-soon { fill: var(--soon); }
+svg .num { fill: var(--primary); }
+svg .numt { fill: var(--on-primary); font-size: 13px; font-weight: 700; }
+
+/* vertical flow: box, arrow down, box */
+.vflow { list-style: none; padding: 0; margin: 16px 0 22px; max-width: 760px; }
+.vflow > li { position: relative; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; margin: 0 0 30px; }
+.vflow > li:last-child { margin-bottom: 0; }
+.vflow > li:not(:last-child)::after { content: ""; position: absolute; left: 30px; top: calc(100% + 3px); width: 2px; height: 17px; background: var(--muted); }
+.vflow > li:not(:last-child)::before { content: ""; position: absolute; left: 25px; top: calc(100% + 18px); border-style: solid; border-width: 8px 6px 0 6px; border-color: var(--muted) transparent transparent transparent; }
+.vflow .h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.vflow .h b { font-size: 16px; }
+.vflow p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.who { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--card); background: var(--c-sys); }
+.vflow .r-rec { border-left-color: var(--c-rec); } .r-rec .who { background: var(--c-rec); }
+.vflow .r-lab { border-left-color: var(--c-lab); } .r-lab .who { background: var(--c-lab); }
+.vflow .r-mac { border-left-color: var(--c-mac); } .r-mac .who { background: var(--c-mac); }
+.vflow .r-doc { border-left-color: var(--c-doc); } .r-doc .who { background: var(--c-doc); }
+.vflow .r-ok { border-left-color: var(--ok); } .r-ok .who { background: var(--ok); }
+.vflow .r-warn { border-left-color: var(--warn); } .r-warn .who { background: var(--warn); }
+.vflow > li.split { background: none; border: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vflow > li.split::after { left: 36px; } .vflow > li.split::before { left: 31px; }
+.vflow > li.split > div { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; }
+.vflow > li.split > div.r-ok { border-left-color: var(--ok); } .vflow > li.split > div.r-warn { border-left-color: var(--warn); } .vflow > li.split > div.r-mac { border-left-color: var(--c-mac); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c-sys); }
+.legend .l-rec::before { background: var(--c-rec); } .legend .l-lab::before { background: var(--c-lab); } .legend .l-mac::before { background: var(--c-mac); } .legend .l-doc::before { background: var(--c-doc); }
+
+/* the tray menu, drawn */
+.traymenu { max-width: 380px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); box-shadow: 0 6px 20px rgba(15, 23, 42, .12); padding: 6px 0; font-size: 14px; }
+.traymenu div { padding: 5px 14px; }
+.traymenu .off { color: var(--muted); }
+.traymenu hr { border: 0; border-top: 1px solid var(--line); margin: 5px 0; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.dot.g { background: #16a34a; } .dot.a { background: #d97706; } .dot.r { background: #dc2626; }
+
+/* licence timeline */
+.tline { min-width: 640px; }
+.tline .lab { font-size: 13px; font-weight: 700; color: var(--muted); margin: 10px 0 4px; }
+.tline .bar { display: flex; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+.tline .bar > div, .tline .ticks > div { min-width: 0; }
+.tline .bar > div { padding: 8px 8px; font-size: 13px; line-height: 1.35; border-right: 2px solid var(--card); }
+.tline .bar > div:last-child { border-right: 0; }
+.tline .bar b { display: block; font-size: 14px; }
+.tline .s-ok { background: var(--ok-soft); color: var(--ok); }
+.tline .s-warn { background: var(--warn-soft); color: var(--warn); }
+.tline .s-ro { background: #fde2e2; color: #b91c1c; }
+:root[data-theme="dark"] .tline .s-ro { background: #3a1616; color: #fca5a5; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tline .s-ro { background: #3a1616; color: #fca5a5; } }
+.tline .ticks { display: flex; font-size: 12px; color: var(--muted); }
+.tline .ticks > div { padding: 3px 4px 0; border-left: 1px solid var(--line); }
+.soon { display: inline-block; padding: 0 8px; border-radius: 999px; border: 1px dashed var(--soon); color: var(--muted); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.ways { counter-reset: w; }
+.ways td:first-child { font-weight: 700; white-space: nowrap; }
+
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; position: fixed; inset: 65px 0 0 0; z-index: 15; background: var(--card); height: auto; border: 0; }
+    nav.toc.open { display: block; }
+    .menu-btn { display: inline-block; }
+    main { padding: 18px 16px 60px; }
+    section.doc { padding: 20px 16px; }
+    .search { max-width: none; }
+    .brand span.name { display: none; }
+    table { display: block; overflow-x: auto; }
+    .dia .hint { display: block; }
+}
+@media (max-width: 640px) {
+    .vflow > li.split { grid-template-columns: 1fr; }
+}
+@media print {
+    :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+        --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8; --text: #0f172a; --muted: #475569; --line: #cbd5e1;
+        --bg: #ffffff; --card: #ffffff; --code: #f1f5f9; --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6; --on-primary: #ffffff;
+        --c-rec: #176bad; --c-lab: #7c3aed; --c-mac: #0f766e; --c-doc: #be123c; --c-sys: #475569; --soon: #94a3b8;
+    }
+    header.top, nav.toc { display: none; }
+    .layout { display: block; }
+    body { background: #fff; }
+    section.doc { border: 0; padding: 0 0 12px; }
+    section.doc.hidden { display: block; }
+    figure, .dia, .vflow > li, table { page-break-inside: avoid; }
+    .dia .box { overflow: visible; }
+    .dia svg { min-width: 0; }
+    .tline { min-width: 0; }
+    .dia .hint { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
+    <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab Installation &amp; Setup</span></a>
+    <div class="search"><input id="q" type="search" placeholder="Search this guide… (e.g. firewall, barcode, backup)" aria-label="Search this guide"></div>
+    <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+    <a href="index.html">← User Manual</a>
+    <div class="grp">Start</div>
+    <a href="#start">Welcome</a>
+    <a href="#network">The hospital network</a>
+    <a href="#need">What you need</a>
+    <div class="grp">Install</div>
+    <a href="#install">Install on the Main PC</a>
+    <a href="#tray">The tray icon</a>
+    <a href="#otherpcs">Other PCs, phones, tablets</a>
+    <div class="grp">First setup</div>
+    <a href="#firstlogin">First sign-in</a>
+    <a href="#hospital">Hospital, locations, counters</a>
+    <a href="#staff">Staff, roles and portals</a>
+    <a href="#doctors">Doctors and duty roster</a>
+    <div class="grp">Licence &amp; cloud</div>
+    <a href="#licence">Licence</a>
+    <a href="#sync">Cloud copy and sync</a>
+    <div class="grp">Machines</div>
+    <a href="#analysers">Lab analysers</a>
+    <a href="#labflow">Sample to report</a>
+    <a href="#xray">X-ray and radiology</a>
+    <a href="#fuji">Fuji CR + DryPix</a>
+    <a href="#icu">ICU monitors</a>
+    <div class="grp">Printing &amp; TV</div>
+    <a href="#printers">Printers and labels</a>
+    <a href="#tv">Queue and doctor TVs</a>
+    <div class="grp">Daily care</div>
+    <a href="#backup">Backups</a>
+    <a href="#updates">Updates</a>
+    <a href="#logs">Logs</a>
+    <a href="#trouble">Problems and fixes</a>
+    <a href="#ports">Ports and folders</a>
+</nav>
+
+<main>
+<div class="noresult" id="noresult">Nothing found. Try another word.</div>
+
+<!-- ============ START ============ -->
+<section class="doc" id="start">
+    <h1>TibuLab Installation &amp; Setup</h1>
+    <p class="lead">For the hospital's IT person or the lab owner. It shows how to install TibuLab on the hospital's own computer, connect the other PCs, phones and TVs, and link the lab analysers, the X-ray console and the ICU monitors. The pictures are simple drawings, so you do not need to be technical.</p>
+    <p>TibuLab is installed on <b>one PC only: the Main PC</b>. Every other PC, tablet, phone and TV opens TibuLab in a web browser (Chrome or Edge). Nothing is installed on them, except the small <b>TibuLab Print Helper</b> on PCs that have a patient TV.</p>
+    <div class="cards">
+        <a href="#install"><b>1. Install</b><small>The Main PC, about 10 minutes</small></a>
+        <a href="#firstlogin"><b>2. First setup</b><small>Password, hospital, locations, staff</small></a>
+        <a href="#analysers"><b>3. Lab analysers</b><small>Cable, settings, test codes, test run</small></a>
+        <a href="#xray"><b>4. X-ray</b><small>Worklist, images, Fuji CR console</small></a>
+        <a href="#icu"><b>5. ICU monitors</b><small>Live vitals, alarms, escalation</small></a>
+        <a href="#backup"><b>6. Daily care</b><small>Backups, updates, problems</small></a>
+    </div>
+    <div class="tip"><b>Tip:</b> staff who only <i>use</i> TibuLab (reception, lab, radiology, cash, HR) should read the <a href="index.html">User Manual</a>. This guide is for setting it up.</div>
+</section>
+
+<section class="doc" id="network">
+    <h2>The hospital network</h2>
+    <p class="lead">One Main PC holds all the data. Everything else talks to it over the hospital's own network. The internet is only needed for the cloud copy, the licence check, SMS and updates.</p>
+    <figure class="dia">
+        <p class="hint">Swipe sideways to see the whole drawing.</p>
+        <div class="box">
+        <svg viewBox="0 0 1000 640" role="img" aria-labelledby="d1t">
+            <title id="d1t">Hospital network: the Main PC in the centre with PCs, phones, TVs, printers, analysers, X-ray console and ICU monitors around it, and the internet to the TibuLab cloud</title>
+            <defs>
+                <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker>
+                <marker id="a1m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah-m"/></marker>
+            </defs>
+            <!-- cloud -->
+            <rect class="bx-soft" x="380" y="16" width="240" height="70" rx="12"/>
+            <text class="t" x="500" y="45" text-anchor="middle">TibuLab cloud</text>
+            <text class="ts" x="500" y="66" text-anchor="middle">read-only copy · licence · updates</text>
+            <path class="ln ln-d" d="M500 218 V92" marker-end="url(#a1)"/>
+            <text class="tl" x="512" y="140">Internet (not needed for daily work)</text>
+            <text class="ts" x="512" y="158">sync goes one way: Main PC → cloud</text>
+            <!-- main pc -->
+            <rect class="bx-main" x="370" y="220" width="260" height="150" rx="14"/>
+            <text class="tm" x="500" y="252" text-anchor="middle">Main PC</text>
+            <text class="tms" x="500" y="274" text-anchor="middle">TibuLab Server (tray icon)</text>
+            <text class="tms" x="500" y="296" text-anchor="middle">fixed IP, e.g. 192.168.1.10</text>
+            <text class="tms" x="500" y="318" text-anchor="middle">database · web server :8080</text>
+            <text class="tms" x="500" y="340" text-anchor="middle">Device Hub (machines)</text>
+            <!-- left column -->
+            <rect class="bx" x="20" y="40" width="240" height="72" rx="10"/>
+            <text class="t" x="34" y="68">Reception &amp; counter PCs</text>
+            <text class="ts" x="34" y="90">Chrome / Edge → http://IP:8080</text>
+            <rect class="bx" x="20" y="150" width="240" height="72" rx="10"/>
+            <text class="t" x="34" y="178">Printers</text>
+            <text class="ts" x="34" y="200">receipts, tube labels, reports</text>
+            <path class="ln-m" d="M140 112 V148"/>
+            <text class="ts" x="148" y="135">USB / network</text>
+            <rect class="bx" x="20" y="260" width="240" height="72" rx="10"/>
+            <text class="t" x="34" y="288">Phones &amp; tablets</text>
+            <text class="ts" x="34" y="310">doctors, nurses · Wi-Fi → :8080</text>
+            <rect class="bx" x="20" y="370" width="240" height="72" rx="10"/>
+            <text class="t" x="34" y="398">TVs</text>
+            <text class="ts" x="34" y="420">door screens, halls, queue</text>
+            <path class="ln" d="M260 76 L368 238" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <path class="ln" d="M260 296 L368 296" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <path class="ln" d="M260 406 L368 352" marker-end="url(#a1)"/>
+            <text class="tl" x="272" y="286">browser</text>
+            <!-- right column -->
+            <rect class="bx" x="740" y="150" width="240" height="72" rx="10"/>
+            <text class="t" x="754" y="178">Lab analysers</text>
+            <text class="ts" x="754" y="200">HL7 / ASTM · LAN or serial adapter</text>
+            <rect class="bx" x="740" y="260" width="240" height="72" rx="10"/>
+            <text class="t" x="754" y="288">X-ray console PC</text>
+            <text class="ts" x="754" y="310">DICOM images, patient list</text>
+            <rect class="bx" x="740" y="370" width="240" height="72" rx="10"/>
+            <text class="t" x="754" y="398">ICU central station</text>
+            <text class="ts" x="754" y="420">monitor vitals (HL7)</text>
+            <path class="ln" d="M740 186 L632 238" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <path class="ln" d="M740 296 L632 296" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <path class="ln" d="M740 406 L632 352" marker-end="url(#a1)"/>
+            <text class="tl" x="660" y="286">results</text>
+            <!-- switch + ups -->
+            <path class="ln-m" d="M500 370 V462"/>
+            <text class="ts" x="508" y="420">network cable</text>
+            <rect class="bx" x="380" y="464" width="240" height="60" rx="10"/>
+            <text class="t" x="500" y="490" text-anchor="middle">Network switch / Wi-Fi router</text>
+            <text class="ts" x="500" y="510" text-anchor="middle">every device is on this one network</text>
+            <rect class="bx-warn" x="660" y="464" width="200" height="60" rx="10"/>
+            <text class="t" x="760" y="490" text-anchor="middle">UPS</text>
+            <text class="ts" x="760" y="510" text-anchor="middle">Main PC + switch + router</text>
+            <path class="ln-m ln-d" d="M620 494 H658"/>
+            <text class="ts" x="500" y="572" text-anchor="middle">Lines show who talks to the Main PC. In real life every cable goes to the switch or router.</text>
+            <text class="ts" x="500" y="594" text-anchor="middle">Arrows into the Main PC = data that machines send to TibuLab.</text>
+        </svg>
+        </div>
+        <figcaption>Drawing 1. The Main PC is the centre of the hospital's TibuLab.</figcaption>
+    </figure>
+    <h3>Four network rules</h3>
+    <ol class="steps">
+        <li><b>Fixed IP for the Main PC.</b> In the router, reserve one address for the Main PC (for example <code>192.168.1.10</code>). If the IP changes, every bookmark, TV, analyser and X-ray console loses the link.</li>
+        <li><b>Same network.</b> All PCs, phones, TVs, analysers, the X-ray console and the ICU station must be on the same hospital network (same router or switch). Use a cable for the Main PC.</li>
+        <li><b>Everyone opens <code>http://IP:8080</code></b>, for example <code>http://192.168.1.10:8080</code>.</li>
+        <li><b>A UPS</b> on the Main PC, the switch and the router. 30 minutes or more is better. Pulling the power can damage the database.</li>
+    </ol>
+</section>
+
+<section class="doc" id="need">
+    <h2>What you need</h2>
+    <table>
+        <tr><th>Item</th><th>Minimum</th><th>Better</th></tr>
+        <tr><td>Main PC</td><td>Windows 10 or 11, 64-bit, 8 GB RAM, 4 cores</td><td>16 GB RAM, SSD</td></tr>
+        <tr><td>Free disk</td><td>20 GB</td><td>A second drive (D: or E:) for the data</td></tr>
+        <tr><td>Network</td><td>All PCs on the same router or switch (cable or Wi-Fi)</td><td>Cable for the Main PC, analysers and the X-ray console</td></tr>
+        <tr><td>Power</td><td>UPS on the Main PC and the router</td><td>UPS of 30 minutes or more</td></tr>
+        <tr><td>Internet</td><td>Not needed for daily work</td><td>Needed for the licence check, cloud copy, SMS and updates</td></tr>
+        <tr><td>Other PCs</td><td>Google Chrome or Microsoft Edge</td><td>Chrome on every PC</td></tr>
+    </table>
+    <div class="warn">Keep the Main PC switched on during working hours. If it is off, nobody can use TibuLab. Do not use it for games, downloads or personal work.</div>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section class="doc" id="install">
+    <h2>Install on the Main PC</h2>
+    <span class="where">File: TibuLab-Main-PC-Setup-&lt;version&gt;.exe</span>
+    <p class="lead">About 10 minutes, plus a few minutes for the first start. Run it on the Main PC only.</p>
+    <ol class="vflow" aria-label="Install steps">
+        <li class="r-rec"><div class="h"><b>Copy the setup file to the Main PC</b><span class="who">You</span></div><p><code>TibuLab-Main-PC-Setup-&lt;version&gt;.exe</code>. Right-click it and choose <b>Run as administrator</b>.</p></li>
+        <li class="r-rec"><div class="h"><b>Welcome and licence pages</b><span class="who">You</span></div><p>Click <span class="b">Next</span> and accept the licence agreement.</p></li>
+        <li class="r-rec"><div class="h"><b>Install folder</b><span class="who">You</span></div><p>Keep the default: <code>C:\Program Files\TibuLab</code>. This holds the program only.</p></li>
+        <li class="r-warn"><div class="h"><b>Lab data folder</b><span class="who">Important</span></div><p>The default is <code>C:\TibuLabData</code>. Choose another drive if you have one, for example <code>D:\TibuLabData</code>. It holds the database, backups, uploaded files and logs. An update or uninstall <b>never deletes</b> this folder.</p></li>
+        <li class="r-rec"><div class="h"><b>Install</b><span class="who">You</span></div><p>Click <span class="b">Install</span>, then <span class="b">Finish</span> with <b>Start TibuLab now</b> ticked.</p></li>
+        <li class="r-mac"><div class="h"><b>The installer does three things by itself</b><span class="who">Automatic</span></div><p>Opens port <b>8080</b> in the Windows firewall for private and domain networks only (never public Wi-Fi). Makes TibuLab start with Windows. Adds a TibuLab shortcut to the desktop and Start menu.</p></li>
+        <li class="r-mac"><div class="h"><b>First start: a few minutes</b><span class="who">Automatic</span></div><p>The tray icon (next to the clock) is <b>amber</b> and shows the step: "Preparing the data folder…", "Creating the database (first start)…", "Creating the lab's tables (first start)…", "Setting up the lab (first start, a few minutes)…", "Starting the web server…".</p></li>
+        <li class="r-ok"><div class="h"><b>Green: TibuLab is running</b><span class="who">Done</span></div><p>Right-click the tray icon, choose <b>First sign-in details</b>, then <b>Open TibuLab</b>. Continue with <a href="#firstlogin">First sign-in</a>.</p></li>
+    </ol>
+    <h3>What is inside</h3>
+    <p>TibuLab brings everything it needs, so nothing else is installed on the PC:</p>
+    <table>
+        <tr><th>Part</th><th>What it does</th></tr>
+        <tr><td>Database (MySQL), port 3317</td><td>All the hospital's data. Only this PC can reach it.</td></tr>
+        <tr><td>Web server (Apache + PHP), port 8080</td><td>The TibuLab screens for every PC, phone and TV.</td></tr>
+        <tr><td>Queue worker</td><td>Background work: SMS, messages, sending reports.</td></tr>
+        <tr><td>Scheduler</td><td>Timed jobs every minute: backups, reminders, charges, alerts, licence check, cloud sync, the Device Hub.</td></tr>
+    </table>
+</section>
+
+<section class="doc" id="tray">
+    <h2>The tray icon</h2>
+    <span class="where">Next to the Windows clock</span>
+    <p>The TibuLab Server has no window. It lives in the tray and keeps the four services running. Its dot shows the state:</p>
+    <table>
+        <tr><th>Dot</th><th>Meaning</th></tr>
+        <tr><td><span class="dot g"></span>Green</td><td>TibuLab is running. All four services are up.</td></tr>
+        <tr><td><span class="dot a"></span>Amber</td><td>Starting, or some services are still coming up.</td></tr>
+        <tr><td><span class="dot r"></span>Red</td><td>A service stopped or the start failed. The menu shows why.</td></tr>
+    </table>
+    <figure>
+        <div class="traymenu" aria-label="Tray menu">
+            <div class="off"><span class="dot g"></span>TibuLab is running</div>
+            <div class="off">Database (MySQL): running</div>
+            <div class="off">Web server (Apache): running</div>
+            <div class="off">Queue worker: running</div>
+            <div class="off">Scheduler: running</div>
+            <hr>
+            <div><b>Open TibuLab</b></div>
+            <div class="off">Other PCs / phones: http://192.168.1.10:8080</div>
+            <hr>
+            <div>First sign-in details</div>
+            <div>Restart services</div>
+            <div>Open logs folder</div>
+            <hr>
+            <div>Quit (stops TibuLab on this PC)</div>
+        </div>
+        <figcaption>The tray menu (right-click the icon).</figcaption>
+    </figure>
+    <table>
+        <tr><th>Menu item</th><th>What it does</th></tr>
+        <tr><td>Open TibuLab</td><td>Opens TibuLab in the default browser on this PC (<code>http://localhost:8080</code>).</td></tr>
+        <tr><td>Other PCs / phones: http://IP:8080</td><td>The link for every other device. Write it down.</td></tr>
+        <tr><td>First sign-in details</td><td>Opens <code>FIRST-LOGIN.txt</code> from the data folder in Notepad.</td></tr>
+        <tr><td>Restart services</td><td>Stops and starts all four services again. Use it when something is stuck.</td></tr>
+        <tr><td>Open logs folder</td><td>Opens <code>&lt;data folder&gt;\logs</code> for TibuLab support.</td></tr>
+        <tr><td>Quit</td><td>Stops TibuLab on this PC for <b>everyone</b>. The database is shut down cleanly.</td></tr>
+    </table>
+    <div class="tip"><b>Services restart themselves.</b> The tray looks at each service every few seconds. If one stops, it is started again after 3 seconds. If it stops more than 5 times in 2 minutes, the tray stops trying and the dot turns red: then choose <b>Restart services</b>.</div>
+</section>
+
+<section class="doc" id="otherpcs">
+    <h2>Other PCs, phones and tablets</h2>
+    <ol class="steps">
+        <li>On the Main PC, read the link in the tray menu: <b>Other PCs / phones: http://IP:8080</b>.</li>
+        <li>On every other PC, open that link in Chrome or Edge. Add it to the bookmarks bar.</li>
+        <li>On phones and tablets (on the hospital Wi-Fi), open the same link and choose <b>Add to Home screen</b>.</li>
+        <li>Each person signs in with their own email and password. Their role decides which screens they see (see <a href="#staff">Staff, roles and portals</a>).</li>
+    </ol>
+    <div class="warn">The link works only inside the hospital network. Phones on mobile data cannot reach it.</div>
+</section>
+
+<!-- ============ FIRST SETUP ============ -->
+<section class="doc" id="firstlogin">
+    <h2>First sign-in</h2>
+    <ol class="steps">
+        <li>Right-click the tray icon and choose <b>First sign-in details</b>. Notepad shows the link, the email (<code>admin@tibulab.local</code>) and a one-time password of 12 letters and numbers.</li>
+        <li>Choose <b>Open TibuLab</b> and sign in with them.</li>
+        <li>Go to <b>Settings › Users</b>. Open your user, give a real email and a <b>new password</b>, and save.</li>
+        <li>Delete the file <code>FIRST-LOGIN.txt</code> from the data folder. After that, the tray says "The first sign-in details were already removed".</li>
+    </ol>
+    <div class="warn">Anyone who reads <code>FIRST-LOGIN.txt</code> can sign in as the owner. Change the password and delete the file on the first day.</div>
+</section>
+
+<section class="doc" id="hospital">
+    <h2>Hospital, locations and counters</h2>
+    <p class="lead">Do these once, in this order, before the first patient. TibuLab is set up as <b>Business</b> → <b>Locations</b> (branches) → labs, pharmacies, radiology rooms and counters inside each location.</p>
+    <ol class="steps">
+        <li><b>Settings › Business</b>: hospital name, phone, address, NTN, licence number, logo, header and footer text.</li>
+        <li><b>Settings › Locations</b>: one per building or branch. Open a location to add its labs (on each floor), pharmacies, radiology rooms and counters.</li>
+        <li><b>Counters</b> (reception, cash, sample collection, pharmacy) are added on the location page, or in <b>Billing › Cash Registers</b>. Money is taken only on an open counter.</li>
+        <li><b>Settings › Report Layout</b> and <b>Signatures</b>: letterhead, paper size and the pathologist's / radiologist's signature.</li>
+        <li><b>Settings › Numbering</b>: the start numbers of bills and receipts (only if you continue from an old system).</li>
+    </ol>
+    <p>The User Manual has pictures of these screens: <a href="index.html#setup">First-time setup</a>.</p>
+</section>
+
+<section class="doc" id="staff">
+    <h2>Staff, roles and portals</h2>
+    <span class="where">Settings › Users</span>
+    <p>Give every person their own login. Never share one login. Choose the <b>Role</b>, the <b>Home location</b> and, if needed, other locations they also work in. Make leavers <b>inactive</b> instead of deleting them.</p>
+    <p>For most staff the role opens their own <b>portal</b>: a simple screen with only their work. Others (owner, manager, accountant…) get the full menu.</p>
+    <table>
+        <tr><th>Role (exact name)</th><th>Portal they open</th><th>Their work</th></tr>
+        <tr><td>doctor</td><td>Doctor portal <code>/doctor</code></td><td>OPD patients, orders, prescriptions</td></tr>
+        <tr><td>nurse</td><td>Nurse portal <code>/nurse</code></td><td>My shift, beds, MAR, vitals, tasks, handover</td></tr>
+        <tr><td>phlebotomist, rider</td><td>Sample room <code>/collection</code></td><td>Waiting patients, tubes, labels, home collection, report counter</td></tr>
+        <tr><td>receptionist</td><td>Front desk <code>/desk</code></td><td>New Bill, OPD tokens, appointments, own cash register</td></tr>
+        <tr><td>admission_officer</td><td>Admission <code>/admission</code></td><td>Admissions (IPD)</td></tr>
+        <tr><td>technician, pathologist</td><td>Lab <code>/laboratory</code></td><td>Receive tubes, results, QC, machine results; verify and sign</td></tr>
+        <tr><td>radiographer, radiologist</td><td>Imaging <code>/imaging</code></td><td>Patients to scan, scan done; reports to write and sign</td></tr>
+        <tr><td>pharmacist, pharmacy_assistant</td><td>Dispensary <code>/dispensary</code></td><td>The pharmacy sale counter and pharmacy screens</td></tr>
+        <tr><td>er_doctor, er_nurse, mlo, ambulance_dispatcher</td><td>Emergency <code>/emergency</code></td><td>ER board, ambulance</td></tr>
+    </table>
+    <p>The owner can change what each role may do in <b>Settings › Roles &amp; Permissions</b>. A module that is not in the hospital's plan stays hidden for everyone.</p>
+</section>
+
+<section class="doc" id="doctors">
+    <h2>Doctors and the duty roster</h2>
+    <h3>One record per doctor</h3>
+    <p>A doctor is an <b>HR employee</b> with the Doctor section filled in. Add doctors in <b>Billing › Referring Doctors</b> (outside doctors) or <b>OPD › Setup › Doctors</b> (staff and visiting consultants). Both open the same employee form.</p>
+    <ol class="steps">
+        <li>Add the doctor (name, PMDC no., speciality, fees and shares).</li>
+        <li>For a doctor who signs in, make a user with the role <b>doctor</b> in <b>Settings › Users</b>, and link that user account on the doctor's employee form.</li>
+    </ol>
+    <h3>Duty roster for nurses and doctors</h3>
+    <span class="where">Duty roster › Monthly roster</span>
+    <p>Set up the roster units in <b>Duty roster › Units</b> (for example ICU, Ward 2), then fill the <b>Monthly roster</b>. <b>On duty now</b> shows who is working. ICU alarms that nobody answers go to the staff on duty now (see <a href="#icu">ICU monitors</a>), so keep the roster up to date.</p>
+</section>
+
+<!-- ============ LICENCE & CLOUD ============ -->
+<section class="doc" id="licence">
+    <h2>Licence</h2>
+    <span class="where">http://localhost:8080/licence on the Main PC</span>
+    <p class="lead">The licence is a key from TibuLab, like <code>TL-XXXX-XXXX-XXXX</code>. It is activated once on the Main PC.</p>
+    <ol class="steps">
+        <li>When TibuLab asks, type the licence key and click activate. The Main PC must be online for this.</li>
+        <li>TibuLab cloud sends back a <b>signed licence token</b>. It is tied to <b>this PC</b>: copying it to another PC does not work.</li>
+        <li>After that the PC works offline on the saved token. The scheduler checks every hour whether a check is due, and asks the cloud about once a day.</li>
+        <li>After you pay a renewal, open the licence page and use the check-now button, so it unlocks at once without waiting for the daily check.</li>
+    </ol>
+    <h3>The three states</h3>
+    <figure class="dia">
+        <p class="hint">Swipe sideways to see the whole drawing.</p>
+        <div class="box"><div class="tline">
+            <div class="lab">A. Subscription date (default values)</div>
+            <div class="bar">
+                <div class="s-ok" style="flex:5"><b>ok</b>Paid. Everything works.</div>
+                <div class="s-warn" style="flex:3"><b>warn</b>Ends soon: last 3 days. Banner, everything works.</div>
+                <div class="s-warn" style="flex:6"><b>warn</b>Expired, within 7 grace days. "Renew within N day(s)". Everything works.</div>
+                <div class="s-ro" style="flex:4"><b>readonly</b>More than 7 days expired. View, reports and sign-in only.</div>
+            </div>
+            <div class="ticks"><div style="flex:5">paid</div><div style="flex:3">3 days before</div><div style="flex:6">paid-until date</div><div style="flex:4">day 8 after</div></div>
+            <div class="lab">B. Days without internet (default values)</div>
+            <div class="bar">
+                <div class="s-ok" style="flex:12"><b>ok</b>Works normally offline.</div>
+                <div class="s-warn" style="flex:3"><b>warn</b>Offline soon: "connect soon".</div>
+                <div class="s-ro" style="flex:4"><b>readonly</b>Offline more than 15 days. Unlocks as soon as it reaches the internet.</div>
+            </div>
+            <div class="ticks"><div style="flex:12">day 0 (last check)</div><div style="flex:3">day 13</div><div style="flex:4">day 16</div></div>
+        </div></div>
+        <figcaption>Drawing 6. Licence states ok → warn → readonly. The 7 grace days and 15 offline days are the defaults; TibuLab sets the real values in its central settings, and they travel inside the signed token.</figcaption>
+    </figure>
+    <table>
+        <tr><th>State</th><th>What staff see</th><th>What to do</th></tr>
+        <tr><td><b>ok</b></td><td>Nothing special.</td><td>Nothing.</td></tr>
+        <tr><td><b>warn</b></td><td>A banner: subscription ends soon, expired (renew within N days), or no internet for N days.</td><td>Renew, or connect the Main PC to the internet.</td></tr>
+        <tr><td><b>readonly</b></td><td>Only viewing, reports and sign-in work. No new bills or results.</td><td>Renew, or connect to the internet. It unlocks straight away after the check.</td></tr>
+        <tr><td>Not activated / on hold</td><td>The activation page, or "account is on hold".</td><td>Enter the key, or call TibuLab support.</td></tr>
+    </table>
+    <div class="tip">A renewal or plan change arrives by itself with the next daily check, even if nobody opens a page.</div>
+</section>
+
+<section class="doc" id="sync">
+    <h2>Cloud copy and sync</h2>
+    <span class="where">Settings › Devices &amp; Licence (page "Devices &amp; sync")</span>
+    <p class="lead">All work is done on the Main PC. TibuLab also keeps a <b>read-only copy</b> in TibuLab cloud. Nothing can be typed into the cloud copy.</p>
+    <figure class="dia">
+        <p class="hint">Swipe sideways to see the whole drawing.</p>
+        <div class="box">
+        <svg viewBox="0 0 1000 400" role="img" aria-labelledby="d7t">
+            <title id="d7t">Sync: Main PC outbox queue, over the internet, to the TibuLab cloud copy, used by the owner, the patient portal and other hospitals' doctors</title>
+            <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+            <rect class="bx-main" x="16" y="120" width="230" height="150" rx="14"/>
+            <text class="tm" x="131" y="150" text-anchor="middle">Main PC</text>
+            <text class="tms" x="131" y="176" text-anchor="middle">every minute: changes</text>
+            <text class="tms" x="131" y="196" text-anchor="middle">go into the outbox queue</text>
+            <text class="tms" x="131" y="222" text-anchor="middle">every minute: the queue</text>
+            <text class="tms" x="131" y="242" text-anchor="middle">is sent, 100 at a time</text>
+            <path class="bx" d="M318 214 a34 34 0 0 1 22 -60 a46 46 0 0 1 86 -6 a34 34 0 0 1 36 66 z"/>
+            <text class="t" x="390" y="199" text-anchor="middle">Internet</text>
+            <path class="ln ln-d" d="M248 195 H312" marker-end="url(#a7)"/>
+            <path class="ln ln-d" d="M466 195 H516" marker-end="url(#a7)"/>
+            <text class="tw" x="390" y="250" text-anchor="middle">Offline? The queue waits.</text>
+            <text class="ts" x="390" y="268" text-anchor="middle">Nothing is lost. It catches up later.</text>
+            <rect class="bx-soft" x="520" y="130" width="200" height="130" rx="14"/>
+            <text class="t" x="620" y="166" text-anchor="middle">TibuLab cloud</text>
+            <text class="ts" x="620" y="190" text-anchor="middle">read-only copy</text>
+            <text class="ts" x="620" y="210" text-anchor="middle">of the hospital</text>
+            <text class="ts" x="620" y="236" text-anchor="middle">one way: local → cloud</text>
+            <rect class="bx" x="770" y="20" width="214" height="90" rx="10"/>
+            <text class="t" x="784" y="48">Owner / manager</text>
+            <text class="ts" x="784" y="70">reports, bills and dashboards</text>
+            <text class="ts" x="784" y="88">from home</text>
+            <rect class="bx" x="770" y="150" width="214" height="90" rx="10"/>
+            <text class="t" x="784" y="178">Patient portal</text>
+            <text class="ts" x="784" y="200">the patient's own verified</text>
+            <text class="ts" x="784" y="218">reports</text>
+            <rect class="bx" x="770" y="280" width="214" height="104" rx="10"/>
+            <text class="t" x="784" y="308">Other TibuLab hospitals</text>
+            <text class="ts" x="784" y="330">their doctors see the history</text>
+            <text class="ts" x="784" y="348">only for the same person;</text>
+            <text class="ts" x="784" y="366">every look is logged</text>
+            <path class="ln" d="M722 160 L766 70" marker-end="url(#a7)"/>
+            <path class="ln" d="M722 195 L766 195" marker-end="url(#a7)"/>
+            <path class="ln" d="M722 230 L766 320" marker-end="url(#a7)"/>
+        </svg>
+        </div>
+        <figcaption>Drawing 7. Sync goes one way, from the Main PC to the cloud copy.</figcaption>
+    </figure>
+    <ul>
+        <li><b>What goes:</b> every changed record. Labs on the Main PC send the full verified results, so the portal and other hospitals see the values, not only a summary.</li>
+        <li><b>Other hospitals' doctors</b> see a patient's history only when TibuLab is sure it is the same person. The patient can switch sharing off. Every look is written in a log, and the patient can see who looked (patient portal › Security).</li>
+        <li><b>Check it:</b> <b>Settings › Devices &amp; Licence</b> shows this installation's link to the cloud, <b>Waiting to sync</b> and <b>Failed items</b>. Failed items are tried again on every sync.</li>
+        <li>Sync runs only when the Main PC is linked to the cloud, by its licence or by a device token. TibuLab support does this.</li>
+    </ul>
+</section>
+
+<!-- ============ MACHINES ============ -->
+<section class="doc" id="analysers">
+    <h2>Lab analysers (machines)</h2>
+    <span class="where">Laboratory › Machines › Analyzers</span>
+    <p class="lead">The <b>Device Hub</b> on the Main PC talks to the analysers. Results come straight into TibuLab, with no typing. It works without internet.</p>
+    <h3>Three ways to connect a machine</h3>
+    <figure class="dia">
+        <p class="hint">Swipe sideways to see the whole drawing.</p>
+        <div class="box">
+        <svg viewBox="0 0 1000 380" role="img" aria-labelledby="d8t">
+            <title id="d8t">Three ways to connect an analyser: network cable, serial cable through a serial-to-TCP adapter, or a shared folder of result files</title>
+            <defs><marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+            <text class="tl" x="16" y="26">A. Network (LAN) port: most new analysers</text>
+            <rect class="bx" x="16" y="36" width="220" height="64" rx="10"/><text class="t" x="30" y="62">Analyser</text><text class="ts" x="30" y="84">LAN port, fixed IP</text>
+            <rect class="bx" x="390" y="36" width="200" height="64" rx="10"/><text class="t" x="404" y="62">Network switch</text><text class="ts" x="404" y="84">network cable</text>
+            <path class="ln" d="M238 68 H386" marker-end="url(#a8)" marker-start="url(#a8)"/>
+            <text class="ts" x="252" y="56">HL7 / ASTM over TCP</text>
+            <text class="tl" x="16" y="146">B. Serial (RS-232) port: older analysers</text>
+            <rect class="bx" x="16" y="156" width="220" height="64" rx="10"/><text class="t" x="30" y="182">Analyser</text><text class="ts" x="30" y="204">9-pin RS-232 host port</text>
+            <rect class="bx-soft" x="276" y="156" width="210" height="64" rx="10"/><text class="t" x="290" y="182">Serial-to-TCP adapter</text><text class="ts" x="290" y="204">Moxa NPort / USR-TCP232</text>
+            <path class="ln" d="M238 188 H272" marker-end="url(#a8)" marker-start="url(#a8)"/>
+            <path class="ln" d="M488 188 L540 102" marker-end="url(#a8)"/>
+            <text class="ts" x="30" y="240">null-modem serial cable (unless the analyser manual says straight)</text>
+            <text class="tl" x="16" y="286">C. Shared folder: machines that only save result files</text>
+            <rect class="bx" x="16" y="296" width="220" height="64" rx="10"/><text class="t" x="30" y="322">Analyser's own PC</text><text class="ts" x="30" y="344">exports CSV files</text>
+            <rect class="bx" x="390" y="296" width="200" height="64" rx="10"/><text class="t" x="404" y="322">Shared folder</text><text class="ts" x="404" y="344">the Main PC can read it</text>
+            <path class="ln" d="M238 328 H386" marker-end="url(#a8)"/>
+            <rect class="bx-main" x="740" y="130" width="244" height="120" rx="14"/>
+            <text class="tm" x="862" y="168" text-anchor="middle">Main PC</text>
+            <text class="tms" x="862" y="192" text-anchor="middle">Device Hub</text>
+            <text class="tms" x="862" y="214" text-anchor="middle">fixed IP, e.g. 192.168.1.10</text>
+            <path class="ln" d="M592 68 L736 160" marker-end="url(#a8)" marker-start="url(#a8)"/>
+            <path class="ln" d="M592 328 L736 226" marker-end="url(#a8)"/>
+        </svg>
+        </div>
+        <figcaption>Connections. A direct USB-to-PC link is not used: a serial machine goes through a serial-to-TCP adapter on the network (or a serial-to-USB cable on a lab PC with a com2tcp bridge).</figcaption>
+    </figure>
+    <h3>Connect a machine, step by step</h3>
+    <ol class="steps">
+        <li><b>Switch on the Device Hub</b> (once). Open <b>Laboratory › Machines › Analyzer Status</b>. If it says "Device Hub is not running on the lab server", ask TibuLab support to switch it on. They add the line <code>TIBULAB_DEVICE_HUB=true</code> to the <code>.env</code> file in the data folder and use <b>Restart services</b>. The scheduler then keeps the hub running.</li>
+        <li><b>Cable.</b> Connect the analyser as in the drawing above. Give a network analyser (or the adapter) a fixed IP, for example <code>192.168.1.50</code>.</li>
+        <li><b>Add the analyser in TibuLab.</b> <b>Laboratory › Machines › Analyzers › Add</b>. Pick the <b>Model preset</b> first (for example Sysmex XN, Sysmex XP-100, Mindray BC-5000, Mindray BS-200, Roche c311, Erba XL-200, Maglumi, Bio-Rad D-10…). It fills the protocol, connection and serial settings. Then give the code, name, location and lab section.</li>
+        <li><b>TibuLab's settings.</b> Check the <b>Protocol</b> (ASTM, LIS2-A2, HL7, CSV file, Sysmex K) and the <b>Connection</b>:
+            <table>
+                <tr><th>Connection</th><th>Fill in</th></tr>
+                <tr><td>TCP – machine connects</td><td><b>TCP port</b> the Main PC listens on (e.g. 5001). Optional: the machine's IP, so only it may connect. Allow this port in the Windows Firewall of the Main PC.</td></tr>
+                <tr><td>TCP – we connect</td><td>The analyser's <b>IP address</b> and <b>TCP port</b>. No firewall rule needed.</td></tr>
+                <tr><td>Serial (COM / USB)</td><td>The adapter's <b>IP address</b> and <b>TCP port</b> (often 4001), and the baud rate, data bits, parity, stop bits of the analyser.</td></tr>
+                <tr><td>Shared folder</td><td>The <b>Folder path</b> as the Main PC sees it. Set the file layout under Hub options on the Mappings screen.</td></tr>
+            </table>
+        </li>
+        <li><b>The machine's host settings.</b> On the analyser, open its Host / LIS / Communication menu (the preset's "How to connect this model" box tells you where). Set the same protocol, the <b>host IP = the Main PC's fixed IP</b> and the same port. For serial, the speed and settings must match on both sides. If the analyser can ask for tests by barcode (host query), switch that on, and switch on <b>Answer host queries (send ordered tests)</b> in TibuLab.</li>
+        <li><b>Is it online?</b> <b>Analyzer Status</b> shows each machine: Online, Waiting for analyzer, Connecting, Offline or Error, with the last message and errors today.</li>
+        <li><b>Tests on this machine.</b> In the Analyzers list, use <b>Tests on this machine</b> on the row. Link each test with the code the analyser orders it by (main or backup machine).</li>
+        <li><b>Map the result codes.</b> Open <b>Analyzer Status › Mappings</b>. Each machine code (WBC, HGB, GLU…) is linked to a TibuLab parameter. Use <b>Apply suggested mappings</b> from the preset, then check them. A unit change is done with value × multiplier + offset.</li>
+        <li><b>Test run.</b> Bill a test patient, collect the sample, print the label and run it on the analyser. Then:
+            <ul>
+                <li><b>Laboratory › Machines › Machine Message Log</b> shows every message (Received, Processed, Error) with Raw and Parsed views.</li>
+                <li><b>Unmapped codes seen</b> on the Mappings screen lists codes not mapped yet. Map them: the results of the last 14 days are taken in again. <b>Replay</b> in the log parses a message again after a fix.</li>
+                <li>Compare the values on <b>Result Entry</b> with the analyser's own printout. Go live only when they match.</li>
+            </ul>
+        </li>
+    </ol>
+    <div class="tip"><b>Safety:</b> machine values never go on a report by themselves. They wait on Result Entry until the technician checks and saves them, and the pathologist verifies them.</div>
+    <h3>Other systems (HL7 out)</h3>
+    <p>TibuLab can also send HL7 v2 messages (patients, admissions, OPD visits, lab orders) to another hospital system. They are queued and sent every minute. Ask TibuLab support to set up such a link.</p>
+</section>
+
+<section class="doc" id="labflow">
+    <h2>Sample to report: the full flow</h2>
+    <p class="lead">The <b>barcode on the tube is the sample ID</b>. It joins the patient, the order, the analyser result and the report.</p>
+    <ol class="vflow" aria-label="Sample to report flow">
+        <li class="r-rec"><div class="h"><b>1. Order</b><span class="who">Reception</span></div><p>New Bill: the patient is registered and the tests are billed. TibuLab makes the lab order.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Barcode label</b><span class="who">Sample room</span></div><p>Sample Collection: the collector takes the sample and prints the barcode label (one per tube).</p></li>
+        <li class="r-rec"><div class="h"><b>3. Tube</b><span class="who">Sample room</span></div><p>The label goes on the tube. The tube goes to the lab (Sample Dispatch for another lab).</p></li>
+        <li class="r-mac"><div class="h"><b>4. The machine reads the barcode</b><span class="who">Analyser</span></div><p>The tube goes into the analyser. Its reader scans the barcode.</p></li>
+        <li class="split">
+            <div class="r-mac"><div class="h"><b>Two-way machine</b></div><p>It asks TibuLab "which tests for this barcode?" (host query). TibuLab answers with the ordered tests.</p></div>
+            <div class="r-mac"><div class="h"><b>One-way machine</b></div><p>It does not ask. The technician scans or types the TibuLab barcode as the Sample No. on the analyser.</p></div>
+        </li>
+        <li class="r-mac"><div class="h"><b>5. Result comes back</b><span class="who">Device Hub</span></div><p>The analyser sends the results. The Device Hub finds the order by the barcode and turns the machine codes into TibuLab parameters.</p></li>
+        <li class="r-lab"><div class="h"><b>6. Technician checks</b><span class="who">Technician</span></div><p>Result Entry shows the values "from &lt;machine&gt;". Check, change if needed, then Save. A wrong value can be rejected.</p></li>
+        <li class="r-doc"><div class="h"><b>7. Pathologist verifies</b><span class="who">Pathologist</span></div><p>Verification: the pathologist verifies and signs. Critical values go to Critical Results.</p></li>
+        <li class="r-ok"><div class="h"><b>8. Report</b><span class="who">Patient</span></div><p>Printed or shared. With the cloud link, the verified report also reaches the patient portal.</p></li>
+    </ol>
+    <div class="legend"><span class="l-rec">Reception / sample room</span><span class="l-mac">Analyser and Device Hub</span><span class="l-lab">Technician</span><span class="l-doc">Pathologist</span></div>
+    <p style="margin-top:14px">Drawing 3. Lab sample-to-report flow, with the analyser.</p>
+</section>
+
+<section class="doc" id="xray">
+    <h2>X-ray and radiology</h2>
+    <span class="where">Radiology › Setup › PACS · Image folders · Rooms &amp; Machines</span>
+    <p class="lead">TibuLab connects to the <b>console PC</b> of the X-ray (the PC where the radiographer sees the image), not to the X-ray tube itself.</p>
+    <h3>Words you will see</h3>
+    <table>
+        <tr><th>Word</th><th>Meaning</th></tr>
+        <tr><td>Accession number</td><td>The number TibuLab gives each billed exam. It travels with the images and joins them to the right exam.</td></tr>
+        <tr><td>Modality worklist</td><td>The patient list TibuLab sends to the machine: name, MRN, exam and accession. The radiographer picks the patient instead of typing. An exam is listed while it is scheduled (yesterday to 7 days ahead), arrived or being scanned, and removed once scanned, cancelled or no-show.</td></tr>
+        <tr><td>PACS</td><td>The image store. TibuLab works with Orthanc (free PACS software) on the Main PC or another PC. The TibuLab installer does not include it yet: ask TibuLab support to set it up.</td></tr>
+        <tr><td>AE title</td><td>The DICOM name of a machine or of the PACS, up to 16 letters or numbers (for example <code>TIBUPACS</code>). Each machine needs its own.</td></tr>
+        <tr><td>Unmatched study</td><td>Images that came in but could not be joined to an exam. They wait in <b>Radiology › Unmatched Studies</b>.</td></tr>
+    </table>
+    <h3>The X-ray flow</h3>
+    <ol class="vflow" aria-label="X-ray flow">
+        <li class="r-rec"><div class="h"><b>1. Patient and bill</b><span class="who">Reception</span></div><p>New Bill: the X-ray exam is billed. TibuLab gives it an accession number.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Radiology Worklist</b><span class="who">Radiographer</span></div><p>The exam appears on the radiographer's list. They mark the patient arrived and start.</p></li>
+        <li class="r-mac"><div class="h"><b>3. Patient list to the machine</b><span class="who">Worklist</span></div><p>If the worklist is on and the console supports it, the console shows the patient with the accession number. No typing.</p></li>
+        <li class="r-mac"><div class="h"><b>4. Console makes the image</b><span class="who">X-ray console</span></div><p>The radiographer takes the X-ray. The console shows the image and can print the film as before. Mark <b>Scan done</b>.</p></li>
+        <li class="r-mac"><div class="h"><b>5. Image to TibuLab</b><span class="who">PACS / folder / upload</span></div><p>The images reach TibuLab (see the four ways below). They join the exam by the accession number by themselves. No match: Unmatched Studies.</p></li>
+        <li class="r-doc"><div class="h"><b>6. Radiologist report</b><span class="who">Radiologist</span></div><p>Radiology › Reporting: open the images, write the report from a template, verify and sign.</p></li>
+        <li class="r-ok"><div class="h"><b>7. Print</b><span class="who">Patient</span></div><p>The report is printed with the key images that were ticked. The patient takes the film and the report.</p></li>
+    </ol>
+    <p>Drawing 4. The X-ray flow: patient → bill → worklist → console → image → TibuLab → radiologist report → print.</p>
+    <h3>Set up the PACS (DICOM)</h3>
+    <ol class="steps">
+        <li><b>Radiology › Setup › PACS › Add PACS</b>: Name, PACS software, <b>PACS AE title</b>, <b>PACS IP / host</b> (the Main PC's IP), <b>DICOM port</b> (Orthanc's default is 4242), Web API address (e.g. <code>http://192.168.1.10:8042</code>) with its user:password, and the Viewer link.</li>
+        <li>For the worklist: the <b>Worklist folder</b> and tick <b>Send patient list (modality worklist) to machines</b>.</li>
+        <li><b>Delete images after (days)</b>: empty keeps them forever. Click <span class="b">Test connection</span>.</li>
+        <li>For each room / machine (<b>Rooms &amp; Machines</b> and the Machines list on the PACS page): the <b>Machine AE title</b>, <b>Machine IP</b> and <b>Port</b> exactly as set on the machine, <b>Sends images to</b>, <b>Reads patient list (worklist)</b>.</li>
+        <li>On the machine or console: add the PACS as a DICOM destination with the same AE title, IP and port. Allow the DICOM port in the Windows Firewall of the PACS PC.</li>
+    </ol>
+    <h3>Machines without DICOM: image folders</h3>
+    <span class="where">Radiology › Setup › Image folders</span>
+    <p>For machines that save JPG, PDF or DICOM files to a folder (ultrasound, ECG, some X-ray consoles). Works on the Main PC only, not in the cloud.</p>
+    <ol class="steps">
+        <li>Share the machine's export folder on the network.</li>
+        <li>Add an image folder: <b>Name</b>, <b>Folder path</b> as the Main PC sees it (for example <code>D:\ecg\out</code> or <code>\\US-PC\export</code>), <b>Files to take</b> (<code>*.jpg,*.pdf,*.dcm</code>), <b>After import</b> (move to "imported", delete, or leave) and <b>Scan every (seconds)</b>.</li>
+        <li>The accession number must be in the file: in the DICOM tag, the file name or the folder name. Other files wait in Unmatched Studies.</li>
+    </ol>
+    <h3>Upload by hand</h3>
+    <p>On any exam, <b>Add images / files</b> takes JPG, PNG, PDF or DICOM files (a photo of the film, a scanned page). Tick <b>Key image (printed on the report)</b> on the pictures that should be printed on the report.</p>
+    <h3>Unmatched studies</h3>
+    <p><b>Radiology › Unmatched Studies</b> lists images with no exam (typed wrongly on the console, or no accession). Open one and use <b>Link to exam</b>, or <b>Ignore</b> it (with a reason) if it is not a patient exam.</p>
+</section>
+
+<section class="doc" id="fuji">
+    <h2>Fujifilm FCR Capsula-2 with a DryPix printer</h2>
+    <p class="lead">A common setup in Pakistan: a Fujifilm FCR Capsula-2 CR reader, its console PC, and a DryPix film printer. TibuLab connects to the <b>console PC</b>. There are four ways, best first.</p>
+    <figure class="dia">
+        <p class="hint">Swipe sideways to see the whole drawing.</p>
+        <div class="box">
+        <svg viewBox="0 0 1000 520" role="img" aria-labelledby="d4t">
+            <title id="d4t">Four ways to get images from the Fuji console to TibuLab: DICOM storage, print capture (coming), shared folder, manual upload</title>
+            <defs>
+                <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker>
+                <marker id="a4m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah-m"/></marker>
+                <marker id="a4ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah-ok"/></marker>
+                <marker id="a4s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah-soon"/></marker>
+            </defs>
+            <rect class="bx" x="16" y="30" width="200" height="76" rx="10"/>
+            <text class="t" x="30" y="60">CR reader</text><text class="ts" x="30" y="82">FCR Capsula-2</text>
+            <rect class="bx-soft" x="330" y="24" width="240" height="88" rx="12"/>
+            <text class="t" x="450" y="58" text-anchor="middle">Fuji console PC</text><text class="ts" x="450" y="82" text-anchor="middle">shows and sends the image</text>
+            <rect class="bx" x="784" y="30" width="200" height="76" rx="10"/>
+            <text class="t" x="798" y="60">DryPix printer</text><text class="ts" x="798" y="82">prints the film</text>
+            <path class="ln-m" d="M218 68 H326" marker-end="url(#a4m)"/>
+            <text class="ts" x="232" y="60">plate scanned</text>
+            <path class="ln-m" d="M572 68 H780" marker-end="url(#a4m)"/>
+            <text class="ts" x="600" y="60">DICOM print (film)</text>
+            <!-- 2: print capture, coming -->
+            <rect class="bx-soon" x="604" y="140" width="190" height="64" rx="10"/>
+            <text class="tsoon" x="699" y="166" text-anchor="middle">② TibuLab between</text>
+            <text class="tsoon" x="699" y="186" text-anchor="middle">console and DryPix</text>
+            <path class="ln-soon" d="M676 72 V138"/>
+            <path class="ln-soon" d="M699 206 L640 372" marker-end="url(#a4s)"/>
+            <text class="tsoon" x="690" y="300">coming, not built yet</text>
+            <!-- 3: shared folder -->
+            <rect class="bx" x="16" y="230" width="230" height="72" rx="10"/>
+            <text class="t" x="30" y="258">③ Shared folder</text><text class="ts" x="30" y="280">console exports JPG / DICOM</text>
+            <path class="ln" d="M380 114 L250 238" marker-end="url(#a4)"/>
+            <path class="ln" d="M140 304 L420 374" marker-end="url(#a4)"/>
+            <text class="tl" x="150" y="350">Image folders</text>
+            <!-- 1: DICOM storage -->
+            <path class="ln-ok" d="M450 114 V370" marker-end="url(#a4ok)"/>
+            <rect class="bx-ok" x="300" y="200" width="138" height="46" rx="8"/>
+            <text class="t" x="369" y="222" text-anchor="middle">① DICOM</text><text class="ts" x="369" y="239" text-anchor="middle">Storage (best)</text>
+            <!-- worklist back -->
+            <path class="ln ln-d" d="M520 372 V116" marker-end="url(#a4)"/>
+            <rect class="bx" x="530" y="230" width="132" height="46" rx="8"/>
+            <text class="tl" x="596" y="250" text-anchor="middle">patient list</text><text class="ts" x="596" y="267" text-anchor="middle">(worklist, option)</text>
+            <!-- 4: manual upload -->
+            <rect class="bx" x="784" y="400" width="200" height="72" rx="10"/>
+            <text class="t" x="798" y="428">④ Upload by hand</text><text class="ts" x="798" y="450">JPG / PNG / PDF / DICOM</text>
+            <path class="ln" d="M782 436 H664" marker-end="url(#a4)"/>
+            <!-- main pc -->
+            <rect class="bx-main" x="340" y="376" width="320" height="110" rx="14"/>
+            <text class="tm" x="500" y="414" text-anchor="middle">TibuLab Main PC</text>
+            <text class="tms" x="500" y="438" text-anchor="middle">PACS (Orthanc) + TibuLab</text>
+            <text class="tms" x="500" y="460" text-anchor="middle">images join the exam by accession no.</text>
+        </svg>
+        </div>
+        <figcaption>The Fuji console, the DryPix printer and the four ways into TibuLab. Way ② is drawn dashed because it is not built yet.</figcaption>
+    </figure>
+    <table class="ways">
+        <tr><th>Way</th><th>How it works</th><th>What you need</th><th>Status</th></tr>
+        <tr><td>① DICOM Storage</td><td>The console sends every image to the PACS on the Main PC, like it sends films to the DryPix. TibuLab joins it to the exam by the accession number.</td><td>The DICOM (storage) option on the console. It is often switched on by a Fuji engineer. Add the PACS as a destination: AE title, IP, port 4242.</td><td>Ready</td></tr>
+        <tr><td>② Between console and DryPix</td><td>TibuLab would catch the film print on its way to the DryPix (DICOM print capture) and keep a copy.</td><td>-</td><td><span class="soon">Coming, not built yet</span></td></tr>
+        <tr><td>③ Shared folder</td><td>The console exports JPG or DICOM files to a shared folder. TibuLab picks them up every few seconds.</td><td>Export set up on the console, and the accession number in the file or folder name. See Image folders above.</td><td>Ready</td></tr>
+        <tr><td>④ Upload by hand</td><td>The radiographer adds the picture on the exam.</td><td>Nothing. Works everywhere.</td><td>Ready</td></tr>
+    </table>
+    <div class="tip"><b>Worklist on the Fuji console:</b> if the console has the worklist option, add TibuLab's PACS as its worklist source. The radiographer then picks the patient from the list, and the accession number is always right. Without it, type the accession number on the console exactly as on the TibuLab exam.</div>
+</section>
+
+<section class="doc" id="icu">
+    <h2>ICU monitors</h2>
+    <span class="where">ICU Monitoring › Live monitor · Setup</span>
+    <p class="lead">Bedside monitors send vitals to their <b>central station</b> (Mindray, Philips, GE). The central station sends them to TibuLab. Doctors and nurses then see every ICU bed live, on a PC or phone.</p>
+    <div class="warn"><b>Remote view only.</b> TibuLab does not replace the bedside monitor alarms. Always respond to the bedside alarm. Values can be late or missing when the network or the central station is down.</div>
+    <h3>How monitor data gets in</h3>
+    <table>
+        <tr><th>Way</th><th>How</th></tr>
+        <tr><td>Device Hub, station connects</td><td>The central station sends HL7 (PCD-01) to the Main PC's IP and a port (e.g. 4601). Allow that port in the Windows Firewall. Optional: only the station's IP may connect.</td></tr>
+        <tr><td>Device Hub, hub connects</td><td>For gateways that act as an HL7 server: TibuLab connects to the gateway's IP and port.</td></tr>
+        <tr><td>HTTPS with a token</td><td>The gateway posts HL7 to TibuLab with a station token. The token is shown only once when it is made.</td></tr>
+        <tr><td>By hand</td><td>No monitor link: nurses enter vitals in the Nurse portal › Vitals.</td></tr>
+    </table>
+    <h3>Set up</h3>
+    <ol class="steps">
+        <li>The Device Hub must be on (see <a href="#analysers">Lab analysers</a>, step 1).</li>
+        <li><b>ICU Monitoring › Setup › Central stations</b>: code, name, vendor, model, connection, host, port.</li>
+        <li><b>Devices</b>: each monitor, and the <b>bed</b> it stands at. The patient is taken from the bed's current admission.</li>
+        <li><b>Alarm limits</b>: the low / high limits and how long a value must stay out before it is an alarm (default 30 seconds).</li>
+        <li><b>Code map</b>: the station's codes to TibuLab's (HR, SpO₂, NIBP, RR, Temp…).</li>
+        <li><b>Settings</b>: escalate after N minutes (default 5), the ICU on-call users, and SMS on escalation (if the hospital has SMS).</li>
+    </ol>
+    <h3>Alarm and escalation</h3>
+    <ol class="vflow" aria-label="ICU alarm and escalation flow">
+        <li class="r-mac"><div class="h"><b>Monitor reading</b><span class="who">Monitor → station → TibuLab</span></div><p>Live values appear on the bed tile.</p></li>
+        <li class="r-warn"><div class="h"><b>Out of range: Pending</b><span class="who">TibuLab</span></div><p>One bad reading (movement, probe off) is not an alarm. It must stay out for the set time.</p></li>
+        <li class="r-doc"><div class="h"><b>Alarm</b><span class="who">ICU screen</span></div><p>The tile turns red and the browser plays an alarm tone.</p></li>
+        <li class="split">
+            <div class="r-ok"><div class="h"><b>Acknowledged in time</b></div><p>A nurse or doctor clicks <b>Acknowledge</b> and writes what was done (for example "Seen, O₂ increased to 6 L, doctor informed"). It does not ring again.</p></div>
+            <div class="r-warn"><div class="h"><b>Nobody acknowledged in 5 minutes</b></div><p><b>Escalation:</b> the staff on duty now in the duty roster for that ward (else the ICU on-call list in Settings), plus the patient's consultant, get the bell, and an SMS if switched on.</p></div>
+        </li>
+        <li class="r-ok"><div class="h"><b>Back in range</b><span class="who">Resolved</span></div><p>The alert closes. Every alert stays in the bed's history.</p></li>
+    </ol>
+    <p>Drawing 5. ICU monitor → alarm → escalation.</p>
+    <p><b>Auto-charting:</b> every hour (default) TibuLab proposes the monitor readings for the nursing chart. Nothing goes into the chart until a nurse validates it (<b>ICU Monitoring › Auto-charting</b>).</p>
+</section>
+
+<!-- ============ PRINTING & TV ============ -->
+<section class="doc" id="printers">
+    <h2>Printers and labels</h2>
+    <p class="lead">Receipts, tube barcode labels and reports print from the browser on each counter PC.</p>
+    <ol class="steps">
+        <li>Install the printer on the counter PC (USB or network) with its Windows driver: receipt printer (80 mm or 58 mm), label printer, and an A4/A5 printer for reports.</li>
+        <li>Choose the paper size and design in TibuLab: <b>Settings › Print designs</b>, <b>Barcode labels</b> (with a test print) and <b>Report Layout</b>.</li>
+        <li>Print once from Chrome and choose the right printer. Chrome remembers the last printer.</li>
+    </ol>
+    <h3>TibuLab Print Helper</h3>
+    <span class="where">File: TibuLab-Print-Helper-&lt;version&gt;.exe</span>
+    <p>A small tray program for counter and doctor PCs. Today it opens the patient TV on this PC's second screen (see <a href="#tv">Queue and doctor TVs</a>). It starts with Windows. Its tray menu: <b>Show TV again</b>, <b>Stop TV on this PC</b>, <b>Quit TibuLab Print</b>.</p>
+    <div class="warn"><b>Not available yet:</b> printing straight to a chosen printer through the Print Helper (receipts, labels and reports with no print box). Until then, use browser printing as above.</div>
+</section>
+
+<section class="doc" id="tv">
+    <h2>Queue and doctor TVs</h2>
+    <span class="where">Settings › TV screens</span>
+    <p>TV screens show the tokens: a doctor's door, a waiting hall with several doctors, or the lab hall (sample collection calls, reports ready). They can call in English and Urdu, and show pictures and videos when the queue is quiet.</p>
+    <h3>A smart TV or a TV with its own small PC: pairing</h3>
+    <ol class="steps">
+        <li>Add the screen in <b>Settings › TV screens</b> (type, doctor, language, voice).</li>
+        <li>Click <span class="b">Pair TV</span> and open that link on the TV once, full screen (F11). It keeps working without a login.</li>
+        <li>Pairing again stops the old TV.</li>
+    </ol>
+    <h3>A TV on a PC's HDMI second screen: "Show on this PC's TV"</h3>
+    <ol class="steps">
+        <li>Connect the TV to the PC with an HDMI cable. Press <b>Windows + P</b> and choose <b>Extend</b>.</li>
+        <li>Install the <b>TibuLab Print Helper</b> on that PC.</li>
+        <li>In TibuLab click <span class="b">Show on this PC's TV</span> (in Settings › TV screens, or the doctor's TV button on his OPD screen).</li>
+        <li>The TV shows the queue, with sound. It opens by itself every time the PC starts. Nothing else to do. <span class="b">Stop TV on this PC</span> turns it off.</li>
+    </ol>
+    <div class="tip">Without the Print Helper it still works in Chrome or Edge, but the TV opens with your first click in TibuLab each day, and you must click once on the TV for sound. Allow pop-ups for TibuLab if the browser blocks the TV window.</div>
+</section>
+
+<!-- ============ DAILY CARE ============ -->
+<section class="doc" id="backup">
+    <h2>Backups</h2>
+    <span class="where">Admin › System health</span>
+    <ul>
+        <li><b>Automatic:</b> every night at 02:30 TibuLab backs up the whole database.</li>
+        <li><b>Where:</b> <code>&lt;data folder&gt;\storage\backups\tibulab\</code>, one compressed file per backup. Backups older than 14 days are removed.</li>
+        <li><b>Check:</b> <b>Admin › System health</b> shows the last backup, its folder, errors and the latest files. <span class="b">Back up now</span> makes one at once.</li>
+    </ul>
+    <div class="warn"><b>Copy backups off the Main PC.</b> A backup on the same disk is lost if the disk dies or the PC is stolen. Every week, copy the newest backup file to a USB drive or another PC, and keep one copy outside the hospital. TibuLab support can also set a second copy folder (another disk or a network share).</div>
+    <p><b>Restore</b> is done by TibuLab support. Never copy database files by hand while TibuLab is running.</p>
+    <p><b>Moving to a new PC:</b> install TibuLab on the new PC, choose <b>Quit</b> on the old one, copy the whole data folder across, then start TibuLab on the new PC. The licence must be activated again on the new PC.</p>
+</section>
+
+<section class="doc" id="updates">
+    <h2>Updates</h2>
+    <ol class="steps">
+        <li><b>Back up first:</b> Admin › System health › <span class="b">Back up now</span>. Do updates after working hours.</li>
+        <li>Run the new <code>TibuLab-Main-PC-Setup-&lt;version&gt;.exe</code> over the old one, as administrator. It finds the same install and data folders by itself.</li>
+        <li>The setup stops TibuLab (the database shuts down cleanly) and replaces the program and its runtime. The data folder and the settings are kept.</li>
+        <li>On the next start the tray shows <b>"Updating the database…"</b>. When the dot is green, the update is done.</li>
+    </ol>
+    <div class="warn"><b>Not available yet:</b> automatic updates from the tray (an "update ready" notice, installing at night, the automatic backup and roll-back if an update fails, and update from a USB file). Today an update is the new setup file run by hand, with a backup taken by you first.</div>
+    <p>The Print Helper is updated the same way: run its new setup file on each PC.</p>
+</section>
+
+<section class="doc" id="logs">
+    <h2>Logs</h2>
+    <span class="where">Tray › Open logs folder</span>
+    <table>
+        <tr><th>File</th><th>What is in it</th></tr>
+        <tr><td><code>server.log</code></td><td>The tray: starts, stops, restarts, the steps of the first start.</td></tr>
+        <tr><td><code>mysql-error.log</code></td><td>Database problems.</td></tr>
+        <tr><td><code>apache-error.log</code></td><td>Web server problems.</td></tr>
+        <tr><td><code>queue.log</code>, <code>scheduler.log</code></td><td>Background and timed jobs.</td></tr>
+        <tr><td><code>storage\logs\</code> (in the data folder)</td><td>TibuLab's own errors, one file per day.</td></tr>
+    </table>
+    <p>When you call support, send the newest files from the logs folder.</p>
+</section>
+
+<section class="doc" id="trouble">
+    <h2>Problems and fixes</h2>
+    <table>
+        <tr><th>Problem</th><th>What to do</th></tr>
+        <tr><td>Other PCs can't open the link</td><td>Same network? Is the Main PC's IP still the same (fixed IP)? Is the Windows network set to Private (the firewall rule is for private and domain networks only)?</td></tr>
+        <tr><td>"Starting…" for more than 10 minutes</td><td>Tray › Restart services. Still stuck: send the logs folder to support.</td></tr>
+        <tr><td>Red dot, "keeps stopping"</td><td>Tray › Restart services. Check that the disk is not full.</td></tr>
+        <tr><td>"Port 8080 is used by another program"</td><td>Close the other program (another web server, Skype…), or restart the PC, then Restart services.</td></tr>
+        <tr><td>Disk full</td><td>The database stops when the disk is full. Free space on the data drive (and on C:), then Restart services.</td></tr>
+        <tr><td>Banner: subscription ends / no internet</td><td>Renew, or connect the Main PC to the internet. See <a href="#licence">Licence</a>.</td></tr>
+        <tr><td>Read-only: can't make bills</td><td>The licence is past the grace days or offline too long. Renew or connect, then use check-now on the licence page.</td></tr>
+        <tr><td>Many items "Waiting to sync"</td><td>The Main PC is offline. It catches up by itself when the internet is back.</td></tr>
+        <tr><td>"Device Hub is not running"</td><td>Ask support to switch the Device Hub on (data folder <code>.env</code>), then Restart services.</td></tr>
+        <tr><td>Analyser Offline</td><td>Cable, the analyser's IP, the host IP and port on the analyser, the firewall rule for that port on the Main PC.</td></tr>
+        <tr><td>Results don't arrive on Result Entry</td><td>Machine Message Log: is there an Error? Unmapped code: map it. Wrong barcode on the analyser: fix it, then Replay.</td></tr>
+        <tr><td>X-ray images don't arrive</td><td>The AE title, IP and port on the console must match the PACS page. Firewall rule for the DICOM port. Test connection on Radiology › Setup › PACS.</td></tr>
+        <tr><td>Images in Unmatched Studies</td><td>Wrong or missing accession number. Link them to the exam by hand.</td></tr>
+        <tr><td>ICU tile shows "no data"</td><td>No reading for a minute: check the central station, its cable, and the station's status in ICU setup.</td></tr>
+        <tr><td>TV doesn't open on the HDMI screen</td><td>Windows + P › Extend. Use Chrome or Edge. Allow pop-ups. Is the Print Helper running in the tray?</td></tr>
+        <tr><td>Forgot the owner password</td><td>Another admin resets it in Settings › Users, or call TibuLab support.</td></tr>
+    </table>
+</section>
+
+<section class="doc" id="ports">
+    <h2>Ports and folders at a glance</h2>
+    <h3>Ports</h3>
+    <table>
+        <tr><th>Port</th><th>What</th><th>Firewall</th></tr>
+        <tr><td>8080</td><td>TibuLab screens for every device</td><td>Opened by the installer (private / domain networks)</td></tr>
+        <tr><td>3317</td><td>Database</td><td>This PC only. Never open it.</td></tr>
+        <tr><td>47812</td><td>Print Helper (on each PC that has it)</td><td>That PC only. Nothing to open.</td></tr>
+        <tr><td>Your choice, e.g. 5001</td><td>Analyser "machine connects" ports</td><td>Open each one yourself on the Main PC</td></tr>
+        <tr><td>4242 (Orthanc default)</td><td>DICOM images from the X-ray console</td><td>Open it on the PACS PC</td></tr>
+        <tr><td>Your choice, e.g. 4601</td><td>ICU central station HL7</td><td>Open it on the Main PC</td></tr>
+    </table>
+    <h3>Folders</h3>
+    <table>
+        <tr><th>Folder</th><th>What is in it</th></tr>
+        <tr><td><code>C:\Program Files\TibuLab</code></td><td>The program and its own PHP, Apache and MySQL. Replaced on every update.</td></tr>
+        <tr><td><code>&lt;data folder&gt;</code> (default <code>C:\TibuLabData</code>)</td><td>Everything that changes. Never deleted by an update or uninstall.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>mysql\</code></td><td>The database files. Do not touch.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>storage\backups\</code></td><td>Nightly backups.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>storage\app\public\</code></td><td>Logos, signatures, uploaded files.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>logs\</code></td><td>The service logs.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>.env</code></td><td>Settings of this installation. Change only with TibuLab support.</td></tr>
+        <tr><td>&nbsp;&nbsp;<code>FIRST-LOGIN.txt</code></td><td>The first sign-in. Delete it after the first day.</td></tr>
+    </table>
+    <p class="lead">Guide checked against TibuLab on 06-11-2026.</p>
+    <p><a href="index.html">← Back to the User Manual</a></p>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('manual-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark'
+            || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('manual-theme', next); } catch (e) {}
+    });
+
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.doc'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+
+    function clearMarks(node) {
+        Array.prototype.slice.call(node.querySelectorAll('mark')).forEach(function (m) {
+            m.replaceWith(document.createTextNode(m.textContent));
+        });
+        node.normalize();
+    }
+    function highlight(node, q) {
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+            acceptNode: function (t) { return t.parentNode.closest('svg') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+        }), hits = [], n;
+        while ((n = walker.nextNode())) { if (n.nodeValue.toLowerCase().indexOf(q) !== -1) hits.push(n); }
+        hits.forEach(function (t) {
+            var i = t.nodeValue.toLowerCase().indexOf(q);
+            var rest = t.splitText(i); rest.splitText(q.length);
+            var m = document.createElement('mark'); m.textContent = rest.nodeValue;
+            rest.parentNode.replaceChild(m, rest);
+        });
+    }
+    document.getElementById('q').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        sections.forEach(function (s) {
+            clearMarks(s);
+            var hit = !q || s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.classList.toggle('hidden', !hit);
+            if (hit) { shown++; if (q) highlight(s, q); }
+        });
+        document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    });
+
+    links.forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav.toc').classList.remove('open'); }); });
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        sections.forEach(function (s) { io.observe(s); });
+    }
+})();
+</script>
+</body>
+</html>

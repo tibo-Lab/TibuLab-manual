@@ -17,13 +17,12 @@ TIBULAB_MANUAL_URL=https://docs.tibulab.com     # default: the published manual
 | Cloud (tibulab.com) | `https://docs.tibulab.com` | This repository published as a static site (GitHub Pages, Netlify, or a folder on the VPS). |
 | Local server with internet | leave the default | The published manual. |
 | Local server **offline** | `/manual/` | Copy this folder onto the server and add an Apache `Alias` (below). |
-| Development PC (Laragon) | `/manual/` | Apache alias to `E:/TibuLab-manual` in `tibulab.test.conf`. |
 
-Apache alias (inside the TibuLab `<VirtualHost>`, before `DocumentRoot` rules apply):
+Apache alias (inside the TibuLab `<VirtualHost>`, before `DocumentRoot` rules apply). Replace `/path/to/TibuLab-manual` with the folder where you copied the manual:
 
 ```apache
-Alias /manual "E:/TibuLab-manual"
-<Directory "E:/TibuLab-manual">
+Alias /manual "/path/to/TibuLab-manual"
+<Directory "/path/to/TibuLab-manual">
     Require all granted
 </Directory>
 ```
@@ -33,7 +32,7 @@ Restart Apache after adding it.
 ## Editing
 
 - Text: edit `index.html`. Each section is a `<section class="doc" id="…">` with a matching link in the sidebar (`<nav class="toc">`).
-- Pictures: `img/<area>-<screen>.jpg`, about 1366×768, JPEG quality around 75, under ~150 KB each. Take them from the **demo lab** only (`demo.tibulab.test`, made-up patients), never from a real lab.
+- Pictures: `img/<area>-<screen>.jpg`, about 1366×768, JPEG quality around 75, under ~150 KB each. Take them from the **demo lab** only (made-up patients), never from a real lab.
 - Use the exact button labels the app shows, and describe only what exists in the app.
 - Check after a change: open the page at desktop and phone width; every image must load and there must be no sideways scrolling.
 
