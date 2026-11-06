@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TibuLab Admin and Settings</title>
+<meta name="description" content="For owners and managers: MIS dashboard, pharmacy, general store, procurement, biomedical, CSSD, linen, pricing, messaging and WhatsApp, patient portal, every settings screen, system health and the central back office.">
+<style>
+:root {
+    --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8;
+    --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --bg: #f4f6f8; --card: #ffffff; --code: #f1f5f9;
+    --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6;
+    --radius: 14px; --on-primary: #ffffff;
+    --c-rec: #176bad; --c-lab: #7c3aed; --c-mac: #0f766e; --c-doc: #be123c; --c-sys: #475569;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+        --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+        --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+        --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+        --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+    }
+}
+:root[data-theme="dark"] {
+    --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+    --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+    --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+    --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+    --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--primary-2); }
+header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+.logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-size: 15px; }
+.search { flex: 1; max-width: 420px; margin-left: auto; }
+.search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
+.tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.menu-btn { display: none; }
+.layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
+nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
+nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 15px; }
+nav.toc a:hover, nav.toc a.active { background: var(--primary-soft); color: var(--primary); }
+main { padding: 28px 32px 80px; min-width: 0; }
+section.doc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px; }
+section.doc.hidden { display: none; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 0 0 6px; }
+h3 { font-size: 18px; margin: 26px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 6px; }
+.where { display: inline-block; margin: 2px 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 600; }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 12px 44px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.b { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.tip, .warn { border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.tip { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+code { padding: 1px 6px; border-radius: 5px; background: var(--code); font-size: 14px; overflow-wrap: anywhere; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+.cards a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--text); background: var(--bg); }
+.cards a:hover { border-color: var(--primary-2); }
+.cards b { display: block; color: var(--primary); }
+.cards small { color: var(--muted); }
+figure { margin: 14px 0 20px; }
+figure a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.shots figure { margin: 0; }
+.noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
+mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0; }
+.flow span { padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; }
+.flow i { color: var(--muted); font-style: normal; }
+.login-link { display: inline-block; margin: 0 0 6px 8px; font-size: 14px; }
+.faq dt { font-weight: 700; margin-top: 12px; }
+.faq dd { margin: 2px 0 0; color: var(--text); }
+/* flow drawing: box, arrow down, box (same as the installation guide) */
+.vflow { list-style: none; padding: 0; margin: 16px 0 22px; max-width: 760px; }
+.vflow > li { position: relative; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; margin: 0 0 30px; }
+.vflow > li:last-child { margin-bottom: 0; }
+.vflow > li:not(:last-child)::after { content: ""; position: absolute; left: 30px; top: calc(100% + 3px); width: 2px; height: 17px; background: var(--muted); }
+.vflow > li:not(:last-child)::before { content: ""; position: absolute; left: 25px; top: calc(100% + 18px); border-style: solid; border-width: 8px 6px 0 6px; border-color: var(--muted) transparent transparent transparent; }
+.vflow .h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.vflow .h b { font-size: 16px; }
+.vflow p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.who { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--card); background: var(--c-sys); }
+.vflow .r-rec { border-left-color: var(--c-rec); } .r-rec .who { background: var(--c-rec); }
+.vflow .r-lab { border-left-color: var(--c-lab); } .r-lab .who { background: var(--c-lab); }
+.vflow .r-mac { border-left-color: var(--c-mac); } .r-mac .who { background: var(--c-mac); }
+.vflow .r-doc { border-left-color: var(--c-doc); } .r-doc .who { background: var(--c-doc); }
+.vflow .r-ok { border-left-color: var(--ok); } .r-ok .who { background: var(--ok); }
+.vflow .r-warn { border-left-color: var(--warn); } .r-warn .who { background: var(--warn); }
+.vflow > li.split { background: none; border: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vflow > li.split::after { left: 36px; } .vflow > li.split::before { left: 31px; }
+.vflow > li.split > div { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; }
+.vflow > li.split > div.r-ok { border-left-color: var(--ok); } .vflow > li.split > div.r-warn { border-left-color: var(--warn); } .vflow > li.split > div.r-doc { border-left-color: var(--c-doc); } .vflow > li.split > div.r-rec { border-left-color: var(--c-rec); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c-sys); }
+.legend .l-rec::before { background: var(--c-rec); } .legend .l-lab::before { background: var(--c-lab); } .legend .l-mac::before { background: var(--c-mac); } .legend .l-doc::before { background: var(--c-doc); } .legend .l-ok::before { background: var(--ok); }
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; position: fixed; inset: 65px 0 0 0; z-index: 15; background: var(--card); height: auto; border: 0; }
+    nav.toc.open { display: block; }
+    .menu-btn { display: inline-block; }
+    main { padding: 18px 16px 60px; }
+    section.doc { padding: 20px 16px; }
+    .search { max-width: none; }
+    .brand span.name { display: none; }
+    table { display: block; overflow-x: auto; }
+}
+@media (max-width: 640px) { .vflow > li.split { grid-template-columns: 1fr; } }
+@media print {
+    header.top, nav.toc { display: none; }
+    .layout { display: block; }
+    body { background: #fff; }
+    section.doc { border: 0; padding: 0 0 12px; }
+    section.doc.hidden { display: block; }
+    figure, .vflow > li, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
+    <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab Admin &amp; Settings</span></a>
+    <div class="search"><input id="q" type="search" placeholder="Search… (e.g. WhatsApp, requisition, opt-out)" aria-label="Search this page"></div>
+    <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+    <a href="index.html">← User Manual</a>
+    <a href="portals.html">Portals (one screen per job)</a>
+    <a href="hospital.html">Hospital modules</a>
+    <div class="grp">Start</div>
+    <a href="#start">For owners and managers</a>
+    <a href="#search">Sidebar search (Ctrl+K)</a>
+    <a href="#mis">Management (MIS) dashboard</a>
+    <div class="grp">Stock and buying</div>
+    <a href="#pharmacy">Pharmacy</a>
+    <a href="#store">General Store</a>
+    <a href="#procurement">Procurement</a>
+    <a href="#biomedical">Biomedical</a>
+    <a href="#cssd">CSSD</a>
+    <a href="#linen">Linen &amp; laundry</a>
+    <div class="grp">Money</div>
+    <a href="#pricing">Pricing, packages, deposits</a>
+    <div class="grp">Patients</div>
+    <a href="#messaging">Messaging and WhatsApp</a>
+    <a href="#patientportal">Patient portal</a>
+    <div class="grp">Owner / admin</div>
+    <a href="#settings">Settings (every screen)</a>
+    <a href="#system">System health, downtime, kiosk</a>
+    <a href="#central">Central back office</a>
+</nav>
+
+<main>
+<div class="noresult" id="noresult">Nothing found. Try another word.</div>
+
+<section class="doc" id="start">
+    <h1>Admin, messaging and settings</h1>
+    <p class="lead">For the owner, managers, store keepers, the pharmacy in-charge and IT. Billing, cash, insurance, accounts, HR and payroll are in the <a href="index.html">User Manual</a>; clinical modules in <a href="hospital.html">Hospital modules</a>; staff screens in <a href="portals.html">Portals</a>. The pictures come from the demo hospital with made-up patients.</p>
+    <div class="cards">
+        <a href="#mis"><b>MIS dashboard</b><small>The whole hospital in numbers</small></a>
+        <a href="#pharmacy"><b>Pharmacy</b><small>Sale, stock, batches, buying</small></a>
+        <a href="#store"><b>General Store</b><small>Requisitions, issues, stock</small></a>
+        <a href="#procurement"><b>Procurement</b><small>Requisition, PO, GRN, bill</small></a>
+        <a href="#messaging"><b>Messaging</b><small>WhatsApp QR, templates, log</small></a>
+        <a href="#settings"><b>Settings</b><small>Every settings screen</small></a>
+    </div>
+</section>
+
+<section class="doc" id="search">
+    <h2>Sidebar search (Ctrl+K)</h2>
+    <span class="where">Find a page… (top of the sidebar)</span>
+    <p>The hospital has hundreds of screens. Press <b>Ctrl+K</b> (or <b>/</b> when you are not typing somewhere) on any screen and type a word, like "ward" or "payroll". Matching pages show with the menu they sit in. Use the arrow keys and <b>Enter</b>, or click one. It shows only the pages you may open.</p>
+    <figure><a href="img/admin-sidebar-search.jpg" target="_blank"><img loading="lazy" src="img/admin-sidebar-search.jpg" alt="Sidebar search"></a><figcaption>"ward" finds Wards, Bed board, Admissions, Nursing station and more.</figcaption></figure>
+    <div class="tip">The search box in the top bar is different: it finds a <b>patient</b> by name, phone, MRN or CNIC.</div>
+</section>
+
+<section class="doc" id="mis">
+    <h2>Management (MIS) dashboard</h2>
+    <span class="where">Management (MIS)</span>
+    <p>Revenue, patients, turnaround, expenses and cash, compared with the previous period. Choose <b>Today</b>, <b>Yesterday</b>, <b>Month to date</b>, <b>Year to date</b> or <b>Custom</b>, and one location or all. There is a card for each module the hospital has (laboratory, OPD, IPD, radiology, pharmacy, HR, ER, OT, ICU, maternity, blood bank, dialysis and the rest), each as a table or a chart, with <b>Open the report</b>.</p>
+    <p><span class="b">Daily summary</span>: a short text of the day, ready to paste into WhatsApp (<b>Copy text</b>, <b>Open WhatsApp</b>). It is also e-mailed to the owners every morning at 08:00; switch it on and choose the e-mails here.</p>
+    <figure><a href="img/mod-mis.jpg" target="_blank"><img loading="lazy" src="img/mod-mis.jpg" alt="MIS dashboard"></a><figcaption>Management dashboard.</figcaption></figure>
+</section>
+
+<!-- ============ STOCK ============ -->
+<section class="doc" id="pharmacy">
+    <h2>Pharmacy</h2>
+    <span class="where">Pharmacy</span>
+    <p class="lead">The pharmacy has its own sale screen, bill numbers and stock, apart from the Lab Inventory. Pharmacists and cashiers work in the <a href="portals.html#dispensary">pharmacy portal</a>.</p>
+    <h3>Set up once</h3>
+    <ol class="steps">
+        <li><b>Pharmacies &amp; Stores</b>: each pharmacy (OPD pharmacy, IPD pharmacy), the main store and the ward stores, who works in each, and its cash counter.</li>
+        <li><b>Medicines</b>: name, generic, company, pack levels (for example tablet › strip › box) with the base unit, MRP, barcodes, par levels per store. Lists: Generic Products, Generics, Ingredients, Companies, ATC Classes, Dosage Forms, Routes, Units.</li>
+        <li><b>Pharmacy Settings</b>: prices, expiry rules, prescriptions, first-expiry-first, scanner, receipt. For all locations or one.</li>
+    </ol>
+    <h3>Daily work</h3>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Pharmacy Sale</td><td>The counter (own screen). F2 search, F4 patient, F8 cash, F9 card, F10 several ways, F6 park, F7 recall, Ctrl+R reprint. Money goes into the cashier's open register.</td></tr>
+        <tr><td>Sales / Sale Returns</td><td>Bills with batches, reprint (80 mm / A4), take back.</td></tr>
+        <tr><td>Controlled Drugs Register</td><td>Controlled medicines in and out.</td></tr>
+        <tr><td>Stock</td><td>On hand per store, at batch cost and moving average.</td></tr>
+        <tr><td>Batches &amp; Recall</td><td>Every batch with expiry badges; recall view; block / unblock a batch in every store; labels.</td></tr>
+        <tr><td>Requisitions</td><td>Indents from wards and stores: new or suggested from par levels, submit, approve, issue, receive.</td></tr>
+        <tr><td>Transfers</td><td>Between stores: send (in transit), receive with shorts, call back.</td></tr>
+        <tr><td>Write-offs, Stock Count, Stock Ledger</td><td>Damaged / expired / lost stock by batch; count a store batch by batch and post the differences; every movement.</td></tr>
+        <tr><td>Bulk Price Change</td><td>A DRAP notice: pick medicines, the new MRP per pack and the date it starts. Future dates wait for the day. <b>Price History</b> keeps the old prices.</td></tr>
+        <tr><td>Purchasing</td><td>Purchase Orders, Goods Received (the distributor's bill at the door), Purchase Returns, Distributors, Distributor Payments.</td></tr>
+        <tr><td>Reports</td><td>Sales by day / medicine / cashier, stock valuation, expiry, reorder / low stock, fast &amp; slow movers, margins, price changes, purchase register, distributor dues, requisitions &amp; fill rate, transfers, controlled drugs.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/mod-pharmacy-sale.jpg" target="_blank"><img loading="lazy" src="img/mod-pharmacy-sale.jpg" alt="Pharmacy sale"></a><figcaption>Pharmacy Sale counter.</figcaption></figure>
+        <figure><a href="img/mod-pharmacy-stock.jpg" target="_blank"><img loading="lazy" src="img/mod-pharmacy-stock.jpg" alt="Pharmacy stock"></a><figcaption>Stock.</figcaption></figure>
+        <figure><a href="img/mod-pharmacy-medicines.jpg" target="_blank"><img loading="lazy" src="img/mod-pharmacy-medicines.jpg" alt="Medicines"></a><figcaption>Medicines.</figcaption></figure>
+        <figure><a href="img/mod-pharmacy-requisitions.jpg" target="_blank"><img loading="lazy" src="img/mod-pharmacy-requisitions.jpg" alt="Requisitions"></a><figcaption>Requisitions.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="store">
+    <h2>General Store</h2>
+    <span class="where">General Store</span>
+    <p>Non-medicine items: gloves, syringes, stationery, cleaning items. Lab reagents stay in <a href="index.html#inventory">Lab Inventory</a>, medicines in the Pharmacy.</p>
+    <ol class="vflow" aria-label="General store flow">
+        <li class="r-rec"><div class="h"><b>1. Department requisition</b><span class="who">Ward / department</span></div><p>New, submit (the nurse portal's Store requisition comes here too).</p></li>
+        <li class="r-doc"><div class="h"><b>2. Approve</b><span class="who">In-charge</span></div><p>Approve all or part.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Issue</b><span class="who">Store keeper</span></div><p>Issues to departments, wards or admitted patients. A return can be taken from an issue.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Stock falls below reorder</b><span class="who">Store keeper</span></div><p>Reorder list › purchase requisition in Procurement.</p></li>
+    </ol>
+    <p>Also: Stock (on hand, reorder levels, next expiry, value; the item card shows every movement), Transfers, Department returns, Write-offs, Stock counts, Stock ledger. Setup: Items, Categories, Units, Stores, Departments (cost centres), Reorder levels. Reports: department consumption, valuation, reorder list, expiry, issue register.</p>
+    <div class="shots">
+        <figure><a href="img/mod-store-requisitions.jpg" target="_blank"><img loading="lazy" src="img/mod-store-requisitions.jpg" alt="Department requisitions"></a><figcaption>Department requisitions.</figcaption></figure>
+        <figure><a href="img/mod-store-stock.jpg" target="_blank"><img loading="lazy" src="img/mod-store-stock.jpg" alt="Store stock"></a><figcaption>Store stock.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="procurement">
+    <h2>Procurement</h2>
+    <span class="where">Procurement</span>
+    <p>Buying for every module. The Lab Inventory and the Pharmacy open the same screens filtered to their own purchases.</p>
+    <div class="flow"><span>Purchase requisition</span><i>→</i><span>Approvals by level</span><i>→</i><span>Quotations</span><i>→</i><span>Purchase order</span><i>→</i><span>Goods received (GRN)</span><i>→</i><span>Supplier bill (3-way match)</span><i>→</i><span>Supplier payment</span></div>
+    <ul>
+        <li><b>Purchase requisitions</b>: draft, approvals by level, quotations compared, supplier chosen › PO.</li>
+        <li><b>Purchase orders</b>: direct or from a quotation; approve, send, receive in parts.</li>
+        <li><b>Goods received (GRN)</b> and <b>Supplier bills</b>: the lab and the pharmacy enter the GRN and the bill in one step; the General Store can take a GRN alone and match the bill later (order = GRN = bill). Differences wait for an override.</li>
+        <li><b>Purchase returns</b> (debit notes), <b>Supplier payments</b>, <b>Suppliers</b>.</li>
+        <li>Setup: <b>Approval levels</b>, <b>Procurement rules</b> (how many quotations from which amount, match tolerances, PO terms). Reports: PO register, goods received not invoiced, supplier performance.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/mod-proc-requisitions.jpg" target="_blank"><img loading="lazy" src="img/mod-proc-requisitions.jpg" alt="Purchase requisitions"></a><figcaption>Purchase requisitions.</figcaption></figure>
+        <figure><a href="img/mod-proc-orders.jpg" target="_blank"><img loading="lazy" src="img/mod-proc-orders.jpg" alt="Purchase orders"></a><figcaption>Purchase orders.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="biomedical">
+    <h2>Biomedical</h2>
+    <span class="where">Biomedical</span>
+    <p><b>Dashboard</b>: devices down now, PM due / overdue, uptime %, calibrations due, contracts to renew. <b>Equipment register</b> with each device's history, calibration certificates and contracts. <b>Breakdown complaints</b> from the wards (also from the nurse portal) › a work order, or close with no fault. <b>Work orders</b> (PM work orders are made every morning; "Make due PMs" makes them now), <b>PM schedules</b>, <b>Calibrations</b>, <b>AMC / CMC contracts</b>. Reports: uptime, PM compliance, maintenance cost.</p>
+    <figure><a href="img/mod-biomedical.jpg" target="_blank"><img loading="lazy" src="img/mod-biomedical.jpg" alt="Biomedical dashboard"></a><figcaption>Biomedical dashboard.</figcaption></figure>
+</section>
+
+<section class="doc" id="cssd">
+    <h2>CSSD</h2>
+    <span class="where">CSSD</span>
+    <div class="flow"><span>Receive used tray</span><i>→</i><span>Wash</span><i>→</i><span>Pack</span><i>→</i><span>Steriliser cycle</span><i>→</i><span>Issue to OT / ward</span><i>→</i><span>Use on patient</span></div>
+    <p><b>Tray board</b> follows every tray round this loop. <b>Steriliser cycles</b> (results, late biological indicator, recall, pack labels), <b>Sterile packs</b>, <b>Traceability</b> (a pack label, tray, cycle or patient MRN shows the whole chain), <b>Trays received</b>, <b>Packs issued</b>, <b>Recalls</b>. Setup: instrument sets, trays, sterilisers, methods, CSSD rules (daily Bowie-Dick test, shelf life).</p>
+    <figure><a href="img/mod-cssd.jpg" target="_blank"><img loading="lazy" src="img/mod-cssd.jpg" alt="CSSD tray board"></a><figcaption>Tray board.</figcaption></figure>
+</section>
+
+<section class="doc" id="linen">
+    <h2>Linen &amp; laundry</h2>
+    <span class="where">Linen &amp; laundry</span>
+    <p><b>Linen board</b>: pieces of each type at the linen store, in every ward (against its par level) and at the laundry. <b>Linen moves</b>: receive new, issue to a ward, collect soiled, clean return of a laundry batch, condemn / loss. Setup: linen types and locations. Reports: stock vs par, laundry &amp; losses.</p>
+    <figure><a href="img/mod-linen.jpg" target="_blank"><img loading="lazy" src="img/mod-linen.jpg" alt="Linen board"></a><figcaption>Linen board.</figcaption></figure>
+</section>
+
+<!-- ============ MONEY ============ -->
+<section class="doc" id="pricing">
+    <h2>Pricing, packages and deposits</h2>
+    <span class="where">Billing › Pricing · Billing › Patient Deposits</span>
+    <p>Bills, receipts, refunds, shifts, the cash book and doctors' payouts are in the <a href="index.html#bills">User Manual</a>. The other Billing screens:</p>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Chargemaster</td><td>Every service the hospital charges for (bed day, visit, procedure, service) with its price.</td></tr>
+        <tr><td>Price Lists</td><td>Other prices for a panel or company.</td></tr>
+        <tr><td>Packages / Bought packages</td><td>Fixed-price packages (for example a normal delivery), and the packages patients bought.</td></tr>
+        <tr><td>Offers &amp; Discounts</td><td>Discount offers for a period.</td></tr>
+        <tr><td>Taxes</td><td>Tax rates on bills.</td></tr>
+        <tr><td>Patient Deposits</td><td>Advance money from a patient, used against later bills.</td></tr>
+        <tr><td>Share / commission rules, Doctor groups, Doctor payment models</td><td>How each doctor's share is worked out.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/mod-billing-chargemaster.jpg" target="_blank"><img loading="lazy" src="img/mod-billing-chargemaster.jpg" alt="Chargemaster"></a><figcaption>Chargemaster.</figcaption></figure>
+        <figure><a href="img/mod-billing-deposits.jpg" target="_blank"><img loading="lazy" src="img/mod-billing-deposits.jpg" alt="Patient deposits"></a><figcaption>Patient Deposits.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ MESSAGING ============ -->
+<section class="doc" id="messaging">
+    <h2>Messaging and WhatsApp</h2>
+    <span class="where">Messaging</span>
+    <p class="lead">How SMS, WhatsApp and e-mail leave the hospital, and a log of every message.</p>
+    <h3>1. Link your WhatsApp (QR)</h3>
+    <ol class="steps">
+        <li><b>Messaging › WhatsApp (QR)</b> › click <span class="b">Link WhatsApp</span>.</li>
+        <li>On the hospital's phone open WhatsApp › <b>Linked devices</b> › <b>Link a device</b>, and scan the code on the screen. The code refreshes by itself.</li>
+        <li>It shows <b>Connected: &lt;number&gt;</b>. <span class="b">Send test message</span> to check.</li>
+        <li>If the phone is logged out or off for long it shows <b>Disconnected</b>: press <span class="b">Show QR again</span> and scan. Until then messages go by SMS (when allowed) or wait.</li>
+    </ol>
+    <figure><a href="img/mod-msg-whatsapp.jpg" target="_blank"><img loading="lazy" src="img/mod-msg-whatsapp.jpg" alt="Link WhatsApp"></a><figcaption>Messaging › WhatsApp (QR).</figcaption></figure>
+    <h3>2. Gateways &amp; options</h3>
+    <p><span class="b">Add gateway</span>: one default gateway per channel (SMS, WhatsApp, e-mail), with its cost per message, and <b>Test</b>. Options: the order patient messages try (for example WhatsApp, then SMS), the default language, the name in messages, how documents go on WhatsApp (PDF, picture, or a text with a secure link) and what to do when the WhatsApp phone is disconnected.</p>
+    <div class="warn">"Messaging is NOT live on this server" means messages are only written to the log. TibuLab support switches it on when the gateways are ready.</div>
+    <h3>3. Automatic messages</h3>
+    <p>Switch each on in Options: <b>Bill registered</b>, <b>Payment receipt</b>, <b>Sample collected</b>, <b>Home collection booked</b>, <b>Rider on the way</b>, <b>Report copy to the referring doctor</b>, <b>IPD discharge</b>. "Report ready" is under Settings › Queue &amp; TV. Critical values go to the doctor, never to the patient.</p>
+    <h3>4. Message templates</h3>
+    <p>The text of each message, per event, channel and language (English and Urdu), with placeholders like <code>{patient}</code>, <code>{mrn}</code>, <code>{bill_no}</code>, <code>{amount}</code>, <code>{due}</code>, <code>{lab}</code>, <code>{report_link}</code>, <code>{date}</code>, <code>{rider}</code>.</p>
+    <figure><a href="img/mod-msg-templates.jpg" target="_blank"><img loading="lazy" src="img/mod-msg-templates.jpg" alt="Message templates"></a><figcaption>Message templates in English and Urdu.</figcaption></figure>
+    <h3>5. Delivery log</h3>
+    <p>Every message of every module: Queued, Sent, Delivered, Failed (tried again by itself), Skipped (opted out), with tries and cost. <span class="b">Send again</span> one message; <span class="b">Send queue now</span>. Filter by status and channel.</p>
+    <h3>6. Opt-outs and campaigns</h3>
+    <ul>
+        <li><b>Opt-outs</b>: numbers or e-mails that must get no messages (all channels or one, all messages or one kind), with a reason. Login codes and critical results still go.</li>
+        <li><b>Campaigns</b>: one message to many patients (health camp, vaccination drive): audience by gender, age, city, visit dates; <b>Count patients</b>, then <b>Send</b>. Opted-out patients are skipped.</li>
+    </ul>
+    <h3>"Send on WhatsApp" on a report, bill or prescription</h3>
+    <p>The button makes the document from the hospital's own print design and sends it (as PDF, picture or link). It goes in a moment; see the Delivery log.</p>
+    <div class="shots">
+        <figure><a href="img/mod-msg-gateways.jpg" target="_blank"><img loading="lazy" src="img/mod-msg-gateways.jpg" alt="Gateways"></a><figcaption>Gateways &amp; options.</figcaption></figure>
+        <figure><a href="img/mod-msg-log.jpg" target="_blank"><img loading="lazy" src="img/mod-msg-log.jpg" alt="Delivery log"></a><figcaption>Delivery log.</figcaption></figure>
+        <figure><a href="img/mod-msg-optouts.jpg" target="_blank"><img loading="lazy" src="img/mod-msg-optouts.jpg" alt="Opt-outs"></a><figcaption>Opt-outs.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="patientportal">
+    <h2>Patient portal</h2>
+    <span class="where">Settings › Patient portal</span>
+    <p>Patients open their own reports, bills and prescriptions and book appointments on their phone. There is no password: they log in with a code sent to their mobile.</p>
+    <ul>
+        <li><b>The hospital's portal</b>: <code>your-address/portal</code>. Print the address on receipts. The patient types his mobile number (or MR number) and the code. Menus: Reports, Appointments, Bills, Prescriptions, Profile (family on the same mobile). It can be added to the phone's home screen.</li>
+        <li><b>The TibuLab patient app</b> (<code>tibulab.com/my-reports</code>): one app for every TibuLab lab and hospital the patient visited. It also has <b>Security</b>: who viewed my records, and the switch <b>Share my records with other TibuLab hospitals</b>.</li>
+    </ul>
+    <p>Settings on this screen: <b>Open a report only when its bill is paid</b>, <b>Patients may book / move / cancel OPD appointments</b>, text on the login screen, whose name portal bookings are made in, what to share with the TibuLab patient app (reports, visits and appointments, prescriptions, bills), and the login code rules (how long a code is valid, wrong tries before a lock, days to stay logged in).</p>
+    <figure><a href="img/set-patient-portal.jpg" target="_blank"><img loading="lazy" src="img/set-patient-portal.jpg" alt="Patient portal settings"></a><figcaption>Settings › Patient portal.</figcaption></figure>
+</section>
+
+<!-- ============ SETTINGS ============ -->
+<section class="doc" id="settings">
+    <h2>Settings: every screen</h2>
+    <span class="where">Settings</span>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Business</td><td>Hospital / lab name, phone, address, NTN, licence no., logo, header and footer for receipts, labels and reports.</td></tr>
+        <tr><td>Locations</td><td>Each branch or campus; open one to add its labs (per floor), pharmacies, radiology rooms and counters.</td></tr>
+        <tr><td>Users</td><td>Logins: name, email, phone, password, role (decides the <a href="portals.html#whichportal">portal</a>), home location, discount limit, active. See <a href="portals.html#account">Give a login / reset a password</a>.</td></tr>
+        <tr><td>Roles &amp; Permissions</td><td>What each role can do, and its discount limit.</td></tr>
+        <tr><td>Report Layout, Signatures</td><td>Letterhead, paper size, and the pathologist's / radiologist's signature.</td></tr>
+        <tr><td>Print designs</td><td>Every printed document of the switched-on modules, its designs per business, location, department, doctor or user, and the designer.</td></tr>
+        <tr><td>My print design</td><td>Your own design: a doctor's prescription, a user's lab report.</td></tr>
+        <tr><td>Numbering</td><td>Prefix and next number of bills, receipts…</td></tr>
+        <tr><td>SMS &amp; WhatsApp</td><td>The message templates (same as Messaging › Message templates).</td></tr>
+        <tr><td>Patient titles, Patient relations</td><td>The lists used on the patient form (Mr, Mrs…; father, husband…).</td></tr>
+        <tr><td>Wards</td><td>Ward names for lab orders from the wards.</td></tr>
+        <tr><td>Devices &amp; Licence</td><td>How this install runs (cloud, local server, desktop), the licence, the cloud link, what waits to sync, failed items, <b>Sync now</b>. See <a href="install.html#sync">Cloud copy and sync</a>.</td></tr>
+        <tr><td>TV screens</td><td>Doctor doors, waiting halls and the lab hall: <b>Pair TV</b> or <b>Show on this PC's TV</b>. See <a href="install.html#tv">Queue and doctor TVs</a>.</td></tr>
+        <tr><td>Queue &amp; TV</td><td>Calls in English / Urdu, voice, pictures when the queue is quiet, and the "Report ready" message.</td></tr>
+        <tr><td>Subscription</td><td>Read only: plan, expiry and which modules this hospital has.</td></tr>
+        <tr><td>Integrations (FHIR / HL7)</td><td>Links to other systems (only when the plan has it).</td></tr>
+        <tr><td>Patient portal</td><td><a href="#patientportal">Above</a>.</td></tr>
+        <tr><td>Lookups</td><td>Countries, Provinces, Cities, Religions, Currencies.</td></tr>
+        <tr><td>Logs</td><td>Activity Log (who changed what), Recycle Bin (restore deleted items), Login History.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/set-locations.jpg" target="_blank"><img loading="lazy" src="img/set-locations.jpg" alt="Locations"></a><figcaption>Locations.</figcaption></figure>
+        <figure><a href="img/set-print-designs.jpg" target="_blank"><img loading="lazy" src="img/set-print-designs.jpg" alt="Print designs"></a><figcaption>Print designs.</figcaption></figure>
+        <figure><a href="img/set-tv-screens.jpg" target="_blank"><img loading="lazy" src="img/set-tv-screens.jpg" alt="TV screens"></a><figcaption>TV screens.</figcaption></figure>
+        <figure><a href="img/set-queue.jpg" target="_blank"><img loading="lazy" src="img/set-queue.jpg" alt="Queue and TV"></a><figcaption>Queue &amp; TV.</figcaption></figure>
+        <figure><a href="img/set-devices.jpg" target="_blank"><img loading="lazy" src="img/set-devices.jpg" alt="Devices and licence"></a><figcaption>Devices &amp; Licence.</figcaption></figure>
+        <figure><a href="img/set-subscription.jpg" target="_blank"><img loading="lazy" src="img/set-subscription.jpg" alt="Subscription"></a><figcaption>Subscription.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="system">
+    <h2>System health, downtime forms, kiosk</h2>
+    <span class="where">Admin</span>
+    <ul>
+        <li><b>System health</b>: disks, background workers, the scheduler, the Device Hub, backups (run now / preview), the message and FBR queues. See <a href="install.html#backup">Backups</a>.</li>
+        <li><b>Downtime forms</b>: a pack of blank paper forms (admission and others) to print when the system is down.</li>
+        <li><b>Kiosk settings</b>: walk-in self registration on a kiosk (on / off, texts, idle time).</li>
+        <li><b>Patients › Registry notices</b>: what TibuLab asked you to check ("the mobile may be wrong"). <b>Correct patient</b> or <b>Checked, nothing to change</b>.</li>
+    </ul>
+    <figure><a href="img/mod-system-health.jpg" target="_blank"><img loading="lazy" src="img/mod-system-health.jpg" alt="System health"></a><figcaption>System health.</figcaption></figure>
+</section>
+
+<section class="doc" id="central">
+    <h2>Central back office (TibuLab staff only)</h2>
+    <span class="where">tibulab.com/central</span>
+    <p>This is not part of a hospital's TibuLab. It is the platform owner's back office, for TibuLab staff: pending registrations, labs &amp; hospitals (tenants), sync and held entries, subscriptions, invoices, payment proofs, plans and features (modules), backups, WhatsApp devices, the patient registry (search people, duplicate reviews, wrong links, merge history), patient portal accounts and the OTP log. Hospitals never sign in here; they use their own address.</p>
+    <div class="tip">To switch a module on or off, or change a plan, contact TibuLab support. The hospital sees its plan in <b>Settings › Subscription</b>.</div>
+    <p class="lead">Page checked against TibuLab on 06-11-2026.</p>
+    <p><a href="index.html">← Back to the User Manual</a></p>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('manual-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark'
+            || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('manual-theme', next); } catch (e) {}
+    });
+
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.doc'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+
+    function clearMarks(node) {
+        Array.prototype.slice.call(node.querySelectorAll('mark')).forEach(function (m) {
+            m.replaceWith(document.createTextNode(m.textContent));
+        });
+        node.normalize();
+    }
+    function highlight(node, q) {
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null), hits = [], n;
+        while ((n = walker.nextNode())) { if (n.nodeValue.toLowerCase().indexOf(q) !== -1) hits.push(n); }
+        hits.forEach(function (t) {
+            var i = t.nodeValue.toLowerCase().indexOf(q);
+            var rest = t.splitText(i); rest.splitText(q.length);
+            var m = document.createElement('mark'); m.textContent = rest.nodeValue;
+            rest.parentNode.replaceChild(m, rest);
+        });
+    }
+    document.getElementById('q').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        sections.forEach(function (s) {
+            clearMarks(s);
+            var hit = !q || s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.classList.toggle('hidden', !hit);
+            if (hit) { shown++; if (q) highlight(s, q); }
+        });
+        document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    });
+
+    links.forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav.toc').classList.remove('open'); }); });
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        sections.forEach(function (s) { io.observe(s); });
+    }
+})();
+</script>
+</body>
+</html>

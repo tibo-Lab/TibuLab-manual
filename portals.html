@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TibuLab Portals</title>
+<meta name="description" content="Portals: one simple screen per job. Doctor, nurse, sample room, front desk, admission desk, lab, radiology, pharmacy and ER, step by step with pictures and flow drawings.">
+<style>
+:root {
+    --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8;
+    --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --bg: #f4f6f8; --card: #ffffff; --code: #f1f5f9;
+    --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6;
+    --radius: 14px; --on-primary: #ffffff;
+    --c-rec: #176bad; --c-lab: #7c3aed; --c-mac: #0f766e; --c-doc: #be123c; --c-sys: #475569;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+        --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+        --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+        --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+        --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+    }
+}
+:root[data-theme="dark"] {
+    --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+    --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+    --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+    --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+    --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--primary-2); }
+header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+.logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-size: 15px; }
+.search { flex: 1; max-width: 420px; margin-left: auto; }
+.search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
+.tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.menu-btn { display: none; }
+.layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
+nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
+nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 15px; }
+nav.toc a:hover, nav.toc a.active { background: var(--primary-soft); color: var(--primary); }
+main { padding: 28px 32px 80px; min-width: 0; }
+section.doc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px; }
+section.doc.hidden { display: none; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 0 0 6px; }
+h3 { font-size: 18px; margin: 26px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 6px; }
+.where { display: inline-block; margin: 2px 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 600; }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 12px 44px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.b { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.tip, .warn { border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.tip { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+code { padding: 1px 6px; border-radius: 5px; background: var(--code); font-size: 14px; overflow-wrap: anywhere; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+.cards a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--text); background: var(--bg); }
+.cards a:hover { border-color: var(--primary-2); }
+.cards b { display: block; color: var(--primary); }
+.cards small { color: var(--muted); }
+figure { margin: 14px 0 20px; }
+figure a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.shots figure { margin: 0; }
+.noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
+mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0; }
+.flow span { padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; }
+.flow i { color: var(--muted); font-style: normal; }
+.login-link { display: inline-block; margin: 0 0 6px 8px; font-size: 14px; }
+.faq dt { font-weight: 700; margin-top: 12px; }
+.faq dd { margin: 2px 0 0; color: var(--text); }
+/* flow drawing: box, arrow down, box (same as the installation guide) */
+.vflow { list-style: none; padding: 0; margin: 16px 0 22px; max-width: 760px; }
+.vflow > li { position: relative; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; margin: 0 0 30px; }
+.vflow > li:last-child { margin-bottom: 0; }
+.vflow > li:not(:last-child)::after { content: ""; position: absolute; left: 30px; top: calc(100% + 3px); width: 2px; height: 17px; background: var(--muted); }
+.vflow > li:not(:last-child)::before { content: ""; position: absolute; left: 25px; top: calc(100% + 18px); border-style: solid; border-width: 8px 6px 0 6px; border-color: var(--muted) transparent transparent transparent; }
+.vflow .h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.vflow .h b { font-size: 16px; }
+.vflow p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.who { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--card); background: var(--c-sys); }
+.vflow .r-rec { border-left-color: var(--c-rec); } .r-rec .who { background: var(--c-rec); }
+.vflow .r-lab { border-left-color: var(--c-lab); } .r-lab .who { background: var(--c-lab); }
+.vflow .r-mac { border-left-color: var(--c-mac); } .r-mac .who { background: var(--c-mac); }
+.vflow .r-doc { border-left-color: var(--c-doc); } .r-doc .who { background: var(--c-doc); }
+.vflow .r-ok { border-left-color: var(--ok); } .r-ok .who { background: var(--ok); }
+.vflow .r-warn { border-left-color: var(--warn); } .r-warn .who { background: var(--warn); }
+.vflow > li.split { background: none; border: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vflow > li.split::after { left: 36px; } .vflow > li.split::before { left: 31px; }
+.vflow > li.split > div { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; }
+.vflow > li.split > div.r-ok { border-left-color: var(--ok); } .vflow > li.split > div.r-warn { border-left-color: var(--warn); } .vflow > li.split > div.r-doc { border-left-color: var(--c-doc); } .vflow > li.split > div.r-rec { border-left-color: var(--c-rec); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c-sys); }
+.legend .l-rec::before { background: var(--c-rec); } .legend .l-lab::before { background: var(--c-lab); } .legend .l-mac::before { background: var(--c-mac); } .legend .l-doc::before { background: var(--c-doc); } .legend .l-ok::before { background: var(--ok); }
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; position: fixed; inset: 65px 0 0 0; z-index: 15; background: var(--card); height: auto; border: 0; }
+    nav.toc.open { display: block; }
+    .menu-btn { display: inline-block; }
+    main { padding: 18px 16px 60px; }
+    section.doc { padding: 20px 16px; }
+    .search { max-width: none; }
+    .brand span.name { display: none; }
+    table { display: block; overflow-x: auto; }
+}
+@media (max-width: 640px) { .vflow > li.split { grid-template-columns: 1fr; } }
+@media print {
+    header.top, nav.toc { display: none; }
+    .layout { display: block; }
+    body { background: #fff; }
+    section.doc { border: 0; padding: 0 0 12px; }
+    section.doc.hidden { display: block; }
+    figure, .vflow > li, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
+    <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab Portals</span></a>
+    <div class="search"><input id="q" type="search" placeholder="Search the portals… (e.g. handover, MAR, triage)" aria-label="Search this page"></div>
+    <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+    <a href="index.html">← User Manual</a>
+    <a href="hospital.html">Hospital modules</a>
+    <a href="admin.html">Admin, messaging, settings</a>
+    <div class="grp">Start</div>
+    <a href="#start">What a portal is</a>
+    <a href="#whichportal">Which role opens which portal</a>
+    <a href="#signin">Signing in (email or mobile)</a>
+    <a href="#account">Give a login / reset a password</a>
+    <a href="#viewas">Owner / admin: "View as"</a>
+    <div class="grp">The portals</div>
+    <a href="#doctor">Doctor</a>
+    <a href="#nurse">Nurse</a>
+    <a href="#collection">Sample room</a>
+    <a href="#desk">Front desk</a>
+    <a href="#admission">Admission desk</a>
+    <a href="#laboratory">Lab</a>
+    <a href="#imaging">Radiology</a>
+    <a href="#dispensary">Pharmacy</a>
+    <a href="#emergency">ER</a>
+    <div class="grp">Help</div>
+    <a href="#faq">Questions for every portal</a>
+    <a href="install.html#staff">IT: staff, roles and portals</a>
+</nav>
+
+<main>
+<div class="noresult" id="noresult">Nothing found. Try another word.</div>
+
+<!-- ============ START ============ -->
+<section class="doc" id="start">
+    <h1>Portals: one simple screen per job</h1>
+    <p class="lead">A doctor, a nurse or a sample collector does one job all day. A <b>portal</b> is a screen made only for that job. It has a short menu of tabs at the top, no big sidebar, and a <b>home page that is a worklist</b>: "what is waiting for me now", most urgent first. The pictures come from the demo hospital with made-up patients.</p>
+    <ul>
+        <li>The portal opens <b>by itself</b> after sign-in. The role of the login decides which one.</li>
+        <li>It works on a PC, a tablet and a phone. On a phone the tabs scroll sideways and tables turn into cards.</li>
+        <li>Lists refresh by themselves (every 15 to 30 seconds). <span class="b">Refresh</span> does it at once.</li>
+        <li>The top bar has your name, <b>UR / EN</b> (Urdu or English), <span class="b">Help</span> (this manual) and <span class="b">Sign out</span>. Some portals also have a printer icon: <b>My print design</b>.</li>
+        <li>Staff in a portal see only their own location (the one in the top bar) and, for doctors and nurses, only their own patients.</li>
+    </ul>
+    <div class="cards">
+        <a href="#doctor"><b>Doctor</b><small>Today, OPD, my patients, results, Rx</small></a>
+        <a href="#nurse"><b>Nurse</b><small>My shift, MAR, vitals, tasks, handover</small></a>
+        <a href="#collection"><b>Sample room</b><small>Waiting, tubes, reports ready, rider</small></a>
+        <a href="#desk"><b>Front desk</b><small>New bill, OPD token, cash register</small></a>
+        <a href="#admission"><b>Admission desk</b><small>Admit, beds, deposits, discharges</small></a>
+        <a href="#laboratory"><b>Lab</b><small>Receive tubes, results, verify, critical</small></a>
+        <a href="#imaging"><b>Radiology</b><small>Scan, images, report, sign</small></a>
+        <a href="#dispensary"><b>Pharmacy</b><small>Rx to dispense, requisitions, expiry</small></a>
+        <a href="#emergency"><b>ER</b><small>Triage board, arrivals, ambulance</small></a>
+    </div>
+    <div class="tip"><b>Owner, manager, accountant, HR</b> and other back-office staff do not get a portal. They use the full app with the sidebar: see the <a href="index.html">User Manual</a>, <a href="hospital.html">Hospital modules</a> and <a href="admin.html">Admin, messaging and settings</a>.</div>
+</section>
+
+<section class="doc" id="whichportal">
+    <h2>Which role opens which portal</h2>
+    <p class="lead">The owner gives each login one role in <b>Settings › Users</b>. These roles open a portal. All other roles open the full app.</p>
+    <table>
+        <tr><th>Portal</th><th>Address</th><th>Roles (name in Settings › Users)</th></tr>
+        <tr><td><a href="#doctor">Doctor</a></td><td><code>/doctor</code></td><td>Doctor (Consultant)</td></tr>
+        <tr><td><a href="#nurse">Nurse</a></td><td><code>/nurse</code></td><td>Nurse</td></tr>
+        <tr><td><a href="#collection">Sample room</a></td><td><code>/collection</code></td><td>Sample Collector, Rider</td></tr>
+        <tr><td><a href="#desk">Front desk</a></td><td><code>/desk</code></td><td>Receptionist</td></tr>
+        <tr><td><a href="#admission">Admission desk</a></td><td><code>/admission</code></td><td>Admission / IPD Billing</td></tr>
+        <tr><td><a href="#laboratory">Lab</a></td><td><code>/laboratory</code></td><td>Lab Technician, Pathologist</td></tr>
+        <tr><td><a href="#imaging">Radiology</a></td><td><code>/imaging</code></td><td>Radiographer / Technologist, Radiologist</td></tr>
+        <tr><td><a href="#dispensary">Pharmacy</a></td><td><code>/dispensary</code></td><td>Pharmacist, Pharmacy Assistant</td></tr>
+        <tr><td><a href="#emergency">ER</a></td><td><code>/emergency</code></td><td>ER Medical Officer, ER / Triage Nurse, Medico-Legal Officer, Ambulance Dispatcher</td></tr>
+    </table>
+    <ul>
+        <li>A portal login that types another address (for example <code>/dashboard</code>) is sent back to its own portal.</li>
+        <li>A menu tab shows only when the hospital's plan has that module and the role may use it. For example, <b>Duty</b> shows only when the duty roster module is on.</li>
+        <li>One person, two jobs: ask the owner for a second login with the other role. A portal role is never widened.</li>
+    </ul>
+</section>
+
+<section class="doc" id="signin">
+    <h2>Signing in: email or mobile</h2>
+    <span class="where">Your hospital's address › Sign in</span>
+    <ol class="steps">
+        <li>Open the hospital's address in Chrome or Edge (on a phone too).</li>
+        <li>In <b>Email or mobile number</b> type your email, or the mobile number saved on your login (for example 0300 1234567).</li>
+        <li>Type your <b>Password</b> and click <span class="b">Sign in</span>. Your portal opens.</li>
+    </ol>
+    <div class="warn">"Email or password is incorrect." means a typing mistake, or your login is blocked. After many wrong tries you must wait a minute. Forgot the password? Ask the owner or HR to set a new one (<a href="#account">next section</a>).</div>
+</section>
+
+<section class="doc" id="account">
+    <h2>Give a staff member a login / reset a password</h2>
+    <p class="lead">For the owner, administrator or HR. Every person gets their <b>own login</b>. Never share one login: everything is saved under the name of the person signed in.</p>
+    <p>There are two places to do it. Both change the same login.</p>
+    <h3>Way 1: Settings › Users (owner / administrator)</h3>
+    <ol class="steps">
+        <li>Open <b>Settings › Users</b> and click <span class="b">Add</span>.</li>
+        <li>Fill <b>Name</b>, <b>Email</b>, <b>Phone</b> (the mobile they may sign in with), <b>Password</b> (at least 8 letters / digits), <b>Role</b>, <b>Home location</b>, <b>Discount limit</b> (empty = the role's limit), <b>Active</b>, and <b>Also works in locations</b> if they work in more than one place.</li>
+        <li>Save. Tell the person their email or mobile and the password.</li>
+    </ol>
+    <ul>
+        <li><b>Reset a password:</b> click the pencil on the user, type a new <b>Password</b>, <span class="b">Save</span>. Left empty, the password stays as it was.</li>
+        <li><b>Block a login</b> (a leaver, a lost phone): edit the user and switch <b>Active</b> off. Never delete a user: their past work keeps their name.</li>
+        <li><b>The role decides the portal</b> (table above). Changing the role changes the portal at the next sign-in.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/set-users-list.jpg" target="_blank"><img loading="lazy" src="img/set-users-list.jpg" alt="Users list"></a><figcaption>Settings › Users: name, email, role, location, discount limit, active.</figcaption></figure>
+        <figure><a href="img/set-user-form.jpg" target="_blank"><img loading="lazy" src="img/set-user-form.jpg" alt="Edit user"></a><figcaption>Edit · User: a new password, the role, Active.</figcaption></figure>
+    </div>
+    <h3>Way 2: from the HR employee profile (Login &amp; password)</h3>
+    <p>An employee record in HR is not a login by itself. You can give the employee a login from his profile, so the login and the employee are joined:</p>
+    <ol class="steps">
+        <li><b>HR &amp; Payroll › Employees</b>, open the employee, tab <b>Roles</b>.</li>
+        <li>In <b>Login &amp; password</b>: email (the employee's email is filled in), <b>Mobile</b>, <b>Password</b> and <b>Role (decides the portal they open)</b>. Click <span class="b">Create login</span>.</li>
+        <li>Later, on the same card: <b>New password</b> › <span class="b">Set password</span>, or <span class="b">Block login</span> / <span class="b">Unblock login</span>. Only the owner can change the owner's password.</li>
+    </ol>
+    <figure><a href="img/hr-employee-login.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-login.jpg" alt="Login and password card"></a><figcaption>Employee profile › Roles › Login &amp; password, for an employee who cannot sign in yet.</figcaption></figure>
+    <h3>Doctors and nurses: login joined to the HR record</h3>
+    <p>A doctor is one HR employee with the Doctor part filled in (<b>OPD › Setup › Doctors</b> or <b>Billing › Referring Doctors</b>; both open the same form). The doctor portal finds "his" queue, patients and earnings through this link. If a doctor sees <i>"Your login is not linked to a doctor in HR"</i>, open his employee profile and create (or join) the login in <b>Roles › Login &amp; password</b>. The same goes for a nurse: her login and her HR record must be one person, so her duty roster finds her ward.</p>
+    <div class="tip">Linking a login to the employee also lets HR approve requests and payroll with that login, and lets a doctor open his own <b>My print design</b> from his profile.</div>
+</section>
+
+<section class="doc" id="viewas">
+    <h2>Owner / admin: open any portal with "View as"</h2>
+    <span class="where">Your name (top right) › Portals</span>
+    <p>The owner and administrator can open every portal, to work there or to check what a staff member sees.</p>
+    <ol class="steps">
+        <li>Click your name at the top right. Under <b>Portals</b> pick one: Doctor portal, Nurse portal, Sample room portal, Front desk portal, Admission desk portal, Lab portal, Radiology portal, ER portal, Pharmacy portal.</li>
+        <li>A blue <b>View as</b> bar appears at the top. In the doctor portal choose a doctor; in the nurse portal choose a ward. The other portals show the location chosen in the header.</li>
+        <li>The bar has buttons to jump to the other portals, and <span class="b">Back to TibuLab</span> to go back to the full app.</li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/admin-portals-menu.jpg" target="_blank"><img loading="lazy" src="img/admin-portals-menu.jpg" alt="Portals menu"></a><figcaption>Your name › Portals.</figcaption></figure>
+        <figure><a href="img/admin-view-as.jpg" target="_blank"><img loading="lazy" src="img/admin-view-as.jpg" alt="View as bar"></a><figcaption>The View as bar: here the doctor portal, as Dr. Ayesha Siddiqui sees it.</figcaption></figure>
+    </div>
+    <div class="warn">Work done in "View as" is saved under <b>your</b> name, not the doctor's or the nurse's.</div>
+</section>
+
+<!-- ============ DOCTOR ============ -->
+<section class="doc" id="doctor">
+    <h2>Doctor portal</h2>
+    <span class="where">/doctor</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> consultants and OPD doctors (role Doctor (Consultant)). On a PC in the OPD room, and on a phone or tablet on ward rounds.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>Today</td><td>Home. What waits for you, most urgent first: ICU alarms and abnormal vitals, critical lab results, prescriptions and notes waiting for your signature, new results, rounds not done today, discharges with no summary, your admission advice. Under it: today's counts (waiting, seen, booked not arrived, ward and ICU patients, OT cases).</td></tr>
+        <tr><td>OPD</td><td>Your OPD desk: queue, patient, notes, prescription pad, tests, advice, referral / admission, certificate.</td></tr>
+        <tr><td>My patients</td><td>Your admitted patients by ward and bed (ICU beds with live values). Filters: All, Round not done, ICU, Alerts. <b>Also seeing</b> = another consultant's patients you were called to see. <b>Nurse handover</b> shows the ward's last handover.</td></tr>
+        <tr><td>Results</td><td><b>To review</b> (tests you ordered in OPD) and <b>My patients' reports</b> (lab and radiology).</td></tr>
+        <tr><td>Prescriptions</td><td><b>To sign</b> (typed by your assistant or the pharmacy), <b>My Rx templates</b>, <b>My note templates</b>, <b>My pad buttons</b>.</td></tr>
+        <tr><td>Appointments</td><td>Your appointments for the coming days and your weekly OPD sittings.</td></tr>
+        <tr><td>Earnings</td><td>Your shares, payouts (gross, tax, net) and balance.</td></tr>
+        <tr><td>Duty</td><td>Your coming duties from the published roster, and duty swap requests.</td></tr>
+    </table>
+    <figure><a href="img/portal-doctor-today.jpg" target="_blank"><img loading="lazy" src="img/portal-doctor-today.jpg" alt="Doctor portal Today"></a><figcaption>Today: new results, rounds not done, admission advice.</figcaption></figure>
+    <h3>An OPD patient, step by step</h3>
+    <ol class="vflow" aria-label="Doctor OPD flow">
+        <li class="r-rec"><div class="h"><b>1. Token</b><span class="who">Front desk</span></div><p>The patient gets an OPD token or checks in an appointment. He appears in your queue.</p></li>
+        <li class="r-doc"><div class="h"><b>2. Call next (F2)</b><span class="who">Doctor</span></div><p>The token shows on the TV with voice. Recall (F3) calls again; Not present sends him to the end.</p></li>
+        <li class="r-doc"><div class="h"><b>3. Vitals and notes</b><span class="who">Doctor or assistant</span></div><p>BP, pulse, temp, SpO2, weight, sugar › Save vitals. Complaint, examination, diagnosis (ICD-10).</p></li>
+        <li class="r-doc"><div class="h"><b>4. Prescription and tests</b><span class="who">Doctor</span></div><p>Search a medicine or pick a template. Dose like 1+0+1, meal timing, days; the Urdu line and the quantity fill in. Lab / X-ray tab for tests.</p></li>
+        <li class="split">
+            <div class="r-doc"><div class="h"><b>Done today</b></div><p>Advice &amp; follow-up date › Print Rx › Finish &amp; call next.</p></div>
+            <div class="r-warn"><div class="h"><b>Come back with reports</b></div><p>The tests are billed at the desk. When results are verified they show on Today and in his visit.</p></div>
+        </li>
+        <li class="r-ok"><div class="h"><b>5. After the visit</b><span class="who">Others</span></div><p>Pharmacy dispenses the Rx. Or Refer / Admit › Advise admission: the admission desk admits him to your ward.</p></li>
+    </ol>
+    <div class="legend"><span class="l-rec">Front desk</span><span class="l-doc">Doctor</span><span class="l-ok">Pharmacy / admission</span></div>
+    <h3>The OPD desk</h3>
+    <ul>
+        <li><b>Top:</b> <span class="b">Call next</span> (F2), <span class="b">Recall</span> (F3), <span class="b">Not present</span>, <span class="b">Break</span>, <span class="b">TV</span>, your tokens and today's appointments, counts.</li>
+        <li><b>Patient bar:</b> token, name, age / sex, MRN, allergies in red, last visit, then the vitals row with <span class="b">Save vitals</span>.</li>
+        <li><b>Left:</b> complaint (note-template chips), examination, diagnosis, <b>More notes</b>; under it <b>Reports</b> (new and abnormal marked), <b>Visits</b> (with <span class="b">Repeat this Rx</span>) and <b>Allergies / problems</b>. <span class="b">Record</span> opens the full patient record.</li>
+        <li><b>Right, tabs:</b> <b>Prescription</b>, <b>Lab / X-ray</b>, <b>Advice &amp; follow-up</b> (3 days, 1 week, 2 weeks, 1 month), <b>Refer / Admit</b> (<span class="b">Advise admission</span>), <b>Certificate</b>.</li>
+        <li><b>Bottom:</b> <span class="b">Save</span> (Ctrl+S), <span class="b">Print Rx</span> (preview first), <span class="b">Finish</span>, <span class="b">Finish &amp; call next</span> (Ctrl+Enter).</li>
+        <li>On a tablet the desk becomes big steps: Vitals &amp; Notes, Prescription, Tests, Reports / History, Finish.</li>
+        <li>A doctor who writes on paper: the counter types the paper Rx (OPD › Paper prescription). <b>Write it here this time</b> switches the pad on for one visit.</li>
+    </ul>
+    <figure><a href="img/portal-doctor-opd.jpg" target="_blank"><img loading="lazy" src="img/portal-doctor-opd.jpg" alt="Doctor OPD desk"></a><figcaption>OPD: Call next, Recall, Not present, Break, TV and the queue strip.</figcaption></figure>
+    <h3>Templates, pad buttons and print design</h3>
+    <ul>
+        <li><b>Prescriptions › My Rx templates › New template</b>: name, medicines, tests, advice. On the desk pick the template and all lines are added. A shared template is copied with <b>Duplicate</b> before changing it.</li>
+        <li><b>My note templates</b>: ready text for complaint and examination.</li>
+        <li><b>My pad buttons</b>: which dose, meal and route buttons show on your pad, their order, your days buttons and your own frequencies (with Urdu). <span class="b">Save my pad</span>.</li>
+        <li><b>My print design</b> (printer icon at the top): how your Rx prints. Pick one: <b>My printed pad</b> (TibuLab prints only the patient line, medicines and follow-up in the blank space; drag the boxes, test print with a mm grid), <b>My letterhead picture</b> (your letterhead picture on plain A5 / A4), or <b>Design in TibuLab</b>. Dates print DD-MM-YYYY.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/portal-doctor-prescriptions.jpg" target="_blank"><img loading="lazy" src="img/portal-doctor-prescriptions.jpg" alt="Prescriptions"></a><figcaption>Prescriptions: To sign, templates, pad buttons.</figcaption></figure>
+        <figure><a href="img/portal-doctor-results.jpg" target="_blank"><img loading="lazy" src="img/portal-doctor-results.jpg" alt="Results"></a><figcaption>Results: to review, and all reports of your patients.</figcaption></figure>
+    </div>
+    <h3>Ward and ICU rounds</h3>
+    <ol class="steps">
+        <li><b>My patients</b>: tap a patient. The admission chart opens with only the clinical tabs: <b>Doctor</b> (round note and orders), <b>MAR</b> and <b>Nursing</b> (read only for you), <b>Discharge</b>.</li>
+        <li>Write the round note. Add orders: medicine (dose, route, how often, when needed), diet, lab, X-ray, an order set, or stop an order. The nurse must read every new order.</li>
+        <li>ICU bed: live HR / SpO2 / BP / RR / Temp and alarms. Acknowledge an alarm on Today.</li>
+        <li>Going home: <span class="b">Order discharge</span>, write the <b>Discharge summary</b> with the medicines on discharge (they go to the pharmacy as one Rx), <span class="b">Print summary</span>. Clearance, the final bill and the discharge itself are done by the admission desk.</li>
+    </ol>
+    <figure><a href="img/portal-doctor-ward.jpg" target="_blank"><img loading="lazy" src="img/portal-doctor-ward.jpg" alt="My patients"></a><figcaption>My patients: by ward and bed, round done or not.</figcaption></figure>
+    <h3>The TV in your room</h3>
+    <p><span class="b">TV</span> on the OPD desk shows your queue on the TV plugged into this PC by HDMI (<b>Show on this PC's TV</b>). With the TibuLab Print Helper it opens by itself every morning. See <a href="install.html#tv">Queue and doctor TVs</a>.</p>
+    <div class="tip"><b>Who did it:</b> every note, order, prescription and signature is saved under the doctor signed in. An assistant's typing waits in <b>To sign</b> for you.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>I see "Your login is not linked to a doctor in HR".</dt><dd>Ask the owner to join your login to your HR record (<a href="#account">Way 2</a>).</dd>
+        <dt>A patient is not in My patients.</dt><dd>You only see patients where you are consultant or admitting doctor, or wrote a note or order. Others are not shown.</dd>
+        <dt>A critical result is on Today.</dt><dd>Read it and click <span class="b">I have read it</span>. The lab sees that you read it.</dd>
+        <dt>The Rx prints in the wrong place on my pad.</dt><dd>My print design › My printed pad: test print, then move the boxes 1 mm at a time.</dd>
+    </dl>
+</section>
+
+<!-- ============ NURSE ============ -->
+<section class="doc" id="nurse">
+    <h2>Nurse portal</h2>
+    <span class="where">/nurse</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> ward and ICU nurses (role Nurse). On the nursing station PC or a tablet. It knows your ward from today's <b>duty roster</b>. With no duty today, <b>Choose your ward</b>: this device remembers it.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>My shift</td><td>Home. ICU alarms on your beds, critical lab values, late / missed medicines, vitals out of range, <b>doctor orders to read</b>, medicines due now, vitals due, care tasks due, arrivals, discharges ordered, handover to accept. Counts: patients, free beds, late doses, vitals due, tasks due.</td></tr>
+        <tr><td>Patients</td><td>The bed board of your ward: patient, consultant, day of stay, alerts, next medicine time. Filters All, With alerts, Going home.</td></tr>
+        <tr><td>MAR</td><td>Medicine round: every dose due in the next 1, 2 or 4 hours, bed by bed, late ones in red.</td></tr>
+        <tr><td>Vitals</td><td>Vitals round: one row per patient, due ones first; ICU beds show the monitor reading to check.</td></tr>
+        <tr><td>Tasks</td><td>Care tasks: to do and done this shift.</td></tr>
+        <tr><td>Handover</td><td>Give the end-of-shift handover and accept the one given to you.</td></tr>
+        <tr><td>Requests</td><td>Pharmacy requisition, store requisition, linen, CSSD, equipment complaint, housekeeping, report an incident, duty swaps (only the ones your hospital uses).</td></tr>
+    </table>
+    <figure><a href="img/portal-nurse-shift.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-shift.jpg" alt="Nurse My shift"></a><figcaption>My shift: an ICU nurse's worklist from the roster.</figcaption></figure>
+    <h3>A shift, step by step</h3>
+    <ol class="vflow" aria-label="Nurse shift flow">
+        <li class="r-rec"><div class="h"><b>1. Accept the handover</b><span class="who">Nurse</span></div><p>My shift › Handover to accept: read each patient's SBAR and accept.</p></li>
+        <li class="r-doc"><div class="h"><b>2. Read new doctor orders</b><span class="who">Nurse</span></div><p>Every new or stopped order: read it and tap <b>I have read it</b>. The doctor sees who read it and when.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Medicine round (MAR)</b><span class="who">Nurse</span></div><p><b>Given</b>, or <b>Not given</b> with why (nil by mouth, away, vomiting, not available, doctor asked to hold, BP too low). Not given goes to the doctor's Today.</p></li>
+        <li class="r-rec"><div class="h"><b>4. Vitals and tasks</b><span class="who">Nurse</span></div><p>Vitals round: type the values. ICU: check the monitor reading. Tasks: Done or Skip.</p></li>
+        <li class="split">
+            <div class="r-warn"><div class="h"><b>Something wrong?</b></div><p>Out-of-range vitals, alarms and missed doses go to the doctor's Today by themselves.</p></div>
+            <div class="r-rec"><div class="h"><b>Ward needs</b></div><p>Requests: medicines from pharmacy, store items, linen, equipment complaint.</p></div>
+        </li>
+        <li class="r-ok"><div class="h"><b>5. Give the handover</b><span class="who">Nurse</span></div><p>Handover › Give handover: Situation, Background, Assessment, Recommendation for each patient.</p></li>
+    </ol>
+    <h3>One patient</h3>
+    <p>Patients › tap the bed. Tabs: <b>Medicines</b> (give / held / refused with reason), <b>Vitals</b> (enter), <b>In / Out</b> (fluid balance), <b>Notes</b> (nursing note), <b>Tasks</b>, <b>Orders</b> (the doctor's running orders, read only), <b>Profile</b> (the patient record). A nurse cannot write medicine orders.</p>
+    <div class="shots">
+        <figure><a href="img/portal-nurse-patients.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-patients.jpg" alt="Patients"></a><figcaption>Patients: the bed board of the ward.</figcaption></figure>
+        <figure><a href="img/portal-nurse-mar.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-mar.jpg" alt="MAR"></a><figcaption>MAR: Given or Not given.</figcaption></figure>
+        <figure><a href="img/portal-nurse-vitals.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-vitals.jpg" alt="Vitals round"></a><figcaption>Vitals round.</figcaption></figure>
+        <figure><a href="img/portal-nurse-handover.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-handover.jpg" alt="Handover"></a><figcaption>Handover (SBAR).</figcaption></figure>
+        <figure><a href="img/portal-nurse-requests.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-requests.jpg" alt="Requests"></a><figcaption>Requests to other departments.</figcaption></figure>
+    </div>
+    <div class="tip"><b>Who did it:</b> every dose, vital, note, task and "I have read it" is saved under the nurse signed in. Never chart on another nurse's login.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>I see "Choose your ward".</dt><dd>You have no duty on today's roster. Pick your ward; ask the in-charge to fill the roster (Duty roster › Monthly roster).</dd>
+        <dt>A patient says "not in your ward today".</dt><dd>He moved to another ward, or you are on another ward's roster.</dd>
+        <dt>A medicine is not in the ward stock.</dt><dd>Requests › Pharmacy requisition. Your ward's store is already chosen.</dd>
+    </dl>
+</section>
+
+<!-- ============ SAMPLE ROOM ============ -->
+<section class="doc" id="collection">
+    <h2>Sample room portal</h2>
+    <span class="where">/collection</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> sample collectors (role Sample Collector) and riders (role Rider). The same counter that takes the sample also hands over the report.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>Waiting</td><td>Home. Patients waiting for a sample: urgent / ER / IPD first (red), then by token. Tube colours, fasting, notes. Counts: waiting, collected today, rejected today, reports ready.</td></tr>
+        <tr><td>Collected today</td><td>Tubes collected today: reprint labels, reject / recollect.</td></tr>
+        <tr><td>Rejected</td><td>Tubes rejected today, the reason, and whether a new sample was taken.</td></tr>
+        <tr><td>Reports ready</td><td>The report counter: verified reports not handed over yet.</td></tr>
+        <tr><td>Home collection</td><td>A rider's home visits of the day (the collector sees every rider's).</td></tr>
+        <tr><td>Sample batches</td><td>Tubes sent to another location's lab (only with more than one location).</td></tr>
+    </table>
+    <figure><a href="img/portal-collection-waiting.jpg" target="_blank"><img loading="lazy" src="img/portal-collection-waiting.jpg" alt="Sample room Waiting"></a><figcaption>Waiting: Call, Print labels, Collected, and More (…).</figcaption></figure>
+    <h3>From sample to report handover</h3>
+    <ol class="vflow" aria-label="Sample room flow">
+        <li class="r-rec"><div class="h"><b>1. Bill with lab tests</b><span class="who">Front desk</span></div><p>The patient appears on Waiting by himself.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Call</b><span class="who">Sample room</span></div><p>The lab hall TV shows the token and the voice calls it. <b>Call again</b> repeats it.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Print labels, take the sample</b><span class="who">Sample room</span></div><p>Stick one barcode label on each tube. Then <b>Collected</b> (or <b>Collect … only</b> for one tube). Not here? More › <b>Not present</b>.</p></li>
+        <li class="r-lab"><div class="h"><b>4. Lab tests it</b><span class="who">Lab</span></div><p>The lab receives the tube, enters and verifies the results.</p></li>
+        <li class="r-rec"><div class="h"><b>5. Reports ready › Call</b><span class="who">Sample room</span></div><p>The TV calls the patient to the report counter (Urdu and English).</p></li>
+        <li class="r-ok"><div class="h"><b>6. Hand over</b><span class="who">Sample room</span></div><p>Due money first, print the report, write who collected it.</p></li>
+    </ol>
+    <div class="legend"><span class="l-rec">Desk / sample room</span><span class="l-lab">Lab</span><span class="l-ok">Patient</span></div>
+    <h3>Reject a tube</h3>
+    <p>More › <span class="b">Reject / recollect</span>: choose <b>Which tube</b> and the <b>Reason</b> (haemolysed, clotted, too little, wrong tube…), add a note. The patient goes back to Waiting with "Recollect".</p>
+    <h3>Report handover</h3>
+    <ol class="steps">
+        <li><b>Reports ready</b> lists each patient, token / bill, tests, ready time, paid or due. Tabs: All ready, Not collected for N+ hours, Handed over today.</li>
+        <li><span class="b">Call</span> (or <span class="b">Recall</span>) calls the patient to the report counter on the TV.</li>
+        <li><span class="b">Hand over</span>: if money is due, <b>Take … (cash)</b> first (your cash register must be open). Then <span class="b">Print report</span>, or tick <b>Already printed by the patient from the portal</b>.</li>
+        <li><b>Collected by</b>: Patient, or Attendant with name, relation and CNIC last 4 digits. Click <span class="b">Handed over</span>.</li>
+        <li>Not collected for long: <span class="b">Send reminder</span> (WhatsApp / SMS).</li>
+    </ol>
+    <figure><a href="img/portal-collection-reports.jpg" target="_blank"><img loading="lazy" src="img/portal-collection-reports.jpg" alt="Reports ready"></a><figcaption>Reports ready: Call, Hand over, Send reminder.</figcaption></figure>
+    <h3>Rider: home collection</h3>
+    <p>A rider's portal opens on <b>Home collection</b>: the visits given to him for the day. Per visit: <span class="b">Call</span> the patient, <span class="b">Map</span>, <span class="b">On the way</span> (the patient gets a message if that is on), <span class="b">Collected</span> (with the cash taken) or <span class="b">Not at home</span>. The tubes are barcoded when he brings them back to the sample room.</p>
+    <figure><a href="img/portal-collection-home.jpg" target="_blank"><img loading="lazy" src="img/portal-collection-home.jpg" alt="Home collection"></a><figcaption>Home collection for the day.</figcaption></figure>
+    <h3>The lab hall TV</h3>
+    <p><span class="b">TV</span> (top right of Waiting) shows the calls on the TV plugged into this PC. See <a href="install.html#tv">Queue and doctor TVs</a>.</p>
+    <div class="tip"><b>Who did it:</b> "Collected", rejections, hand-overs and money taken are saved under the person signed in. Money goes into your own open cash register.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>The labels did not print.</dt><dd>Print labels again. Check the label printer (<a href="install.html#printers">Printers and labels</a>).</dd>
+        <dt>"Open your cash register first".</dt><dd>Click <span class="b">Open cash register</span> in the hand-over window and enter the cash in hand.</dd>
+        <dt>A report is not in Reports ready.</dt><dd>It is not verified yet. Ask the lab.</dd>
+    </dl>
+</section>
+
+<!-- ============ FRONT DESK ============ -->
+<section class="doc" id="desk">
+    <h2>Front desk portal</h2>
+    <span class="where">/desk</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> receptionists (role Receptionist). Registration, bills, OPD tokens, appointments and their own cash register.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>Home</td><td>Doctor orders to bill (blinking), tokens today by doctor (waiting, in room, seen), appointments arriving in the next hour (<span class="b">Check in</span>), my cash register, reports ready, dues to collect today.</td></tr>
+        <tr><td>New bill</td><td>The POS, full screen: see <a href="index.html#newbill">New Bill (POS)</a>.</td></tr>
+        <tr><td>OPD token</td><td>Patient + doctor + a free token number + the fee. One click registers the visit, bills the fee and prints the slip. For another day the same click books an appointment.</td></tr>
+        <tr><td>Appointments</td><td>A doctor's day as slots: book, move, cancel, no-show, check in.</td></tr>
+        <tr><td>Doctor orders</td><td>Tests and X-rays the doctors ordered that nobody has billed yet. <span class="b">Bill</span> takes the cash on your register.</td></tr>
+        <tr><td>Reports ready</td><td>Read only: where a patient's report is. The sample room hands it over.</td></tr>
+        <tr><td>Patients</td><td>Find, add and edit patients (no clinical notes).</td></tr>
+        <tr><td>My cash register</td><td>Open with cash in hand, see what is expected in the drawer, close with counted notes.</td></tr>
+    </table>
+    <figure><a href="img/portal-desk-home.jpg" target="_blank"><img loading="lazy" src="img/portal-desk-home.jpg" alt="Front desk home"></a><figcaption>Front desk home.</figcaption></figure>
+    <h3>A day at the front desk</h3>
+    <ol class="vflow" aria-label="Front desk flow">
+        <li class="r-rec"><div class="h"><b>1. Open my cash register</b><span class="who">Receptionist</span></div><p>Counter and cash in hand. Money is taken only on an open register.</p></li>
+        <li class="split">
+            <div class="r-rec"><div class="h"><b>OPD patient</b></div><p>OPD token: patient, doctor, token, fee › one click. Slip prints.</p></div>
+            <div class="r-rec"><div class="h"><b>Lab / X-ray patient</b></div><p>New bill: tests, payment, receipt and labels.</p></div>
+        </li>
+        <li class="r-doc"><div class="h"><b>2. Doctor orders come back</b><span class="who">Doctor</span></div><p>Tests ordered on the OPD desk blink on Home. <b>Bill</b> them.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Appointments arrive</b><span class="who">Receptionist</span></div><p>Check in: the patient joins the doctor's queue.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Close the register</b><span class="who">Receptionist</span></div><p>Count the notes, close. The manager sees the difference, if any.</p></li>
+    </ol>
+    <figure><a href="img/portal-desk-token.jpg" target="_blank"><img loading="lazy" src="img/portal-desk-token.jpg" alt="OPD token"></a><figcaption>OPD token: patient, doctor, token board, fee.</figcaption></figure>
+    <div class="tip"><b>Who did it:</b> every bill, token, payment and refund carries the receptionist signed in, and the money goes into his own register.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>"No counter is set up for you".</dt><dd>The admin adds a counter in Billing › Cash Registers and allows you on it.</dd>
+        <dt>The token number I want is taken.</dt><dd>Pick any free number on the doctor's token board.</dd>
+        <dt>A patient asks for his report.</dt><dd>Reports ready shows if it is ready and if money is due. Send him to the report counter.</dd>
+    </dl>
+</section>
+
+<!-- ============ ADMISSION ============ -->
+<section class="doc" id="admission">
+    <h2>Admission desk portal</h2>
+    <span class="where">/admission</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> the admission / IPD billing desk (role Admission / IPD Billing). Admit, beds, deposits, transfers, final bills and discharges.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>Home</td><td>Counts (in house, advice to admit, discharges ordered, deposits low); admission advice waiting from OPD / ER; bed requests; discharges ordered with clearances and final bill; deposits low; beds free by ward; my cash register.</td></tr>
+        <tr><td>Bed board</td><td>Floors, wards and beds coloured by status (free, occupied, reserved, cleaning). Click a bed to admit, transfer, discharge or clean.</td></tr>
+        <tr><td>Admit</td><td>From the doctor's advice, or a <b>New admission</b>: bed (male / female ward checked), consultant, payer / pre-authorisation, estimate, deposit. Also the waiting list, estimates and pre-authorisations.</td></tr>
+        <tr><td>Admissions</td><td>Patients in house; open one to see the chart's desk tabs.</td></tr>
+        <tr><td>Transfers</td><td>Move a patient to another bed / ward, or to another consultant. The old bed goes to cleaning.</td></tr>
+        <tr><td>IPD bills &amp; deposits</td><td>Every patient in house: bill so far, received, balance. <b>Deposit low</b> = ask the attendant for more.</td></tr>
+        <tr><td>Discharges</td><td>Discharges ordered by the consultant: clearances, final bill, discharge.</td></tr>
+        <tr><td>Patients</td><td>Find and register patients.</td></tr>
+    </table>
+    <figure><a href="img/portal-admission-home.jpg" target="_blank"><img loading="lazy" src="img/portal-admission-home.jpg" alt="Admission desk home"></a><figcaption>Admission desk home.</figcaption></figure>
+    <h3>Admission to discharge</h3>
+    <ol class="vflow" aria-label="Admission flow">
+        <li class="r-doc"><div class="h"><b>1. Advise admission</b><span class="who">Doctor</span></div><p>OPD or ER doctor: Refer / Admit › Advise admission. It appears on Home.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Admit</b><span class="who">Admission desk</span></div><p>Bed, consultant, payer (cash / panel / Sehat card), estimate, deposit on your register.</p></li>
+        <li class="r-mac"><div class="h"><b>3. In the ward</b><span class="who">Doctor and nurse</span></div><p>The patient appears for the ward nurse and the doctor. Charges run every day.</p></li>
+        <li class="r-warn"><div class="h"><b>4. Deposits and transfers</b><span class="who">Admission desk</span></div><p>Deposit low: take more. Transfer for a new bed or consultant.</p></li>
+        <li class="r-doc"><div class="h"><b>5. Order discharge + summary</b><span class="who">Doctor</span></div><p>It appears under Discharges ordered.</p></li>
+        <li class="r-ok"><div class="h"><b>6. Clear, final bill, discharge</b><span class="who">Admission desk</span></div><p>Departments clear, final bill (refund extra deposit), <b>Discharge patient</b>. The bed goes to housekeeping.</p></li>
+    </ol>
+    <div class="shots">
+        <figure><a href="img/portal-admission-board.jpg" target="_blank"><img loading="lazy" src="img/portal-admission-board.jpg" alt="Bed board"></a><figcaption>Bed board.</figcaption></figure>
+        <figure><a href="img/portal-admission-discharges.jpg" target="_blank"><img loading="lazy" src="img/portal-admission-discharges.jpg" alt="Discharges"></a><figcaption>Discharges: cleared n of N, final bill.</figcaption></figure>
+    </div>
+    <div class="tip"><b>Who did it:</b> admissions, deposits, transfers, final bills and discharges are saved under the person signed in; deposits and refunds go through his own cash register.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>The bed I want is refused.</dt><dd>A male patient cannot go into a female ward and the other way round. Pick a bed in the right ward.</dd>
+        <dt>I cannot discharge.</dt><dd>All departments must clear first, and the final bill must be made.</dd>
+        <dt>Extra deposit to give back?</dt><dd>The final bill shows it; refund it from your register.</dd>
+    </dl>
+</section>
+
+<!-- ============ LAB ============ -->
+<section class="doc" id="laboratory">
+    <h2>Lab portal</h2>
+    <span class="where">/laboratory</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> lab technicians (role Lab Technician) on their bench, and pathologists (role Pathologist) who verify and sign. Urgent, ER and ICU samples always come first, then the oldest promised report time.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>Worklist</td><td>Home. Counts (to receive, to enter, to verify, critical to call, reports late), <b>Tubes to receive</b> with a barcode box, <b>Results to enter</b> and (pathologist) <b>Results to verify</b>.</td></tr>
+        <tr><td>Result entry</td><td>Report Entry, full screen: see <a href="index.html#reportentry">Report entry and printing</a>.</td></tr>
+        <tr><td>To enter</td><td>The lab worklist on its "Enter results" tab.</td></tr>
+        <tr><td>Verify</td><td>Pathologist only: results waiting for verification.</td></tr>
+        <tr><td>Critical</td><td>Critical values to phone, with <span class="b">Log call</span>.</td></tr>
+        <tr><td>Bench stock</td><td>Stock issued to your lab section (issue and return = the in-charge).</td></tr>
+        <tr><td>Machines</td><td>Machine results and analyser status (technician; when analysers are connected).</td></tr>
+        <tr><td>QC</td><td>Quality control results.</td></tr>
+    </table>
+    <figure><a href="img/portal-lab-worklist.jpg" target="_blank"><img loading="lazy" src="img/portal-lab-worklist.jpg" alt="Lab worklist"></a><figcaption>Worklist: tubes to receive, Receive and Reject.</figcaption></figure>
+    <h3>A tube's day</h3>
+    <ol class="vflow" aria-label="Lab bench flow">
+        <li class="r-rec"><div class="h"><b>1. Tube arrives</b><span class="who">Sample room</span></div><p>It shows under Tubes to receive.</p></li>
+        <li class="split">
+            <div class="r-lab"><div class="h"><b>Receive</b></div><p>Scan or type the tube barcode in the box (or click <b>Receive</b>).</p></div>
+            <div class="r-warn"><div class="h"><b>Reject</b></div><p>Haemolysed, clotted, too little, wrong tube, no label: it goes back to the sample room for a new sample.</p></div>
+        </li>
+        <li class="r-mac"><div class="h"><b>2. Run it</b><span class="who">Analyser</span></div><p>Machine values come in by themselves on connected analysers.</p></li>
+        <li class="r-lab"><div class="h"><b>3. Enter results</b><span class="who">Technician</span></div><p>Check or type values, Save. A critical value? Phone and <b>Log call</b>.</p></li>
+        <li class="r-doc"><div class="h"><b>4. Verify</b><span class="who">Pathologist</span></div><p>Read the whole report and earlier values, then Verify. Doubtful: send back.</p></li>
+        <li class="r-ok"><div class="h"><b>5. Report ready</b><span class="who">Patient</span></div><p>It joins Reports ready at the counter, the doctor's Today, and the patient portal.</p></li>
+    </ol>
+    <div class="legend"><span class="l-rec">Sample room</span><span class="l-mac">Analyser</span><span class="l-lab">Technician</span><span class="l-doc">Pathologist</span></div>
+    <h3>Critical values: "Log call"</h3>
+    <ol class="steps">
+        <li><b>Critical</b> lists each panic value with the time to report by. Tabs: To report, Overdue, Reported, All. Overdue values turn red and go to the lab in-charge.</li>
+        <li>Phone the doctor or ward (the list shows who to call and the phone).</li>
+        <li><span class="b">Log call</span>: who you called and their name, how (phone, in person, WhatsApp), the <b>Value read back</b> (it must match), the time.</li>
+        <li>When the doctor or nurse clicks "I have read it" in their portal, it shows "Read in portal".</li>
+    </ol>
+    <div class="warn">A critical value is never sent to the patient by itself.</div>
+    <div class="shots">
+        <figure><a href="img/portal-lab-critical.jpg" target="_blank"><img loading="lazy" src="img/portal-lab-critical.jpg" alt="Critical"></a><figcaption>Critical: Log call.</figcaption></figure>
+        <figure><a href="img/portal-lab-verify.jpg" target="_blank"><img loading="lazy" src="img/portal-lab-verify.jpg" alt="Verify"></a><figcaption>Verify (pathologist).</figcaption></figure>
+        <figure><a href="img/portal-lab-bench.jpg" target="_blank"><img loading="lazy" src="img/portal-lab-bench.jpg" alt="Bench stock"></a><figcaption>Bench stock.</figcaption></figure>
+    </div>
+    <div class="tip"><b>Who did it:</b> receive, reject, every result, verification and call log is saved under the person signed in. The pathologist's signature prints on the reports he verifies.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>The barcode says "not found".</dt><dd>The tube belongs to another location, or was not collected yet.</dd>
+        <dt>I cannot see Verify.</dt><dd>Only a pathologist verifies.</dd>
+        <dt>A machine value looks wrong.</dt><dd>Re-run the tube; change the value before Save, or reject it.</dd>
+    </dl>
+</section>
+
+<!-- ============ RADIOLOGY ============ -->
+<section class="doc" id="imaging">
+    <h2>Radiology portal</h2>
+    <span class="where">/imaging</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> radiographers / technologists (scan the patient) and radiologists (write and sign the report). All radiology screens also work in Urdu.</p>
+    <table>
+        <tr><th>Menu</th><th>Who</th><th>What is there</th></tr>
+        <tr><td>Today</td><td>Both</td><td>Counts (waiting today, arrived / scanning, to report, to verify, signed today). Radiographer: patients to scan, urgent first. Radiologist: studies to report and preliminary reports to sign.</td></tr>
+        <tr><td>Worklist</td><td>Both</td><td>The radiology worklist: Book, Arrived, Start, Scan done, Cancel exam.</td></tr>
+        <tr><td>Schedule</td><td>Radiographer</td><td>The rooms' day board and bookings.</td></tr>
+        <tr><td>Unmatched studies</td><td>Radiographer</td><td>Images that came in with no matching exam: <span class="b">Link to exam</span> or <span class="b">Ignore</span>.</td></tr>
+        <tr><td>Report</td><td>Radiologist</td><td>Scanned exams on the left, the report editor on the right.</td></tr>
+        <tr><td>Verify</td><td>Radiologist</td><td>Preliminary reports sent for verification: read, correct, sign.</td></tr>
+        <tr><td>Reports</td><td>Radiologist</td><td>Signed reports; Print gives the A4 report with letterhead and signature.</td></tr>
+    </table>
+    <figure><a href="img/portal-imaging-today.jpg" target="_blank"><img loading="lazy" src="img/portal-imaging-today.jpg" alt="Radiology Today"></a><figcaption>Today (radiographer).</figcaption></figure>
+    <h3>An exam, step by step</h3>
+    <ol class="vflow" aria-label="Radiology flow">
+        <li class="r-rec"><div class="h"><b>1. Exam billed or booked</b><span class="who">Desk / ward / ER</span></div><p>It shows as Waiting.</p></li>
+        <li class="r-mac"><div class="h"><b>2. Arrived › Start</b><span class="who">Radiographer</span></div><p>Check identity, preparation, contrast consent, pregnancy.</p></li>
+        <li class="r-mac"><div class="h"><b>3. Scan done</b><span class="who">Radiographer</span></div><p>Room / machine, films printed and wasted (why), contrast, dose, notes for the radiologist › <b>Mark scanned</b>.</p></li>
+        <li class="split">
+            <div class="r-mac"><div class="h"><b>Images by themselves</b></div><p>DICOM machines send to PACS; the exam shows "Images received (n)".</p></div>
+            <div class="r-mac"><div class="h"><b>Images by hand</b></div><p><b>Add images / files</b>: photo, PDF or DICOM (up to 25 MB), or a machine folder imports them.</p></div>
+        </li>
+        <li class="r-doc"><div class="h"><b>4. Report</b><span class="who">Radiologist</span></div><p>Template, findings, impression, recommendation › Save draft or Send for verification.</p></li>
+        <li class="r-ok"><div class="h"><b>5. Sign &amp; verify, print</b><span class="who">Radiologist</span></div><p>After signing, a change needs <b>Amend</b> with a reason; the old version stays.</p></li>
+    </ol>
+    <h3>The report editor</h3>
+    <ul>
+        <li><b>Template</b>: start from a ready report. <b>Findings</b>, <b>Impression</b>, <b>Recommendation</b>.</li>
+        <li><b>Critical finding</b> with <b>Doctor informed (name / phone)</b>: phone the doctor at once.</li>
+        <li><b>Images</b>: open them; tick <b>Key image (printed on the report)</b>. <b>Open in viewer</b> when a PACS viewer is set.</li>
+        <li>Buttons: <span class="b">Save draft</span>, <span class="b">Send for verification</span>, <span class="b">Sign &amp; verify</span>, <span class="b">Amend</span>, <span class="b">Print</span>. <b>Previous reports of this patient</b> are listed.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/portal-imaging-worklist.jpg" target="_blank"><img loading="lazy" src="img/portal-imaging-worklist.jpg" alt="Worklist"></a><figcaption>Worklist.</figcaption></figure>
+        <figure><a href="img/portal-imaging-reports.jpg" target="_blank"><img loading="lazy" src="img/portal-imaging-reports.jpg" alt="Reports"></a><figcaption>Signed reports.</figcaption></figure>
+    </div>
+    <p>Machine folders are set by the admin in <b>Radiology › Setup › Image folders</b>; connecting X-ray machines: <a href="install.html#xray">X-ray and radiology</a>.</p>
+    <div class="tip"><b>Who did it:</b> a radiographer signed in is always the technician of his own scan; a radiologist is always the writer and signer of his own report.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>"Waiting for images".</dt><dd>The machine has not sent them yet. Add them by hand, or look in Unmatched studies.</dd>
+        <dt>I signed a report with a mistake.</dt><dd>Amend, give the reason, correct and sign again.</dd>
+    </dl>
+</section>
+
+<!-- ============ PHARMACY ============ -->
+<section class="doc" id="dispensary">
+    <h2>Pharmacy portal</h2>
+    <span class="where">/dispensary</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> pharmacists (role Pharmacist) and the counter cashier (role Pharmacy Assistant). Only the pharmacies and stores given to you.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>To dispense</td><td>Home. Counts (Rx to dispense, discharge Rx, requisitions and urgent ones, expired batches, expiring soon). Today's prescriptions not dispensed (discharge first), ward requisitions to issue, batches expired or expiring in 90 days.</td></tr>
+        <tr><td>Pharmacy sale</td><td>The sale counter, full screen. Exit comes back home.</td></tr>
+        <tr><td>Prescriptions</td><td>The OPD and discharge prescription queue: pending and dispensed.</td></tr>
+        <tr><td>Ward requisitions</td><td>Requests from the wards: approve, issue.</td></tr>
+        <tr><td>Stock</td><td>Medicines on hand per store.</td></tr>
+        <tr><td>Batches &amp; expiry</td><td>Every batch with expiry badges, recall, block / unblock, labels.</td></tr>
+        <tr><td>Sales</td><td>Bills of your pharmacies: view, reprint, take back.</td></tr>
+        <tr><td>Patients</td><td>Find and register patients.</td></tr>
+    </table>
+    <figure><a href="img/portal-pharmacy-home.jpg" target="_blank"><img loading="lazy" src="img/portal-pharmacy-home.jpg" alt="To dispense"></a><figcaption>To dispense: discharge Rx first, then OPD Rx.</figcaption></figure>
+    <h3>Prescription to sale</h3>
+    <ol class="vflow" aria-label="Pharmacy flow">
+        <li class="r-doc"><div class="h"><b>1. Doctor writes the Rx</b><span class="who">Doctor</span></div><p>OPD Rx or discharge medicines. It appears on To dispense.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Dispense</b><span class="who">Pharmacist</span></div><p>Opens the sale counter with the Rx no. loaded. <b>Record</b> shows allergies and past medicines.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Sell</b><span class="who">Cashier</span></div><p>Batches are picked first-expiry-first. F8 cash (save, print, next), F9 card, F10 several ways.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Done</b><span class="who">Patient</span></div><p>The Rx shows as dispensed. Money goes into the cashier's open register.</p></li>
+    </ol>
+    <h3>Ward requisitions</h3>
+    <ol class="vflow" aria-label="Ward requisition flow">
+        <li class="r-rec"><div class="h"><b>1. Nurse asks</b><span class="who">Nurse</span></div><p>Nurse portal › Requests › Pharmacy requisition (her ward store is chosen).</p></li>
+        <li class="r-doc"><div class="h"><b>2. Approve</b><span class="who">Pharmacist</span></div><p>Urgent first, then needed soonest.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Issue</b><span class="who">Pharmacist</span></div><p>The medicines go "in transit" to the ward store.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Receive</b><span class="who">Ward</span></div><p>The ward receives them into its store.</p></li>
+    </ol>
+    <h3>Sale counter keys</h3>
+    <table>
+        <tr><th>Key</th><th>Does</th></tr>
+        <tr><td>F2 / F4</td><td>Search a medicine / choose the patient</td></tr>
+        <tr><td>F8 / F9 / F10</td><td>Cash (save + print + next) / card / several ways</td></tr>
+        <tr><td>F6 / F7</td><td>Park the sale / recall a parked sale</td></tr>
+        <tr><td>Ctrl+R</td><td>Reprint the last bill</td></tr>
+        <tr><td>+ / − , U, Del, Esc</td><td>Quantity, change unit, remove line, back to search</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/portal-pharmacy-requisitions.jpg" target="_blank"><img loading="lazy" src="img/portal-pharmacy-requisitions.jpg" alt="Requisitions"></a><figcaption>Ward requisitions.</figcaption></figure>
+        <figure><a href="img/portal-pharmacy-batches.jpg" target="_blank"><img loading="lazy" src="img/portal-pharmacy-batches.jpg" alt="Batches"></a><figcaption>Batches &amp; expiry.</figcaption></figure>
+    </div>
+    <div class="tip"><b>Who did it:</b> every sale, return, issue and approval is signed by the person signed in.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>"No pharmacy assigned to you yet".</dt><dd>The admin adds you to a pharmacy in Pharmacy › Setup › Pharmacies &amp; Stores.</dd>
+        <dt>A batch must not be sold.</dt><dd>Batches &amp; expiry › Block: it is blocked in every store.</dd>
+    </dl>
+</section>
+
+<!-- ============ ER ============ -->
+<section class="doc" id="emergency">
+    <h2>ER portal</h2>
+    <span class="where">/emergency</span><a class="login-link" href="#account">How do I get a login?</a>
+    <p class="lead"><b>Who:</b> ER medical officers, ER / triage nurses, the medico-legal officer (MLO) and the ambulance dispatcher. Each sees only the tabs of their role.</p>
+    <table>
+        <tr><th>Menu</th><th>What is there</th></tr>
+        <tr><td>ER board</td><td>Home. Counts (in ER, waiting doctor, over target time, bays free), tiles by triage colour (Red, Orange, Yellow, Green, Blue, Not triaged; a tile filters the list), the patients with waiting time and who is seeing them, left the ER today, ambulance calls on the road.</td></tr>
+        <tr><td>Tracking board</td><td>Everyone in the ER by triage level and arrival, with bay, doctor, time in ER, pending labs / X-rays / doses, MLC.</td></tr>
+        <tr><td>Ambulance dispatch</td><td>Fleet and active trips.</td></tr>
+        <tr><td>Ambulance trips</td><td>Every trip with km, charge and billing.</td></tr>
+        <tr><td>ER register</td><td>Every ER visit: arrival, triage, doctor, disposition.</td></tr>
+        <tr><td>Medico-legal cases</td><td>MLO: the MLC register.</td></tr>
+        <tr><td>ER reports</td><td>Census by triage and other ER reports.</td></tr>
+        <tr><td>Patients</td><td>Find and register patients.</td></tr>
+    </table>
+    <figure><a href="img/portal-er-board.jpg" target="_blank"><img loading="lazy" src="img/portal-er-board.jpg" alt="ER board"></a><figcaption>ER board: triage colours, Triage, Chart / disposition.</figcaption></figure>
+    <h3>An ER patient, step by step</h3>
+    <ol class="vflow" aria-label="ER flow">
+        <li class="r-rec"><div class="h"><b>1. New arrival</b><span class="who">ER nurse / desk</span></div><p>Register him (an unknown patient gets a temporary number, merged later). Or the ambulance hands him over.</p></li>
+        <li class="r-warn"><div class="h"><b>2. Triage</b><span class="who">Triage nurse</span></div><p>Level 1 to 5 (ESI or Manchester, as set) and vitals. The colour tile shows it; waiting time turns red past the target.</p></li>
+        <li class="r-doc"><div class="h"><b>3. Chart</b><span class="who">ER doctor</span></div><p>Notes, orders (lab, X-ray, medicine, procedure), doses, bill. Police case? It opens an MLC.</p></li>
+        <li class="r-doc"><div class="h"><b>4. Disposition</b><span class="who">ER doctor</span></div><p>Discharged home, Admitted, Referred out, LAMA, DAMA, Death in ER, Brought dead, Absconded › Save disposition.</p></li>
+        <li class="r-ok"><div class="h"><b>5. Leaves the ER</b><span class="who">Others</span></div><p>Admitted: the admission desk gives a bed. Listed under Left the ER today.</p></li>
+    </ol>
+    <h3>Ambulance</h3>
+    <p><b>Ambulance dispatch › New trip request</b>: caller, patient, pickup address, landmark, destination, complaint, priority; <b>Assign ambulance now</b>. The trip moves: Left base › At scene › Transporting › <span class="b">Complete trip</span> (odometer, charge). <span class="b">Hand over to ER</span> registers the patient in the ER at once.</p>
+    <figure><a href="img/portal-er-tracking.jpg" target="_blank"><img loading="lazy" src="img/portal-er-tracking.jpg" alt="Tracking board"></a><figcaption>Tracking board.</figcaption></figure>
+    <div class="tip"><b>Who did it:</b> the triage nurse is always the person signed in; only the ER doctor decides the disposition.</div>
+    <h3>Common questions</h3>
+    <dl class="faq">
+        <dt>The patient's name is not known.</dt><dd>Register him as unknown. Merge into the real record when he is identified.</dd>
+        <dt>I cannot save the disposition.</dt><dd>Only the ER doctor decides it.</dd>
+    </dl>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="doc" id="faq">
+    <h2>Questions for every portal</h2>
+    <table>
+        <tr><th>Question</th><th>Answer</th></tr>
+        <tr><td>How do I get a login? I forgot my password.</td><td>The owner or HR makes it, or sets a new password: <a href="#account">Give a login / reset a password</a>.</td></tr>
+        <tr><td>Can I sign in with my mobile?</td><td>Yes, when the mobile is saved on your login.</td></tr>
+        <tr><td>A tab in this manual is missing for me.</td><td>Your role or the hospital's plan does not have it.</td></tr>
+        <tr><td>The screen is in Urdu.</td><td>Click <b>EN</b> in the top bar (or <b>UR</b> for Urdu).</td></tr>
+        <tr><td>Shown dates.</td><td>Always DD-MM-YYYY, for example 06-11-2026.</td></tr>
+        <tr><td>Who is written as the person who did it?</td><td>Always the person signed in. Sign out when you leave a shared PC.</td></tr>
+        <tr><td>Another location's patient is "not found".</td><td>A portal shows only the location in the top bar. Switch it there if you work in more than one.</td></tr>
+    </table>
+    <p class="lead">Page checked against TibuLab on 06-11-2026.</p>
+    <p><a href="index.html">← Back to the User Manual</a></p>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('manual-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark'
+            || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('manual-theme', next); } catch (e) {}
+    });
+
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.doc'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+
+    function clearMarks(node) {
+        Array.prototype.slice.call(node.querySelectorAll('mark')).forEach(function (m) {
+            m.replaceWith(document.createTextNode(m.textContent));
+        });
+        node.normalize();
+    }
+    function highlight(node, q) {
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null), hits = [], n;
+        while ((n = walker.nextNode())) { if (n.nodeValue.toLowerCase().indexOf(q) !== -1) hits.push(n); }
+        hits.forEach(function (t) {
+            var i = t.nodeValue.toLowerCase().indexOf(q);
+            var rest = t.splitText(i); rest.splitText(q.length);
+            var m = document.createElement('mark'); m.textContent = rest.nodeValue;
+            rest.parentNode.replaceChild(m, rest);
+        });
+    }
+    document.getElementById('q').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        sections.forEach(function (s) {
+            clearMarks(s);
+            var hit = !q || s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.classList.toggle('hidden', !hit);
+            if (hit) { shown++; if (q) highlight(s, q); }
+        });
+        document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    });
+
+    links.forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav.toc').classList.remove('open'); }); });
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        sections.forEach(function (s) { io.observe(s); });
+    }
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # TibuLab User Manual
 
-The end-user manual for TibuLab: one static page (`index.html`) plus screenshots (`img/`). It has no build step and no server code. Any web server, or a double-click on `index.html`, opens it.
+The end-user manual for TibuLab: static pages plus screenshots (`img/`): `index.html` (the main manual: lab, billing, cash, insurance, stock, accounts, HR), `portals.html` (the role portals: doctor, nurse, sample room, front desk, admission, lab, radiology, pharmacy, ER, and logins), `hospital.html` (hospital modules), `admin.html` (MIS, pharmacy, store, procurement, messaging, patient portal, settings) and `install.html` (the IT guide). It has no build step and no server code. Any web server, or a double-click on `index.html`, opens it.
 
 It lives apart from the app repository (`TibuLab`), so screenshots and text can change without touching the app.
 
@@ -31,7 +31,7 @@ Restart Apache after adding it.
 
 ## Editing
 
-- Text: edit `index.html`. Each section is a `<section class="doc" id="…">` with a matching link in the sidebar (`<nav class="toc">`).
+- Text: edit the page. Each section is a `<section class="doc" id="…">` with a matching link in the sidebar (`<nav class="toc">`).
 - Pictures: `img/<area>-<screen>.jpg`, about 1366×768, JPEG quality around 75, under ~150 KB each. Take them from the **demo lab** only (made-up patients), never from a real lab.
 - Use the exact button labels the app shows, and describe only what exists in the app.
 - Check after a change: open the page at desktop and phone width; every image must load and there must be no sideways scrolling.

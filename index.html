@@ -38,6 +38,10 @@ header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: 
 .search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
 .tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
 .menu-btn { display: none; }
+.toplinks { display: flex; gap: 4px; }
+.toplinks a { padding: 6px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; }
+.toplinks a:hover { background: var(--primary-soft); color: var(--primary); }
+@media (max-width: 1100px) { .toplinks { display: none; } }
 .layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
 nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
 nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -103,6 +107,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
 <header class="top">
     <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
     <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab User Manual</span></a>
+    <nav class="toplinks" aria-label="Other guides"><a href="portals.html">Portals</a><a href="hospital.html">Hospital</a><a href="admin.html">Admin</a></nav>
     <div class="search"><input id="q" type="search" placeholder="Search the manual… (e.g. refund, verify, payroll)" aria-label="Search the manual"></div>
     <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
     <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
@@ -110,6 +115,11 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
 
 <div class="layout">
 <nav class="toc" aria-label="Contents">
+    <div class="grp">Other guides</div>
+    <a href="portals.html">Portals: one screen per job</a>
+    <a href="hospital.html">Hospital modules</a>
+    <a href="admin.html">Admin, messaging, settings</a>
+    <a href="install.html">Installation &amp; setup (IT)</a>
     <div class="grp">Start</div>
     <a href="#start">Welcome</a>
     <a href="#roles">Who does what</a>
@@ -159,6 +169,42 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <a href="#settings">Settings screens</a>
     <a href="#help">Problems &amp; fixes</a>
     <a href="install.html">Installation &amp; setup guide</a>
+    <div class="grp">Portals (other page)</div>
+    <a href="portals.html#account">Give a login / reset a password</a>
+    <a href="portals.html#viewas">Owner: "View as"</a>
+    <a href="portals.html#doctor">Doctor portal</a>
+    <a href="portals.html#nurse">Nurse portal</a>
+    <a href="portals.html#collection">Sample room portal</a>
+    <a href="portals.html#desk">Front desk portal</a>
+    <a href="portals.html#admission">Admission desk portal</a>
+    <a href="portals.html#laboratory">Lab portal</a>
+    <a href="portals.html#imaging">Radiology portal</a>
+    <a href="portals.html#dispensary">Pharmacy portal</a>
+    <a href="portals.html#emergency">ER portal</a>
+    <div class="grp">Hospital (other page)</div>
+    <a href="hospital.html#record">Patient record</a>
+    <a href="hospital.html#opd">OPD</a>
+    <a href="hospital.html#er">Emergency &amp; ambulance</a>
+    <a href="hospital.html#ipd">IPD: admission, wards, beds</a>
+    <a href="hospital.html#discharge">Discharge</a>
+    <a href="hospital.html#icu">ICU monitoring</a>
+    <a href="hospital.html#ot">Operation theatres</a>
+    <a href="hospital.html#maternity">Maternity</a>
+    <a href="hospital.html#dialysis">Dialysis</a>
+    <a href="hospital.html#bloodbank">Blood bank</a>
+    <a href="hospital.html#daycare">Day-care, physio, diet, mortuary</a>
+    <a href="hospital.html#mrd">MRD, infection, quality, compliance</a>
+    <a href="hospital.html#roster">Duty roster</a>
+    <div class="grp">Admin (other page)</div>
+    <a href="admin.html#search">Sidebar search (Ctrl+K)</a>
+    <a href="admin.html#mis">MIS dashboard</a>
+    <a href="admin.html#pharmacy">Pharmacy</a>
+    <a href="admin.html#store">General Store &amp; procurement</a>
+    <a href="admin.html#biomedical">Biomedical, CSSD, linen</a>
+    <a href="admin.html#messaging">Messaging &amp; WhatsApp</a>
+    <a href="admin.html#patientportal">Patient portal</a>
+    <a href="admin.html#settings">Settings (every screen)</a>
+    <a href="admin.html#central">Central back office</a>
 </nav>
 
 <main>
@@ -180,6 +226,12 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <a href="#setup"><b>Owner / Admin</b><small>Setup, users, settings</small></a>
         <a href="install.html"><b>IT / Installation</b><small>Main PC, network, machines, backups</small></a>
     </div>
+    <p>Hospital staff with one job (doctor, nurse, sample room, front desk, admission desk, lab, radiology, pharmacy, ER) work in their own simple screen, a <b>portal</b>:</p>
+    <div class="cards">
+        <a href="portals.html"><b>Portals</b><small>One simple screen per job, with flow drawings</small></a>
+        <a href="hospital.html"><b>Hospital modules</b><small>OPD, ER, IPD, ICU, OT, maternity, dialysis, blood bank…</small></a>
+        <a href="admin.html"><b>Admin &amp; settings</b><small>MIS, pharmacy, store, messaging, patient portal</small></a>
+    </div>
     <div class="tip"><b>Tip:</b> you only see the menus your role and your lab's plan allow. If a screen in this manual is missing for you, ask your lab owner. Click any picture to open it full size.</div>
 </section>
 
@@ -199,6 +251,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Accountant</td><td>Cash book, expenses, accounts, reports</td></tr>
         <tr><td>Rider</td><td>Home sample collection</td></tr>
     </table>
+    <p>Hospitals have more roles: Doctor (Consultant), Nurse, Admission / IPD Billing, Pharmacist, Pharmacy Assistant, ER staff and others. Many roles open their own <b>portal</b> instead of the full menu: see <a href="portals.html#whichportal">Which role opens which portal</a>. To give someone a login or a new password: <a href="portals.html#account">Give a login / reset a password</a>.</p>
 </section>
 
 <section class="doc" id="login">
@@ -206,7 +259,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <span class="where">Your lab's address, e.g. citylab.tibulab.com</span>
     <ol class="steps">
         <li>Open your lab's address in Chrome or Edge. If you only know your lab code (like <b>TL001</b>), open <b>tibulab.com</b>, click <span class="b">Login</span>, type the code and click <span class="b">Continue</span>.</li>
-        <li>Type your <b>Email</b> and <b>Password</b>. Leave <b>Keep me signed in</b> ticked on your own PC, and click <span class="b">Sign in</span>.</li>
+        <li>Type your <b>Email or mobile number</b> and <b>Password</b>. Leave <b>Keep me signed in</b> ticked on your own PC, and click <span class="b">Sign in</span>.</li>
         <li>"Email or password is incorrect." means a typing mistake. After many wrong tries you must wait a minute.</li>
     </ol>
     <figure class="half"><a href="img/login.jpg" target="_blank"><img loading="lazy" src="img/login.jpg" alt="Sign in to your lab"></a><figcaption>The lab login page.</figcaption></figure>
@@ -686,6 +739,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <figure><a href="img/hr-employee-form-eobi.jpg" target="_blank"><img loading="lazy" src="img/hr-employee-form-eobi.jpg" alt="EOBI"></a><figcaption>EOBI &amp; Income Tax.</figcaption></figure>
     </div>
     <div class="tip">If employee numbers are set to <b>Sequential</b> in HR Settings › Preferences, the next number fills in by itself.</div>
+    <div class="warn"><b>Where is the employee's password?</b> An employee record is not a login by itself. Give the login (email or mobile, password, role) in the profile's <b>Roles › Login &amp; password</b>, or in <b>Settings › Users</b>. The role decides which portal the person opens. Step by step: <a href="portals.html#account">Give a staff member a login / reset a password</a>.</div>
 </section>
 
 <section class="doc" id="profile">
@@ -840,10 +894,10 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <p class="lead">Do these once, in this order, before the lab starts billing.</p>
     <p>Installing TibuLab on the hospital's own Main PC, and connecting analysers, X-ray and ICU monitors: see the <a href="install.html">Installation &amp; Setup guide</a>.</p>
     <ol class="steps">
-        <li><b>Settings › Lab Profile</b>: name, phone, address, NTN, licence no., logo, header and footer text.</li>
+        <li><b>Settings › Business</b> (the lab profile): name, phone, address, NTN, licence no., logo, header and footer text.</li>
         <li><b>Settings › Report Layout</b> and <b>Signatures</b>: letterhead, paper size, and the pathologist's / radiologist's signature.</li>
-        <li><b>Settings › Branches</b> and <b>Billing › Cash Registers</b> (one per counter).</li>
-        <li><b>Settings › Users</b>: one login per person, each with a role.</li>
+        <li><b>Settings › Locations</b> and <b>Billing › Cash Registers</b> (one per counter).</li>
+        <li><b>Settings › Users</b>: one login per person, each with a role (see <a href="portals.html#account">Give a login / reset a password</a>).</li>
         <li><b>Laboratory › Setup › Tests</b>: check prices.</li>
         <li><b>Billing › Referring Doctors</b> with commission rates.</li>
         <li><b>Accounts › Fiscal Years</b>: create the current year.</li>
@@ -870,6 +924,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Recycle Bin</td><td>Everything deleted, by whom and why. <b>Restore</b> brings it back.</td></tr>
         <tr><td>Activity Log</td><td>Who changed what, and when.</td></tr>
     </table>
+    <p>Every other settings screen (locations, print designs, TV screens, devices &amp; licence, patient portal, subscription…): <a href="admin.html#settings">Settings: every screen</a>.</p>
     <div class="shots">
         <figure><a href="img/set-roles.jpg" target="_blank"><img loading="lazy" src="img/set-roles.jpg" alt="Roles"></a><figcaption>Roles &amp; Permissions.</figcaption></figure>
         <figure><a href="img/set-invoice-layouts.jpg" target="_blank"><img loading="lazy" src="img/set-invoice-layouts.jpg" alt="Invoice layouts"></a><figcaption>Invoice layouts.</figcaption></figure>

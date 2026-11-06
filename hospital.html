@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TibuLab Hospital Modules</title>
+<meta name="description" content="Hospital modules of TibuLab: OPD, ER, ambulance, IPD admission and discharge, ICU, OT, maternity, dialysis, blood bank, day-care, physiotherapy, diet, mortuary, MRD, infection control, quality, compliance, duty roster and the patient record.">
+<style>
+:root {
+    --primary: #0e3f66; --primary-2: #176bad; --primary-soft: #e8f1f8;
+    --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --bg: #f4f6f8; --card: #ffffff; --code: #f1f5f9;
+    --ok: #15803d; --ok-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff6e6;
+    --radius: 14px; --on-primary: #ffffff;
+    --c-rec: #176bad; --c-lab: #7c3aed; --c-mac: #0f766e; --c-doc: #be123c; --c-sys: #475569;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+        --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+        --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+        --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+        --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+    }
+}
+:root[data-theme="dark"] {
+    --primary: #7cb8e8; --primary-2: #a5d0f2; --primary-soft: #16314a;
+    --text: #e5edf5; --muted: #a3b3c4; --line: #26384b;
+    --bg: #0d1722; --card: #13212f; --code: #1a2b3c;
+    --ok: #5fd08e; --ok-soft: #12301f; --warn: #f2b25c; --warn-soft: #33260f; --on-primary: #0d1722;
+    --c-rec: #7cb8e8; --c-lab: #c4a5fb; --c-mac: #5eead4; --c-doc: #fda4af; --c-sys: #a3b3c4;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--primary-2); }
+header.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+.logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-size: 15px; }
+.search { flex: 1; max-width: 420px; margin-left: auto; }
+.search input { width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
+.tbtn { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.menu-btn { display: none; }
+.layout { display: grid; grid-template-columns: 270px 1fr; max-width: 1280px; margin: 0 auto; }
+nav.toc { position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; padding: 20px 14px 40px; border-right: 1px solid var(--line); }
+nav.toc .grp { margin: 16px 8px 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 15px; }
+nav.toc a:hover, nav.toc a.active { background: var(--primary-soft); color: var(--primary); }
+main { padding: 28px 32px 80px; min-width: 0; }
+section.doc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px; }
+section.doc.hidden { display: none; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 0 0 6px; }
+h3 { font-size: 18px; margin: 26px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 6px; }
+.where { display: inline-block; margin: 2px 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 600; }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 12px 44px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.b { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.tip, .warn { border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.tip { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+code { padding: 1px 6px; border-radius: 5px; background: var(--code); font-size: 14px; overflow-wrap: anywhere; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+.cards a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--text); background: var(--bg); }
+.cards a:hover { border-color: var(--primary-2); }
+.cards b { display: block; color: var(--primary); }
+.cards small { color: var(--muted); }
+figure { margin: 14px 0 20px; }
+figure a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.shots figure { margin: 0; }
+.noresult { display: none; padding: 30px; text-align: center; color: var(--muted); }
+mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0; }
+.flow span { padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; }
+.flow i { color: var(--muted); font-style: normal; }
+.login-link { display: inline-block; margin: 0 0 6px 8px; font-size: 14px; }
+.faq dt { font-weight: 700; margin-top: 12px; }
+.faq dd { margin: 2px 0 0; color: var(--text); }
+/* flow drawing: box, arrow down, box (same as the installation guide) */
+.vflow { list-style: none; padding: 0; margin: 16px 0 22px; max-width: 760px; }
+.vflow > li { position: relative; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; margin: 0 0 30px; }
+.vflow > li:last-child { margin-bottom: 0; }
+.vflow > li:not(:last-child)::after { content: ""; position: absolute; left: 30px; top: calc(100% + 3px); width: 2px; height: 17px; background: var(--muted); }
+.vflow > li:not(:last-child)::before { content: ""; position: absolute; left: 25px; top: calc(100% + 18px); border-style: solid; border-width: 8px 6px 0 6px; border-color: var(--muted) transparent transparent transparent; }
+.vflow .h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.vflow .h b { font-size: 16px; }
+.vflow p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.who { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--card); background: var(--c-sys); }
+.vflow .r-rec { border-left-color: var(--c-rec); } .r-rec .who { background: var(--c-rec); }
+.vflow .r-lab { border-left-color: var(--c-lab); } .r-lab .who { background: var(--c-lab); }
+.vflow .r-mac { border-left-color: var(--c-mac); } .r-mac .who { background: var(--c-mac); }
+.vflow .r-doc { border-left-color: var(--c-doc); } .r-doc .who { background: var(--c-doc); }
+.vflow .r-ok { border-left-color: var(--ok); } .r-ok .who { background: var(--ok); }
+.vflow .r-warn { border-left-color: var(--warn); } .r-warn .who { background: var(--warn); }
+.vflow > li.split { background: none; border: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vflow > li.split::after { left: 36px; } .vflow > li.split::before { left: 31px; }
+.vflow > li.split > div { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c-sys); border-radius: 10px; padding: 10px 14px 10px 16px; }
+.vflow > li.split > div.r-ok { border-left-color: var(--ok); } .vflow > li.split > div.r-warn { border-left-color: var(--warn); } .vflow > li.split > div.r-doc { border-left-color: var(--c-doc); } .vflow > li.split > div.r-rec { border-left-color: var(--c-rec); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c-sys); }
+.legend .l-rec::before { background: var(--c-rec); } .legend .l-lab::before { background: var(--c-lab); } .legend .l-mac::before { background: var(--c-mac); } .legend .l-doc::before { background: var(--c-doc); } .legend .l-ok::before { background: var(--ok); }
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; position: fixed; inset: 65px 0 0 0; z-index: 15; background: var(--card); height: auto; border: 0; }
+    nav.toc.open { display: block; }
+    .menu-btn { display: inline-block; }
+    main { padding: 18px 16px 60px; }
+    section.doc { padding: 20px 16px; }
+    .search { max-width: none; }
+    .brand span.name { display: none; }
+    table { display: block; overflow-x: auto; }
+}
+@media (max-width: 640px) { .vflow > li.split { grid-template-columns: 1fr; } }
+@media print {
+    header.top, nav.toc { display: none; }
+    .layout { display: block; }
+    body { background: #fff; }
+    section.doc { border: 0; padding: 0 0 12px; }
+    section.doc.hidden { display: block; }
+    figure, .vflow > li, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <button class="tbtn menu-btn" type="button" aria-label="Contents" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰</button>
+    <a class="brand" href="#start"><span class="logo">T</span><span class="name">TibuLab Hospital Modules</span></a>
+    <div class="search"><input id="q" type="search" placeholder="Search hospital modules… (e.g. bed, partograph, crossmatch)" aria-label="Search this page"></div>
+    <button class="tbtn" type="button" id="theme" aria-label="Dark or light">◐</button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Print">Print</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+    <a href="index.html">← User Manual</a>
+    <a href="portals.html">Portals (one screen per job)</a>
+    <a href="admin.html">Admin, messaging, settings</a>
+    <div class="grp">Start</div>
+    <a href="#start">Hospital modules</a>
+    <a href="#record">Patient record</a>
+    <div class="grp">Patients come in</div>
+    <a href="#opd">OPD</a>
+    <a href="#er">Emergency (ER)</a>
+    <a href="#ambulance">Ambulance</a>
+    <div class="grp">Admitted patients</div>
+    <a href="#ipd">IPD: admission, wards, beds</a>
+    <a href="#discharge">Discharge</a>
+    <a href="#icu">ICU monitoring</a>
+    <a href="#ot">Operation theatres</a>
+    <a href="#maternity">Maternity</a>
+    <div class="grp">Units</div>
+    <a href="#dialysis">Dialysis</a>
+    <a href="#bloodbank">Blood bank</a>
+    <a href="#daycare">Day-care</a>
+    <a href="#physio">Physiotherapy</a>
+    <a href="#diet">Diet &amp; kitchen</a>
+    <a href="#mortuary">Mortuary</a>
+    <div class="grp">Records &amp; quality</div>
+    <a href="#mrd">Medical records (MRD)</a>
+    <a href="#infection">Infection control</a>
+    <a href="#quality">Incident &amp; quality</a>
+    <a href="#compliance">Compliance</a>
+    <a href="#roster">Duty roster</a>
+    <a href="#coming">Coming later</a>
+</nav>
+
+<main>
+<div class="noresult" id="noresult">Nothing found. Try another word.</div>
+
+<!-- ============ START ============ -->
+<section class="doc" id="start">
+    <h1>Hospital modules</h1>
+    <p class="lead">The screens of a full hospital, in the normal app with the sidebar: OPD, ER, IPD, ICU, OT, maternity, dialysis, blood bank and the support units. They are for the owner, managers, desks and unit in-charges. Doctors, nurses and most desk staff do the same work in their own <a href="portals.html">portal</a>. The pictures come from the demo hospital with made-up patients.</p>
+    <ul>
+        <li><b>Every module is switched on per hospital.</b> A lab-only customer sees none of this. A module that is not in your plan is hidden for everyone (see <b>Settings › Subscription</b>).</li>
+        <li>Each module has the same parts in its sidebar group: the daily screens, <b>Registers</b>, <b>Setup</b> and <b>Reports</b>.</li>
+        <li>Can't find a screen? Press <b>Ctrl+K</b> and type its name (<a href="admin.html#search">Sidebar search</a>).</li>
+        <li>Shown dates are always DD-MM-YYYY.</li>
+    </ul>
+    <div class="cards">
+        <a href="#opd"><b>OPD</b><small>Tokens, appointments, doctor desk</small></a>
+        <a href="#er"><b>Emergency</b><small>Triage, chart, MLC</small></a>
+        <a href="#ipd"><b>IPD</b><small>Beds, admission, discharge</small></a>
+        <a href="#icu"><b>ICU</b><small>Live monitors, alarms</small></a>
+        <a href="#ot"><b>OT</b><small>Schedule, WHO checklist</small></a>
+        <a href="#maternity"><b>Maternity</b><small>Labour room, births</small></a>
+        <a href="#dialysis"><b>Dialysis</b><small>Shift board, sessions</small></a>
+        <a href="#bloodbank"><b>Blood bank</b><small>Donors, stock, crossmatch</small></a>
+    </div>
+    <h3>How a patient moves through the hospital</h3>
+    <ol class="vflow" aria-label="Hospital patient flow">
+        <li class="split">
+            <div class="r-rec"><div class="h"><b>OPD token / appointment</b></div><p>Front desk or OPD › Front desk.</p></div>
+            <div class="r-warn"><div class="h"><b>ER arrival</b></div><p>Walk-in or ambulance; triage first.</p></div>
+        </li>
+        <li class="r-doc"><div class="h"><b>Doctor</b><span class="who">OPD / ER doctor</span></div><p>Notes, tests, X-ray, prescription. Advise admission if needed.</p></li>
+        <li class="r-rec"><div class="h"><b>Admission desk</b><span class="who">IPD</span></div><p>Bed, consultant, payer, deposit.</p></li>
+        <li class="r-lab"><div class="h"><b>Ward / ICU / OT / labour room</b><span class="who">Doctors and nurses</span></div><p>Orders, MAR, vitals, operations, deliveries. Charges add up on the IPD bill.</p></li>
+        <li class="r-ok"><div class="h"><b>Discharge</b><span class="who">Doctor + desk</span></div><p>Summary, clearance, final bill, discharge Rx to the pharmacy, bed to housekeeping.</p></li>
+    </ol>
+</section>
+
+<!-- ============ PATIENT RECORD ============ -->
+<section class="doc" id="record">
+    <h2>The patient record</h2>
+    <span class="where">Record button: doctor desk, admission chart, nurse patient, ER chart, Patients list</span>
+    <p>One record of the patient, the same on every clinical screen. The <b>header</b> shows name, sex, age, MRN, blood group, last weight, allergies (red), the current stay (ward and bed and day, ER bay, or today's OPD token), the consultant and the attendant's phone.</p>
+    <table>
+        <tr><th>Tab</th><th>What is there</th></tr>
+        <tr><td>Profile</td><td>Details, guardian, mobile, address, TibuLab ID, payer, problems.</td></tr>
+        <tr><td>Visits</td><td>OPD, IPD and ER visits, newest first; open one for its diagnosis and Rx.</td></tr>
+        <tr><td>Lab reports</td><td>Verified reports only, with ranges and flags. <span class="b">Compare</span> shows one value over time.</td></tr>
+        <tr><td>Radiology</td><td>Final and amended reports with the impression.</td></tr>
+        <tr><td>Medicines</td><td>Running ward orders with the last dose, and past prescriptions.</td></tr>
+        <tr><td>Vitals</td><td>OPD, ward and ER vitals as a chart and a table.</td></tr>
+        <tr><td>Doctor notes</td><td>OPD notes, ward rounds, ER notes (read only).</td></tr>
+        <tr><td>Allergies &amp; problems</td><td>Known allergies and chronic problems.</td></tr>
+        <tr><td>Documents</td><td>Outside reports, pinned items, scanned papers. <span class="b">Add outside report</span>: photo or PDF, place, date, type, optional values.</td></tr>
+    </table>
+    <h3>Who sees what</h3>
+    <table>
+        <tr><th>Login</th><th>Opens</th></tr>
+        <tr><td>Doctor portal</td><td>Only his own patients; all tabs.</td></tr>
+        <tr><td>Nurse portal</td><td>Only patients in her ward(s) today; doctor notes read only.</td></tr>
+        <tr><td>Owner, admin, clinical staff</td><td>Everyone; all tabs.</td></tr>
+        <tr><td>Lab staff</td><td>Profile, visits (no notes), lab, radiology, allergies, documents.</td></tr>
+        <tr><td>Reception, admission desk</td><td>Profile, visits (when / where / with whom only), documents. Never clinical notes.</td></tr>
+    </table>
+    <h3>Other TibuLab places</h3>
+    <p>If the same person was seen at another TibuLab lab or hospital, those visits and reports join the record with a badge like "City Lab · verified there". Use the filter <b>All · Here · Other TibuLab · Outside</b>. <span class="b">Pin to this visit</span> keeps one item under Documents.</p>
+    <ul>
+        <li>Shown only to staff <b>treating the patient now</b> (his doctor today, his ward nurse, the lab with his order today). Never to the front desk.</li>
+        <li>Only when TibuLab is sure it is the same person (same CNIC, or same mobile + exact name + date of birth + gender).</li>
+        <li>Every look is logged. The patient sees who looked in the patient app (<b>Security › Who viewed my records</b>).</li>
+        <li><b>Opt-out:</b> the patient can switch off <b>Share my records with other TibuLab hospitals</b> in the patient app. The record then says "The patient has switched off sharing with other places."</li>
+        <li>Offline, the last copy is shown with "last updated … (offline)".</li>
+    </ul>
+    <h3>Consent</h3>
+    <p>Consent is taken where the work is: <b>General consent signed</b> (and who signed) on the IPD admission form; <b>Consents</b> on the OT case (surgery, anaesthesia, blood transfusion, high risk) with <span class="b">Print consent</span>; the day-care check-in ("Consent for the procedure is signed"); the medical record release in MRD (patient consent, CNIC checked, proof of relation). Message opt-outs are in <a href="admin.html#messaging">Messaging › Opt-outs</a>.</p>
+</section>
+
+<!-- ============ OPD ============ -->
+<section class="doc" id="opd">
+    <h2>OPD</h2>
+    <span class="where">OPD</span>
+    <p class="lead">Out-patients: tokens, appointments, the doctor desk, prescriptions and doctors' shares. Doctors work in the <a href="portals.html#doctor">doctor portal</a>; receptionists in the <a href="portals.html#desk">front desk portal</a>.</p>
+    <ol class="vflow" aria-label="OPD flow">
+        <li class="r-rec"><div class="h"><b>1. Front desk</b><span class="who">Reception</span></div><p>Patient + doctor + token + fee: one click registers the visit, bills the fee and prints the slip. Or Appointments › check in.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Token queue</b><span class="who">Reception / nurse</span></div><p>Token queue by doctor. Nurse station (optional): vitals before the doctor.</p></li>
+        <li class="r-doc"><div class="h"><b>3. Doctor desk</b><span class="who">Doctor</span></div><p>Call next (TV + voice), notes, ICD-10 diagnosis, prescription, tests, follow-up, admission advice.</p></li>
+        <li class="split">
+            <div class="r-rec"><div class="h"><b>Tests ordered</b></div><p>The desk bills them (doctors' orders to bill).</p></div>
+            <div class="r-ok"><div class="h"><b>Prescription</b></div><p>OPD prescriptions queue at the pharmacy.</p></div>
+        </li>
+        <li class="r-ok"><div class="h"><b>4. Day close</b><span class="who">Doctor / accounts</span></div><p>Doctor day close; shares and the payout run.</p></li>
+    </ol>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Front desk</td><td>Register a visit: patient, doctor cards with search, the doctor's token board (pick any free number), the fee from the fee rules. On the right: appointments to check in, doctors' orders to bill, today's visits.</td></tr>
+        <tr><td>Appointments</td><td>Pick date and doctor: free / booked / leave / past slots. Click a free slot to book; a booked one to move, cancel, mark no-show or check in.</td></tr>
+        <tr><td>Token queue</td><td>Today's tokens by doctor: status, vitals, call for the doctor, print, open on desk.</td></tr>
+        <tr><td>Nurse station</td><td>Patients waiting for vitals first; enter vitals; the doctor sees them.</td></tr>
+        <tr><td>Doctor desk</td><td>The doctor's EMR screen (staff version). An OPD assistant can type for the doctor of his room; the doctor signs later. F2 call next, F3 recall, Ctrl+S save, Ctrl+Enter finish.</td></tr>
+        <tr><td>Room call (no screen)</td><td>A phone or tablet calls tokens for a room with no doctor PC: call next, again, not present, break.</td></tr>
+        <tr><td>To sign</td><td>Prescriptions typed by an assistant or the pharmacy, waiting for the doctor's signature.</td></tr>
+        <tr><td>Token display (TV)</td><td>The waiting hall screen with every doctor, on a logged-in PC.</td></tr>
+        <tr><td>OPD prescriptions</td><td>The pharmacy's Rx queue (OPD + IPD discharge): pending / dispensed.</td></tr>
+        <tr><td>Paper prescription</td><td>The doctor wrote on paper: scan the slip barcode, type the medicines, attach a photo. It goes to the pharmacy like a typed Rx.</td></tr>
+        <tr><td>My earnings / Doctor payout run</td><td>A doctor's shares and payouts; accounts make draft payouts for every doctor (approved and paid in Billing › Doctor Payouts).</td></tr>
+        <tr><td>Registers</td><td>Visits, Appointment list, Admission requests.</td></tr>
+        <tr><td>OPD setup</td><td>Doctors (one HR record per doctor), Doctor schedules (his week), Departments, Procedures, ICD-10 codes, Note and Prescription templates, Fee rules, Doctor payment models, Share / commission rules, Prescription options, Token screens, OPD settings.</td></tr>
+        <tr><td>OPD tools</td><td>Results to review, Procedure room (injections, dressings), Waiting board, Doctor day close, Doctor late / absent (message the day's patients or move the day), Patient feedback, Specialty forms, Drug interactions, Dose limits, Vaccination schedule, Online booking page, VIP / restricted records.</td></tr>
+        <tr><td>OPD reports</td><td>Daily census, Doctor-wise, Department-wise, Appointments vs walk-ins, Diagnosis (ICD) frequency, Doctor shares &amp; payouts, Waiting times.</td></tr>
+    </table>
+    <div class="shots">
+        <figure><a href="img/mod-opd-reception.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-reception.jpg" alt="OPD front desk"></a><figcaption>OPD › Front desk.</figcaption></figure>
+        <figure><a href="img/mod-opd-appointments.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-appointments.jpg" alt="Appointments"></a><figcaption>Appointments: a doctor's day as slots.</figcaption></figure>
+        <figure><a href="img/mod-opd-queue.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-queue.jpg" alt="Token queue"></a><figcaption>Token queue.</figcaption></figure>
+        <figure><a href="img/mod-opd-doctors.jpg" target="_blank"><img loading="lazy" src="img/mod-opd-doctors.jpg" alt="Doctors"></a><figcaption>OPD setup › Doctors.</figcaption></figure>
+    </div>
+    <div class="tip"><b>Online booking:</b> patients book at <code>/book</code> on your address (doctor, day, free time, name, mobile and an SMS code). Switch it on in OPD tools › Online booking page.</div>
+</section>
+
+<!-- ============ ER ============ -->
+<section class="doc" id="er">
+    <h2>Emergency (ER)</h2>
+    <span class="where">Emergency</span>
+    <p class="lead">ER staff work in the <a href="portals.html#emergency">ER portal</a>. The same screens are here for managers.</p>
+    <ul>
+        <li><b>Tracking board</b>: everyone in the ER by triage level then arrival, with bay, doctor, time in ER and waiting-for-doctor (red when over the level's target), pending labs / X-rays / doses and MLC. Triage and doctor can be set right in the row.</li>
+        <li><b>ER chart</b> of one visit, tabs: triage &amp; vitals, notes, orders, doses, bill, <b>Disposition</b> (Discharged home, Admitted, Referred out, LAMA, DAMA, Death in ER, Brought dead, Absconded) and <b>MLC</b>.</li>
+        <li><b>ER register</b>: every ER visit. <b>MLC register</b>: medico-legal cases by police station, date, MLC or FIR no. A case holds the police details, the MLO's examination, injuries on a body diagram, samples with chain of custody, and prints the MLC certificate and police intimation. It is never deleted; a final opinion changes only with a reason.</li>
+        <li><b>ER setup</b>: Bays / trolleys, ER lists, ER settings (triage scale ESI or Manchester, consult fee, board refresh, door-to-doctor and length-of-stay targets).</li>
+        <li><b>ER reports</b>: census by triage, door-to-doctor time, length of stay, dispositions, MLC register (police station).</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/mod-er-board.jpg" target="_blank"><img loading="lazy" src="img/mod-er-board.jpg" alt="ER tracking board"></a><figcaption>Tracking board.</figcaption></figure>
+        <figure><a href="img/mod-er-mlc.jpg" target="_blank"><img loading="lazy" src="img/mod-er-mlc.jpg" alt="MLC register"></a><figcaption>MLC register.</figcaption></figure>
+    </div>
+</section>
+
+<section class="doc" id="ambulance">
+    <h2>Ambulance</h2>
+    <span class="where">Ambulance</span>
+    <p><b>Dispatch board</b>: the fleet (available, on trip, maintenance) and active trips. <b>New trip request</b> (caller, pickup, landmark, destination, complaint, priority) › <b>Assign</b> › Left base › At scene › Transporting › <span class="b">Complete trip</span> (odometer, fuel, charge per km / fixed / free). <span class="b">Hand over to ER</span> registers the patient in the ER. <span class="b">Bill (cash)</span> bills a finished trip. Also <b>Trips register</b>, <b>Fleet</b> (vehicle, crew from HR, rates), <b>Lists</b> and the <b>Trips &amp; revenue</b> report.</p>
+    <figure><a href="img/mod-ambulance.jpg" target="_blank"><img loading="lazy" src="img/mod-ambulance.jpg" alt="Ambulance dispatch"></a><figcaption>Dispatch board.</figcaption></figure>
+</section>
+
+<!-- ============ IPD ============ -->
+<section class="doc" id="ipd">
+    <h2>IPD: admission, wards and beds</h2>
+    <span class="where">IPD</span>
+    <p class="lead">The admission desk works in the <a href="portals.html#admission">admission desk portal</a>, nurses in the <a href="portals.html#nurse">nurse portal</a>.</p>
+    <h3>Set it up once (IPD setup)</h3>
+    <div class="flow"><span>Buildings</span><i>→</i><span>Floors</span><i>→</i><span>Nursing stations</span><i>→</i><span>Wards</span><i>→</i><span>Rooms</span><i>→</i><span>Beds</span></div>
+    <p>Then <b>IPD lists</b>, <b>Order sets</b> (ready groups of medicines, diet and nursing orders) and <b>IPD settings</b> (day rule, visit charge, deposits and the low-deposit alert, clearances, MAR overdue time, passes, nursing shift times).</p>
+    <h3>Daily screens</h3>
+    <table>
+        <tr><th>Screen</th><th>Use it to</th></tr>
+        <tr><td>Bed board</td><td>Floors › wards › beds coloured by status. Click a bed to admit, transfer, discharge or clean.</td></tr>
+        <tr><td>Admissions</td><td>Admissions register (current and past), admit, and OPD requests waiting for a bed.</td></tr>
+        <tr><td>Admission desk</td><td>Tabs <b>Waiting list</b> (priority, reserve a bed, admit), <b>Estimates</b>, <b>Pre-authorisations</b> (panels).</td></tr>
+        <tr><td>Housekeeping</td><td>Beds waiting for cleaning, oldest first; cleaned = free again. Choose who cleaned at the top.</td></tr>
+        <tr><td>Diet / kitchen list</td><td>Every admitted patient's diet, ward by ward, per meal.</td></tr>
+        <tr><td>Nursing station</td><td>The ward's medicines due in 2 hours or overdue, last vitals, open tasks, shift handover.</td></tr>
+    </table>
+    <h3>The patient chart</h3>
+    <p>Open an admission. Tabs: <b>Charges</b>, <b>Bill &amp; deposits</b>, <b>Doctor</b> (rounds, orders), <b>MAR</b>, <b>Nursing</b>, <b>Discharge</b>, <b>Passes</b> (gate passes). Doctors see only the clinical tabs; the admission desk only the money and discharge tabs.</p>
+    <div class="shots">
+        <figure><a href="img/mod-ipd-board.jpg" target="_blank"><img loading="lazy" src="img/mod-ipd-board.jpg" alt="Bed board"></a><figcaption>Bed board.</figcaption></figure>
+        <figure><a href="img/mod-ipd-admissions.jpg" target="_blank"><img loading="lazy" src="img/mod-ipd-admissions.jpg" alt="Admissions"></a><figcaption>Admissions.</figcaption></figure>
+        <figure><a href="img/mod-ipd-desk.jpg" target="_blank"><img loading="lazy" src="img/mod-ipd-desk.jpg" alt="Admission desk"></a><figcaption>Admission desk: waiting list, estimates, pre-authorisations.</figcaption></figure>
+        <figure><a href="img/mod-ipd-nursing.jpg" target="_blank"><img loading="lazy" src="img/mod-ipd-nursing.jpg" alt="Nursing station"></a><figcaption>Nursing station.</figcaption></figure>
+        <figure><a href="img/mod-ipd-housekeeping.jpg" target="_blank"><img loading="lazy" src="img/mod-ipd-housekeeping.jpg" alt="Housekeeping"></a><figcaption>Housekeeping.</figcaption></figure>
+    </div>
+    <p><b>IPD reports:</b> Daily census, Bed occupancy, Average length of stay, Admissions &amp; discharges, IPD revenue by service, Outstanding IPD balances, Panel claims list. Deposits taken outside an admission: <b>Billing › Patient Deposits</b>.</p>
+</section>
+
+<section class="doc" id="discharge">
+    <h2>Discharge</h2>
+    <span class="where">Patient chart › Discharge</span>
+    <ol class="vflow" aria-label="Discharge flow">
+        <li class="r-doc"><div class="h"><b>1. Order discharge</b><span class="who">Consultant</span></div><p>The nurse and the admission desk see "Discharge ordered".</p></li>
+        <li class="r-doc"><div class="h"><b>2. Discharge summary</b><span class="who">Consultant</span></div><p>Condition at discharge, medicines on discharge (they go to the pharmacy as one Rx), advice. Save summary, Print summary.</p></li>
+        <li class="r-rec"><div class="h"><b>3. Clearance</b><span class="who">Departments</span></div><p>Each department clears the patient ("n of N cleared").</p></li>
+        <li class="r-rec"><div class="h"><b>4. Final bill</b><span class="who">Admission desk</span></div><p>Deposits are set against it; extra money is refunded.</p></li>
+        <li class="r-ok"><div class="h"><b>5. Discharge patient</b><span class="who">Admission desk</span></div><p>"Discharged. The bed has gone for cleaning." A discharge message goes to the patient if it is switched on.</p></li>
+    </ol>
+</section>
+
+<!-- ============ ICU ============ -->
+<section class="doc" id="icu">
+    <h2>ICU monitoring</h2>
+    <span class="where">ICU Monitoring</span>
+    <ul>
+        <li><b>Live monitor</b>: every ICU bed as a tile with live values; open alarms with sound. <span class="b">Acknowledge</span> an alarm and write what was done ("Seen, O₂ increased, doctor informed"). Alarms not acknowledged in time go to the staff on duty now.</li>
+        <li><b>ICU bed</b>: live numbers, trends (1 h, 8 h, 24 h, 72 h), alarm limits, alerts, devices.</li>
+        <li><b>Auto-charting</b>: monitor readings proposed for the vitals chart. The nurse checks each: <span class="b">Validate</span>, correct then <span class="b">Save &amp; validate</span>, or reject. Only validated readings go into the chart.</li>
+        <li><b>Setup</b>: Central stations, Devices, Alarm limits, Code map, Settings. Connecting monitors: <a href="install.html#icu">ICU monitors</a> in the installation guide.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/mod-icu-live.jpg" target="_blank"><img loading="lazy" src="img/mod-icu-live.jpg" alt="ICU live monitor"></a><figcaption>Live monitor.</figcaption></figure>
+        <figure><a href="img/mod-icu-charting.jpg" target="_blank"><img loading="lazy" src="img/mod-icu-charting.jpg" alt="Auto-charting"></a><figcaption>Auto-charting.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ OT ============ -->
+<section class="doc" id="ot">
+    <h2>Operation theatres</h2>
+    <span class="where">Operation theatres</span>
+    <ol class="vflow" aria-label="OT flow">
+        <li class="r-rec"><div class="h"><b>1. Book</b><span class="who">OT desk</span></div><p>OT schedule: a day grid per theatre. Click a slot to book; drag a case to move it.</p></li>
+        <li class="r-doc"><div class="h"><b>2. Pre-op and consent</b><span class="who">Surgeon / anaesthetist</span></div><p>Pre-op checks, consents (surgery, anaesthesia, blood, high risk), Print consent.</p></li>
+        <li class="r-mac"><div class="h"><b>3. In theatre</b><span class="who">OT team</span></div><p>WHO checklist (Sign In, Time Out, Sign Out), anaesthesia, operation note, implants / specimens / blood, counts.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Recovery and charges</b><span class="who">OT staff</span></div><p>Recovery score; charges go to the patient's bill.</p></li>
+    </ol>
+    <p><b>The case screen</b> tabs: Pre-op, WHO checklist, Anaesthesia, Operation note, Implants, specimens &amp; blood, Counts, Recovery, Charges. Buttons include <span class="b">Print consent</span>, <span class="b">Change booking</span>, <span class="b">Cancel / postpone</span> (with a reason: patient unfit, no consent, not fasting…).</p>
+    <p><b>OT register</b> lists every case. <b>Implant trace</b> finds every patient who got a serial / batch / lot (for a recall). <b>Setup</b>: Theatres, OT charge slabs, Procedures / surgeries (with the note template and consent risks), Anaesthesia types, Cancellation reasons, Consumable kits (issued in one go from the OT store), Lists, OT settings. <b>Reports</b>: utilisation, cases by surgeon / procedure, cancellations and reasons, surgeon revenue / shares.</p>
+    <div class="shots">
+        <figure><a href="img/mod-ot-schedule.jpg" target="_blank"><img loading="lazy" src="img/mod-ot-schedule.jpg" alt="OT schedule"></a><figcaption>OT schedule.</figcaption></figure>
+        <figure><a href="img/mod-ot-cases.jpg" target="_blank"><img loading="lazy" src="img/mod-ot-cases.jpg" alt="OT register"></a><figcaption>OT register.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ MATERNITY ============ -->
+<section class="doc" id="maternity">
+    <h2>Maternity</h2>
+    <span class="where">Maternity</span>
+    <ul>
+        <li><b>Antenatal cards</b>: open a card (LMP › EDD, obstetric score, risk factors); check-ups and gestation today.</li>
+        <li><b>Labour room board</b>: every mother in labour with bed, G P, hours, last cervix and foetal heart, warnings.</li>
+        <li><b>One labour</b>: partograph (chart and entries), delivery and babies, postnatal notes, maternity charges.</li>
+        <li><b>Registers</b>: Labour register, Births register (baby, mother, MRNs, weight, APGAR, outcome, birth notification no.). <b>Setup</b>: Risk factors, Maternity settings (normal delivery / C-section packages, PPH and partograph alert limits).</li>
+        <li><b>Reports</b>: Deliveries by type, C-section rate, Births register, Maternal &amp; neonatal outcomes.</li>
+    </ul>
+    <div class="shots">
+        <figure><a href="img/mod-maternity-board.jpg" target="_blank"><img loading="lazy" src="img/mod-maternity-board.jpg" alt="Labour room board"></a><figcaption>Labour room board.</figcaption></figure>
+        <figure><a href="img/mod-maternity-antenatal.jpg" target="_blank"><img loading="lazy" src="img/mod-maternity-antenatal.jpg" alt="Antenatal cards"></a><figcaption>Antenatal cards.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ DIALYSIS ============ -->
+<section class="doc" id="dialysis">
+    <h2>Dialysis</h2>
+    <span class="where">Dialysis</span>
+    <ol class="vflow" aria-label="Dialysis flow">
+        <li class="r-rec"><div class="h"><b>1. Patient on the programme</b><span class="who">Dialysis unit</span></div><p>Dialysis patients › new profile: prescription, viral status, schedule, dialyzers, package.</p></li>
+        <li class="r-rec"><div class="h"><b>2. Book a slot</b><span class="who">Dialysis unit</span></div><p>Shift board: machines × shifts for a day; click a free slot to book.</p></li>
+        <li class="r-mac"><div class="h"><b>3. Session</b><span class="who">Dialysis nurse</span></div><p>Start (pre), vitals during the run, end (post), summary and charge.</p></li>
+        <li class="r-ok"><div class="h"><b>4. Billing</b><span class="who">Desk</span></div><p>Dialysis billing: completed sessions not yet billed, one invoice per patient (fund / panel bill when the profile says so).</p></li>
+    </ol>
+    <p><b>Setup</b>: Machines (viral dedication, disinfection log), Shifts, Machine types, Access types, Dialyzer types, Complications, Dialysis settings (dialyzer reuse, vitals interval, viral test validity). <b>Reports</b>: sessions per machine / shift, patient adherence, adequacy (URR / Kt/V), revenue.</p>
+    <div class="shots">
+        <figure><a href="img/mod-dialysis-board.jpg" target="_blank"><img loading="lazy" src="img/mod-dialysis-board.jpg" alt="Dialysis shift board"></a><figcaption>Shift board.</figcaption></figure>
+        <figure><a href="img/mod-dialysis-patients.jpg" target="_blank"><img loading="lazy" src="img/mod-dialysis-patients.jpg" alt="Dialysis patients"></a><figcaption>Dialysis patients.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ BLOOD BANK ============ -->
+<section class="doc" id="bloodbank">
+    <h2>Blood bank</h2>
+    <span class="where">Blood Bank</span>
+    <ol class="vflow" aria-label="Blood bank flow">
+        <li class="r-rec"><div class="h"><b>1. Donor</b><span class="who">Blood bank</span></div><p>Donors: search or register (CNIC once), questions, physical check, deferral if unfit.</p></li>
+        <li class="r-mac"><div class="h"><b>2. Donation and screening</b><span class="who">Technologist</span></div><p>Bleeding, bag and components with labels; screening (TTI) with kit / lot and two-person verification. Reactive donors go to Deferrals to be told.</p></li>
+        <li class="r-mac"><div class="h"><b>3. Stock</b><span class="who">Technologist</span></div><p>Blood stock grid (group × component), soonest expiry first (FEFO). Fridge temperatures logged.</p></li>
+        <li class="r-doc"><div class="h"><b>4. Blood request</b><span class="who">Ward / OT / ER</span></div><p>Sample, grouping by two people, crossmatch and reserve.</p></li>
+        <li class="r-ok"><div class="h"><b>5. Issue and transfusion</b><span class="who">Two people</span></div><p>Issue with two scans; transfusion and any reaction recorded; charges.</p></li>
+    </ol>
+    <p>Also: <b>Unit register</b>, <b>Transfusion reactions</b>, setup (storage units, screening tests, deferral reasons, donor questions, component types, bag types, anticoagulants, settings) and reports including the <b>SBTA</b> donor, screening and crossmatch &amp; issue registers.</p>
+    <div class="shots">
+        <figure><a href="img/mod-bloodbank-dashboard.jpg" target="_blank"><img loading="lazy" src="img/mod-bloodbank-dashboard.jpg" alt="Blood bank dashboard"></a><figcaption>Blood bank dashboard.</figcaption></figure>
+        <figure><a href="img/mod-bloodbank-requests.jpg" target="_blank"><img loading="lazy" src="img/mod-bloodbank-requests.jpg" alt="Blood requests"></a><figcaption>Blood requests.</figcaption></figure>
+        <figure><a href="img/mod-bloodbank-stock.jpg" target="_blank"><img loading="lazy" src="img/mod-bloodbank-stock.jpg" alt="Blood stock"></a><figcaption>Blood stock (FEFO).</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ SMALL UNITS ============ -->
+<section class="doc" id="daycare">
+    <h2>Day-care</h2>
+    <span class="where">Day-care</span>
+    <p><b>Day-care board</b>: chairs / beds with the patient and time in the chair, today's bookings and visits. Book, seat (check-in with "Consent for the procedure is signed"), discharge. <b>Day-care register</b>, <b>Day-care procedures</b>, <b>Lists</b>; reports by procedure and chair utilisation.</p>
+    <figure><a href="img/mod-daycare.jpg" target="_blank"><img loading="lazy" src="img/mod-daycare.jpg" alt="Day-care board"></a><figcaption>Day-care board.</figcaption></figure>
+</section>
+
+<section class="doc" id="physio">
+    <h2>Physiotherapy</h2>
+    <span class="where">Physiotherapy</span>
+    <p><b>Referrals</b> (from OPD, ward, ER, self or outside) open an <b>episode</b>: assessment, plan, sessions, outcome scores, discharge. <b>Day board</b>: the day's sessions by time; attend, no-show or cancel. Setup: modalities, outcome measures, lists. Reports: sessions by therapist, revenue, outcomes (baseline vs discharge).</p>
+    <figure><a href="img/mod-physio.jpg" target="_blank"><img loading="lazy" src="img/mod-physio.jpg" alt="Physiotherapy day board"></a><figcaption>Physiotherapy day board.</figcaption></figure>
+</section>
+
+<section class="doc" id="diet">
+    <h2>Diet &amp; kitchen</h2>
+    <span class="where">Diet &amp; kitchen</span>
+    <p>The doctor's diet order on the IPD chart drives everything. <b>Meal plan &amp; delivery</b>: one meal, ward-wise tray check-off. <b>Production list</b>: how many trays of each diet. <b>Patient diets</b>: who is fed now, nutrition risk, review date. Setup: diet types, meal times, menus, lists, meal charges. Reports: diet census, meal charges, refused / missed meals.</p>
+    <figure><a href="img/mod-diet.jpg" target="_blank"><img loading="lazy" src="img/mod-diet.jpg" alt="Meal plan"></a><figcaption>Meal plan &amp; delivery.</figcaption></figure>
+</section>
+
+<section class="doc" id="mortuary">
+    <h2>Mortuary</h2>
+    <span class="where">Mortuary</span>
+    <p><b>Cabinets board</b>: cabinets with the bodies in them, deaths waiting to be received, receive a body. <b>Body register</b>; one body holds details, cabinet (move), belongings, police / postmortem, release. Reports: register, cabinet occupancy, bodies released.</p>
+    <figure><a href="img/mod-mortuary.jpg" target="_blank"><img loading="lazy" src="img/mod-mortuary.jpg" alt="Mortuary board"></a><figcaption>Cabinets board.</figcaption></figure>
+</section>
+
+<!-- ============ RECORDS & QUALITY ============ -->
+<section class="doc" id="mrd">
+    <h2>Medical records (MRD)</h2>
+    <span class="where">Medical records</span>
+    <ul>
+        <li><b>Patient record</b>: search a patient; files, scanned documents, record requests and hospital stays.</li>
+        <li><b>File tracking</b>: every file out of the record room, overdue first; return it here.</li>
+        <li><b>Record requests</b>: take a request, approve, refuse or release (patient consent, CNIC checked, proof of relation).</li>
+        <li><b>Coding queue</b>: discharged stays to code (to code, in progress, query, coded).</li>
+        <li><b>Retention &amp; archive</b>, <b>Merge patients</b> (keep one record, move the duplicate, with a reason; see Merge log).</li>
+        <li>Setup: record rooms / racks, document categories, MRD settings. Reports: file movements, requests, morbidity (ICD-10), coding turnaround, retention.</li>
+    </ul>
+    <figure><a href="img/mod-mrd.jpg" target="_blank"><img loading="lazy" src="img/mod-mrd.jpg" alt="MRD patient record"></a><figcaption>MRD › Patient record.</figcaption></figure>
+</section>
+
+<section class="doc" id="infection">
+    <h2>Infection control</h2>
+    <span class="where">Infection control</span>
+    <p><b>Dashboard</b> (open HAI cases, isolation, exposure follow-ups, hand hygiene, top organisms). Surveillance: <b>HAI cases</b>, <b>Device days</b>, <b>HAI rates</b> (per 1000 device days), <b>Isolation</b>. Staff safety: <b>Needle-stick / exposures</b> (confidential), <b>Hand hygiene</b> (WHO 5 moments). <b>Antibiogram</b> from verified lab cultures. Reports by ward and location.</p>
+    <figure><a href="img/mod-infection.jpg" target="_blank"><img loading="lazy" src="img/mod-infection.jpg" alt="Infection control dashboard"></a><figcaption>Infection control dashboard.</figcaption></figure>
+</section>
+
+<section class="doc" id="quality">
+    <h2>Incident &amp; quality</h2>
+    <span class="where">Incident &amp; quality</span>
+    <p><b>Report an incident</b> is for every staff member (also from the nurse portal's Requests). <b>Incident register</b> (sentinel events first), root cause and <b>CAPA tracker</b> (actions, overdue first). <b>Complaints &amp; feedback</b> (acknowledge, resolve, close, low OPD feedback). <b>KPI scorecard</b> per month, locked when done. Setup: incident types, KPI definitions, lists. Reports including the KPI scorecard (MSDS).</p>
+    <figure><a href="img/mod-quality.jpg" target="_blank"><img loading="lazy" src="img/mod-quality.jpg" alt="Incident register"></a><figcaption>Incident register.</figcaption></figure>
+</section>
+
+<section class="doc" id="compliance">
+    <h2>Compliance</h2>
+    <span class="where">Compliance</span>
+    <ul>
+        <li><b>Disease surveillance</b>: Notifiable diseases register (flagged from diagnoses and lab positives; confirm, report, discard), <b>IDSR weekly report</b> (CSV for the health department, dengue line list), disease list, flag rules, groups.</li>
+        <li><b>Healthcare Commission</b>: MSDS documents with expiry alerts, document categories, <b>Waste log</b> and the month summary.</li>
+        <li><b>Tax</b>: <b>FBR POS</b> per location (POS ID, token) and the invoice queue with resend.</li>
+    </ul>
+    <figure><a href="img/mod-compliance.jpg" target="_blank"><img loading="lazy" src="img/mod-compliance.jpg" alt="Notifiable diseases"></a><figcaption>Notifiable diseases.</figcaption></figure>
+</section>
+
+<section class="doc" id="roster">
+    <h2>Duty roster</h2>
+    <span class="where">Duty roster</span>
+    <p>Set up <b>Roster units</b> (ICU, Ward 2, ER…), then fill the <b>Monthly roster</b> (staff × days; drag-copy, copy week / month) and <b>publish</b> it. <b>On duty now</b> shows who works now per unit. <b>Duty swaps</b>: ask for and approve swaps. <b>Roster rules</b>: rest hours, nights in a row, weekly hours, feed HR attendance. The nurse portal finds a nurse's ward from the published roster, and ICU alarms escalate to the staff on duty now.</p>
+    <figure><a href="img/mod-roster.jpg" target="_blank"><img loading="lazy" src="img/mod-roster.jpg" alt="Monthly roster"></a><figcaption>Monthly roster.</figcaption></figure>
+</section>
+
+<section class="doc" id="coming">
+    <h2>Coming later</h2>
+    <p class="lead">These are planned but not in TibuLab yet.</p>
+    <ul>
+        <li>Clinical teams (consultant + registrar + house officer) with co-signing; verbal orders signed within 24 hours; IPD consult requests and on-call lists.</li>
+        <li>"Break-glass": a doctor opens a patient who is not his, with a written reason (logged).</li>
+        <li>A second nurse confirming high-alert medicines on the MAR.</li>
+        <li>ICU scores (SOFA, APACHE II, GCS), drip titration, ventilator orders, lines and drains with days.</li>
+        <li>Referring doctor portal: outside doctors sign in with a mobile code to see their patients' reports and commission.</li>
+        <li>TibuLab AI reading the values of an outside report (today staff type them).</li>
+    </ul>
+    <p class="lead">Page checked against TibuLab on 06-11-2026.</p>
+    <p><a href="index.html">← Back to the User Manual</a></p>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('manual-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark'
+            || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('manual-theme', next); } catch (e) {}
+    });
+
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.doc'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+
+    function clearMarks(node) {
+        Array.prototype.slice.call(node.querySelectorAll('mark')).forEach(function (m) {
+            m.replaceWith(document.createTextNode(m.textContent));
+        });
+        node.normalize();
+    }
+    function highlight(node, q) {
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null), hits = [], n;
+        while ((n = walker.nextNode())) { if (n.nodeValue.toLowerCase().indexOf(q) !== -1) hits.push(n); }
+        hits.forEach(function (t) {
+            var i = t.nodeValue.toLowerCase().indexOf(q);
+            var rest = t.splitText(i); rest.splitText(q.length);
+            var m = document.createElement('mark'); m.textContent = rest.nodeValue;
+            rest.parentNode.replaceChild(m, rest);
+        });
+    }
+    document.getElementById('q').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        sections.forEach(function (s) {
+            clearMarks(s);
+            var hit = !q || s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.classList.toggle('hidden', !hit);
+            if (hit) { shown++; if (q) highlight(s, q); }
+        });
+        document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    });
+
+    links.forEach(function (a) { a.addEventListener('click', function () { document.querySelector('nav.toc').classList.remove('open'); }); });
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        sections.forEach(function (s) { io.observe(s); });
+    }
+})();
+</script>
+</body>
+</html>
