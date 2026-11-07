@@ -145,7 +145,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <a href="hospital.html">Hospital modules</a>
     <div class="grp">Start</div>
     <a href="#start">For owners and managers</a>
-    <a href="#menu">The menu: Setup, Reports, More…</a>
+    <a href="#menu">The menu: work screens and Settings</a>
     <a href="#search">Sidebar search (Ctrl+K)</a>
     <a href="#mis">Management (MIS) dashboard</a>
     <div class="grp">Stock and buying</div>
@@ -183,20 +183,20 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
 </section>
 
 <section class="doc" id="menu">
-    <h2>The menu: Setup, Reports and More…</h2>
-    <span class="where">Sidebar › any module</span>
-    <p>Each module's menu shows the screens people open every day. The lists you set up once (departments, units, templates…) and the reports are each <b>one entry</b> that opens a page of cards. A card has the list's name and one line about what it is. Click a card to open the list. You see only the cards your role may open.</p>
+    <h2>The menu: work screens and Settings</h2>
+    <span class="where">Sidebar</span>
+    <p>There are two sidebars. The normal one has the screens you work in every day. Everything you set up once (lists, templates, fees, users, lookups) is in the <b>Settings</b> sidebar. The module you are in is shown in dark blue, and the page you are on is highlighted inside it. The sidebar scrolls by itself so you always see where you are.</p>
     <ol class="steps">
-        <li><b>A setup list you use often stays in the menu.</b> Examples: OPD › Setup › <b>Doctors</b> and <b>Doctor schedules</b>, Laboratory › Setup › <b>Tests</b> and <b>Test Particulars</b>. Every other OPD setup list is under <span class="b">More…</span> just below them (Departments, Procedures, ICD-10 codes, Fee rules, Prescription templates, OPD settings and the rest).
-            <figure><a href="img/menu-more-opd-setup.jpg" target="_blank"><img loading="lazy" src="img/menu-more-opd-setup.jpg" alt="OPD Setup with Doctors, Doctor schedules and More…, and the OPD setup cards"></a><figcaption>Step 1: OPD › Setup › More… opens the OPD setup cards.</figcaption></figure></li>
-        <li><b>Reports.</b> At the bottom of a module, under <b>MORE</b>, one <b>Reports</b> entry (for example <b>OPD reports</b>) opens every report of that module as cards. Each report can be filtered by dates and printed or exported.
-            <figure><a href="img/menu-hub-reports.jpg" target="_blank"><img loading="lazy" src="img/menu-hub-reports.jpg" alt="OPD reports cards"></a><figcaption>Step 2: OPD › More › OPD reports.</figcaption></figure></li>
-        <li><b>Pharmacy › Medicine lists</b>: Formulas, Salts, Ingredients, Units, Dosage Forms, Routes, ATC Classes and Price History are on one page, each with what it is for. Most are filled from DRAP, so you rarely open them.
-            <figure><a href="img/menu-pharmacy-lists.jpg" target="_blank"><img loading="lazy" src="img/menu-pharmacy-lists.jpg" alt="Pharmacy Medicine lists"></a><figcaption>Step 3: Pharmacy › Setup › Medicine lists.</figcaption></figure></li>
-        <li><b>Settings › More › Lookups</b>: Countries, Provinces, Cities, Religions, Currencies, Patient titles and Patient relations. <b>Settings › More › Logs</b>: Activity Log, Recycle Bin, Login History.
-            <figure><a href="img/menu-settings-lookups.jpg" target="_blank"><img loading="lazy" src="img/menu-settings-lookups.jpg" alt="Settings Lookups cards"></a><figcaption>Step 4: Settings › More › Lookups.</figcaption></figure></li>
+        <li><b>Settings</b> is the last entry of the sidebar. Setup pages you open every day also stay in the normal sidebar, for example Pharmacy › Medicines, Laboratory › Tests and OPD › Doctors.
+            <figure><a href="img/menu-settings-entry.jpg" target="_blank"><img loading="lazy" src="img/menu-settings-entry.jpg" alt="Settings at the bottom of the sidebar"></a><figcaption>Step 1: Settings (bottom of the sidebar).</figcaption></figure></li>
+        <li>The sidebar changes to <b>Settings</b>: first the hospital's settings (Business, Locations, Users, Lookups, Logs…), then each module with its setup pages. Click a module, then the page, for example <b>Pharmacy › Salts</b>. <span class="b">← Back to app</span> at the top takes you back to the screen you came from.
+            <figure><a href="img/menu-settings-sidebar.jpg" target="_blank"><img loading="lazy" src="img/menu-settings-sidebar.jpg" alt="Settings sidebar with Back to app"></a><figcaption>Step 2: Settings › Pharmacy › Salts, with Back to app at the top.</figcaption></figure></li>
+        <li>Each module's setup pages are listed in full, for example <b>Settings › OPD</b>: Doctors, Doctor schedules, Departments, Procedures, Fee rules, Prescription templates, OPD settings…
+            <figure><a href="img/menu-settings-opd.jpg" target="_blank"><img loading="lazy" src="img/menu-settings-opd.jpg" alt="Settings OPD Fee rules"></a><figcaption>Step 3: Settings › OPD › Fee rules.</figcaption></figure></li>
+        <li><b>Reports</b>: at the bottom of a module, under <b>MORE</b>, one entry (for example <b>OPD reports</b>) opens all that module's reports as cards. Each report can be filtered by dates and printed or exported.
+            <figure><a href="img/menu-hub-reports.jpg" target="_blank"><img loading="lazy" src="img/menu-hub-reports.jpg" alt="OPD reports cards"></a><figcaption>Step 4: OPD › More › OPD reports.</figcaption></figure></li>
     </ol>
-    <div class="tip">Can't find a page? Press <b>Ctrl+K</b> and type its name (next section). It finds the pages inside Setup and Reports too.</div>
+    <div class="tip">Can't find a page? Press <b>Ctrl+K</b> and type its name, like "fee rules" or "salts". It finds pages in both sidebars.</div>
 </section>
 
 <section class="doc" id="search">
@@ -224,7 +224,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <ol class="steps">
         <li><b>Pharmacies &amp; Stores</b>: each pharmacy (OPD pharmacy, IPD pharmacy), the main store and the ward stores, who works in each, and its cash counter.
             <figure><a href="img/admin-pharmacy-step1.jpg" target="_blank"><img loading="lazy" src="img/admin-pharmacy-step1.jpg" alt="Pharmacies and stores"></a><figcaption>Step 1: Pharmacy › Pharmacies &amp; Stores.</figcaption></figure></li>
-        <li><b>Medicines</b>: name, generic, company, pack levels (for example tablet › strip › box) with the base unit, MRP, barcodes, par levels per store. <b>Companies</b> is in the menu. Formulas, Salts, Ingredients, Units, Dosage Forms, Routes, ATC Classes and Price History are in <b>Pharmacy › Setup › Medicine lists</b> (see <a href="#menu">The menu</a>).
+        <li><b>Medicines</b>: name, generic, company, pack levels (for example tablet › strip › box) with the base unit, MRP, barcodes, par levels per store. <b>Companies</b> is in the menu. Formulas, Salts, Ingredients, Units, Dosage Forms, Routes, ATC Classes and Price History are in <b>Settings › Pharmacy</b> (see <a href="#menu">The menu</a>).
             <figure><a href="img/admin-pharmacy-step2.jpg" target="_blank"><img loading="lazy" src="img/admin-pharmacy-step2.jpg" alt="Medicines list"></a><figcaption>Step 2: Pharmacy › Medicines.</figcaption></figure></li>
         <li><b>Pharmacy Settings</b>: prices, expiry rules, prescriptions, first-expiry-first, scanner, receipt. For all locations or one.
             <figure><a href="img/admin-pharmacy-step3.jpg" target="_blank"><img loading="lazy" src="img/admin-pharmacy-step3.jpg" alt="Pharmacy settings"></a><figcaption>Step 3: Pharmacy Settings (all locations or one).</figcaption></figure></li>
@@ -240,7 +240,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Requisitions</td><td>Indents from wards and stores: new or suggested from par levels, submit, approve, issue, receive.</td></tr>
         <tr><td>Transfers</td><td>Between stores: send (in transit), receive with shorts, call back.</td></tr>
         <tr><td>Write-offs, Stock Count, Stock Ledger</td><td>Damaged / expired / lost stock by batch; count a store batch by batch and post the differences; every movement.</td></tr>
-        <tr><td>Bulk Price Change</td><td>A DRAP notice: pick medicines, the new MRP per pack and the date it starts. Future dates wait for the day. <b>Price History</b> (in Medicine lists) keeps the old prices.</td></tr>
+        <tr><td>Bulk Price Change</td><td>A DRAP notice: pick medicines, the new MRP per pack and the date it starts. Future dates wait for the day. <b>Price History</b> (Settings › Pharmacy) keeps the old prices.</td></tr>
         <tr><td>Purchasing</td><td>Purchase Orders, Goods Received (the distributor's bill at the door), Purchase Returns, Distributors, Distributor Payments.</td></tr>
         <tr><td>Reports (Pharmacy › More › Reports)</td><td>Sales by day / medicine / cashier, stock valuation, expiry, reorder / low stock, fast &amp; slow movers, margins, price changes, purchase register, distributor dues, requisitions &amp; fill rate, transfers, controlled drugs.</td></tr>
     </table>

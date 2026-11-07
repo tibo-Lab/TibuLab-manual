@@ -183,7 +183,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <p class="lead">The screens of a full hospital, in the normal app with the sidebar: OPD, ER, IPD, ICU, OT, maternity, dialysis, blood bank and the support units. They are for the owner, managers, desks and unit in-charges. Doctors, nurses and most desk staff do the same work in their own <a href="portals.html">portal</a>. The pictures come from the demo hospital with made-up patients.</p>
     <ul>
         <li><b>Every module is switched on per hospital.</b> A lab-only customer sees none of this. A module that is not in your plan is hidden for everyone (see <b>Settings › Subscription</b>).</li>
-        <li>Each module has the same parts in its sidebar group: the daily screens and <b>Registers</b>; <b>Setup</b> and <b>Reports</b> each open a page of cards (see <a href="admin.html#menu">The menu</a>).</li>
+        <li>Each module has the same parts in its sidebar group: the daily screens and <b>Registers</b>; <b>Reports</b> opens a page of cards; the setup pages are in the <b>Settings</b> sidebar (see <a href="admin.html#menu">The menu</a>).</li>
         <li>Can't find a screen? Press <b>Ctrl+K</b> and type its name (<a href="admin.html#search">Sidebar search</a>).</li>
         <li>Shown dates are always DD-MM-YYYY.</li>
     </ul>
@@ -303,7 +303,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <li class="r-doc"><div class="h"><b>2. Doctor section: tick what he does</b></div><p>For the OPD: <b>Sees patients in the OPD</b>. Specialty, clinical department, PMDC.</p></li>
         <li class="r-rec"><div class="h"><b>3. Login &amp; Password</b></div><p>Last step of the same form: email or mobile, password, role <b>Doctor</b>. He opens the doctor portal.</p></li>
         <li class="r-lab"><div class="h"><b>4. His week</b><span class="who">OPD › Setup › Doctor schedules</span></div><p><span class="b">Set week</span>: days, times, minutes per patient, room.</p></li>
-        <li class="r-ok"><div class="h"><b>5. His fee</b><span class="who">OPD › Setup › More… › Fee rules</span></div><p>Consultation fee, follow-up free days, his share. Then he is in appointments, the token queue and the front desk.</p></li>
+        <li class="r-ok"><div class="h"><b>5. His fee</b><span class="who">Settings › OPD › Fee rules</span></div><p>Consultation fee, follow-up free days, his share. Then he is in appointments, the token queue and the front desk.</p></li>
     </ol>
 
     <h3>Each step on screen</h3>
@@ -318,7 +318,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
             <figure><a href="img/add-doctor-step4.png" target="_blank"><img loading="lazy" src="img/add-doctor-step4.png" alt="Login and Password card"></a><figcaption>Step 4: his login and password.</figcaption></figure></li>
         <li><b>OPD › Setup › Doctor schedules</b> → <span class="b">Set week</span> on his row. Tick his days, pick <b>From</b> and <b>To</b> with the time picker (hour, minutes, <b>AM / PM</b>, then <span class="b">Done</span>), minutes per patient, most patients and room. <span class="b">Copy Monday to Tue–Fri</span> saves typing. <span class="b">Save week</span>.
             <figure><a href="img/add-doctor-step5.png" target="_blank"><img loading="lazy" src="img/add-doctor-step5.png" alt="Week editor with the AM PM time picker"></a><figcaption>Step 5: his week, with the AM / PM time picker.</figcaption></figure></li>
-        <li><b>OPD › Setup › More… › Fee rules</b> → <span class="b">Add</span>. <b>First make a "Fee of a visit kind" rule</b>: Visit kind = <b>Consultation</b> (the new visit), Doctor = this doctor (or empty = all doctors), How = <b>Fixed amount</b>, Amount = his fee. <b>Without it the front desk shows no fee.</b> "Follow-up within N days", "Report review", after-hours, holiday, VIP and booking rules only <b>change that main fee</b>: for example follow-up within 7 days = Rs 1000 or Free. Every rule is explained in <a href="#opd-fees">OPD fees: every rule explained</a>.
+        <li><b>Settings › OPD › Fee rules</b> → <span class="b">Add</span>. <b>First make a "Fee of a visit kind" rule</b>: Visit kind = <b>Consultation</b> (the new visit), Doctor = this doctor (or empty = all doctors), How = <b>Fixed amount</b>, Amount = his fee. <b>Without it the front desk shows no fee.</b> "Follow-up within N days", "Report review", after-hours, holiday, VIP and booking rules only <b>change that main fee</b>: for example follow-up within 7 days = Rs 1000 or Free. Every rule is explained in <a href="#opd-fees">OPD fees: every rule explained</a>.
             <figure><a href="img/add-doctor-step6.png" target="_blank"><img loading="lazy" src="img/add-doctor-step6.png" alt="Fee rules list"></a><figcaption>Step 6: fee rules.</figcaption></figure>
             <figure><a href="img/add-doctor-step6b.jpg" target="_blank"><img loading="lazy" src="img/add-doctor-step6b.jpg" alt="Add fee rule form with Rule Fee of a visit kind"></a><figcaption>Step 6: the Add form with Rule = "Fee of a visit kind" (the main fee, make it first).</figcaption></figure></li>
     </ol>
@@ -365,7 +365,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
 <!-- ============ OPD FEES ============ -->
 <section class="doc" id="opd-fees">
     <h2>OPD fees: every rule explained</h2>
-    <span class="where">OPD › Setup › More… › Fee rules</span>
+    <span class="where">Settings › OPD › Fee rules</span>
     <p class="lead">The front desk works out the fee of every OPD visit from the <b>fee rules</b>. One rule is the <b>main fee</b> ("Fee of a visit kind"); all other rules only <b>change</b> it: a follow-up makes it free or cheaper, a surcharge adds to it, a patient type takes a discount off.</p>
 
     <h3>The order the fee is worked out in</h3>
@@ -466,7 +466,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <li><b>Appointments</b>: the fee is worked out when the patient is checked in at the front desk (booking fee and advance included). The <b>online booking page</b> shows each doctor's new-visit fee.</li>
     </ul>
     <figure><a href="img/opd-fees-desk.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-desk.jpg" alt="Front desk with the fee and its breakdown"></a><figcaption>Front desk: Dr Sana Iqbal's main fee Rs 2,000, patient type Staff, and the breakdown under it.</figcaption></figure>
-    <figure><a href="img/opd-fees-list.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-list.jpg" alt="Fee rules list"></a><figcaption>OPD › Setup › More… › Fee rules.</figcaption></figure>
+    <figure><a href="img/opd-fees-list.jpg" target="_blank"><img loading="lazy" src="img/opd-fees-list.jpg" alt="Fee rules list"></a><figcaption>Settings › OPD › Fee rules.</figcaption></figure>
 
     <h3>Problems</h3>
     <table>
