@@ -229,6 +229,21 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <li><b>Pharmacy Settings</b>: prices, expiry rules, prescriptions, first-expiry-first, scanner, receipt. For all locations or one.
             <figure><a href="img/admin-pharmacy-step3.jpg" target="_blank"><img loading="lazy" src="img/admin-pharmacy-step3.jpg" alt="Pharmacy settings"></a><figcaption>Step 3: Pharmacy Settings (all locations or one).</figcaption></figure></li>
     </ol>
+    <h3 id="pharmacy-datamatrix">Add a medicine's barcode / DataMatrix</h3>
+    <ol class="steps">
+        <li>Open <b>Pharmacy › Medicines</b> and click the medicine (or <b>New</b>).</li>
+        <li>Open the <b>Pack &amp; prices</b> tab (next to <b>General</b>). The pack levels table (tablet › strip › box) is there, and each level has a <b>Barcode / DataMatrix</b> box (2nd column) with a <b>camera</b> button next to it.</li>
+        <li>Click in the <b>Barcodes</b> box of the pack you hold (for example <b>Box</b>), then scan the pack's DataMatrix with the scanner, or type the code and press <b>Enter</b>. For a DataMatrix, TibuLab keeps only the product code (GTIN). Batch, expiry and serial change on every pack, so they are read at sale and receiving time.</li>
+        <li>The code shows as a tag. Scan more codes if the pack has more than one. Click <b>x</b> on a tag to remove it.</li>
+        <li>Click <b>Save</b>. From now on a scan finds this medicine on <b>Pharmacy Sale</b> and on <b>Goods Received</b>.</li>
+    </ol>
+    <table>
+        <tr><th>The pack has</th><th>What to do</th></tr>
+        <tr><td>DataMatrix</td><td>Scan it into <b>Barcodes</b>. Batch and expiry come from each scan.</td></tr>
+        <tr><td>Only a normal barcode</td><td>Scan it into <b>Barcodes</b> too. At sale the batch that expires first is used; at Goods Received type the batch and expiry.</td></tr>
+        <tr><td>No barcode</td><td>Leave <b>Barcodes</b> empty and search by name (F2), or print TibuLab labels (<b>Goods Received › Print labels</b> or <b>Batches &amp; Recall › Print labels</b>): batch label for the pack, break-pack label for loose strips, shelf label. Scanning the label gives the exact batch and expiry.</td></tr>
+    </table>
+    <p>If the scan shows the batch joined to the expiry, the scanner is not sending the GS separator: in <b>Pharmacy Settings › Barcode scanner</b>, use <b>Test scanner</b>, and set the scanner to GS1 mode or fill in <b>GS separator substitute</b>.</p>
     <h3>Daily work</h3>
     <table>
         <tr><th>Screen</th><th>Use it to</th></tr>
