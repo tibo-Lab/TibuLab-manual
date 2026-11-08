@@ -445,6 +445,7 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
             <div class="off">Scheduler: running</div>
             <hr>
             <div><b>Open TibuLab</b></div>
+            <div>Cloud sync settings…</div>
             <div class="off">Other PCs / phones: http://192.168.1.10:8080</div>
             <hr>
             <div>First sign-in details</div>
@@ -458,7 +459,8 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
     <table>
         <tr><th>Menu item</th><th>What it does</th></tr>
         <tr><td>Open TibuLab</td><td>Opens TibuLab in the default browser on this PC (<code>http://localhost:8080</code>).</td></tr>
-        <tr><td>Other PCs / phones: http://IP:8080</td><td>The link for every other device. Write it down.</td></tr>
+        <tr><td>Cloud sync settings…</td><td>The cloud address and sync key of this hospital (see <a href="#sync">Cloud copy and sync</a>).</td></tr>
+        <tr><td>Other PCs / phones: http://IP:8080</td><td>The link for every other device. Write it down. The port is 8080, or the next free one when another program already uses 8080 (the setup picks it).</td></tr>
         <tr><td>First sign-in details</td><td>Opens <code>FIRST-LOGIN.txt</code> from the data folder in Notepad.</td></tr>
         <tr><td>Restart services</td><td>Stops and starts all four services again. Use it when something is stuck.</td></tr>
         <tr><td>Open logs folder</td><td>Opens <code>&lt;data folder&gt;\logs</code> for TibuLab support.</td></tr>
@@ -592,7 +594,7 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
 
 <section class="doc" id="sync">
     <h2>Cloud copy and sync</h2>
-    <span class="where">Settings › Devices &amp; Licence (page "Devices &amp; sync")</span>
+    <span class="where">Tray › Cloud sync settings… · Settings › Devices &amp; Licence</span>
     <p class="lead">All work is done on the Main PC. TibuLab also keeps a <b>read-only copy</b> in TibuLab cloud. Nothing can be typed into the cloud copy.</p>
     <figure class="dia">
         <p class="hint">Swipe sideways to see the whole drawing.</p>
@@ -602,15 +604,15 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
             <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
             <rect class="bx-main" x="16" y="120" width="230" height="150" rx="14"/>
             <text class="tm" x="131" y="150" text-anchor="middle">Main PC</text>
-            <text class="tms" x="131" y="176" text-anchor="middle">every minute: changes</text>
-            <text class="tms" x="131" y="196" text-anchor="middle">go into the outbox queue</text>
-            <text class="tms" x="131" y="222" text-anchor="middle">every minute: the queue</text>
-            <text class="tms" x="131" y="242" text-anchor="middle">is sent, 100 at a time</text>
+            <text class="tms" x="131" y="176" text-anchor="middle">first: the whole database</text>
+            <text class="tms" x="131" y="196" text-anchor="middle">then every minute:</text>
+            <text class="tms" x="131" y="222" text-anchor="middle">only what changed;</text>
+            <text class="tms" x="131" y="242" text-anchor="middle">every 6 h: tables checked</text>
             <path class="bx" d="M318 214 a34 34 0 0 1 22 -60 a46 46 0 0 1 86 -6 a34 34 0 0 1 36 66 z"/>
             <text class="t" x="390" y="199" text-anchor="middle">Internet</text>
             <path class="ln ln-d" d="M248 195 H312" marker-end="url(#a7)"/>
             <path class="ln ln-d" d="M466 195 H516" marker-end="url(#a7)"/>
-            <text class="tw" x="390" y="250" text-anchor="middle">Offline? The queue waits.</text>
+            <text class="tw" x="390" y="250" text-anchor="middle">Offline? The changes wait.</text>
             <text class="ts" x="390" y="268" text-anchor="middle">Nothing is lost. It catches up later.</text>
             <rect class="bx-soft" x="520" y="130" width="200" height="130" rx="14"/>
             <text class="t" x="620" y="166" text-anchor="middle">TibuLab cloud</text>
@@ -637,11 +639,24 @@ pre.cmd { margin: 8px 0; padding: 10px 12px; border-radius: 8px; background: var
         </div>
         <figcaption>Drawing 7. Sync goes one way, from the Main PC to the cloud copy.</figcaption>
     </figure>
+    <h3>Switch it on (once)</h3>
+    <ol class="steps">
+        <li>TibuLab support: <b>Central › Tenants › the hospital › Edit</b>, <b>Deployment = Desktop</b> (the online copy becomes read-only). On the hospital's page, card <b>Sync key (Main PC)</b>, press <b>Make sync key</b> and <b>Copy both</b>. The key is shown only once; a new key stops the old one.
+            <figure><a href="img/central-sync-key.jpg" target="_blank"><img loading="lazy" src="img/central-sync-key.jpg" alt="Sync key card in Central"></a><figcaption>Step 1: the hospital's Sync key in TibuLab Central.</figcaption></figure></li>
+        <li>On the Main PC: tray icon › <b>Cloud sync settings…</b>. Paste into either box (the whole copied text is fine) and press <b>Save</b>. It answers <b>Saved and connected</b>, or says what is wrong (key not valid, address wrong, no internet). The address and key are kept in the data folder's <code>.env</code> (<code>TIBULAB_SYNC_URL</code>, <code>TIBULAB_SYNC_KEY</code>); the licence uses the same address. TibuLab restarts by itself.</li>
+    </ol>
+    <h3>How it works</h3>
     <ul>
-        <li><b>What goes:</b> every changed record. Labs on the Main PC send the full verified results, so the portal and other hospitals see the values, not only a summary.</li>
-        <li><b>Other hospitals' doctors</b> see a patient's history only when TibuLab is sure it is the same person. The patient can switch sharing off. Every look is written in a log, and the patient can see who looked (patient portal › Security).</li>
-        <li><b>Check it:</b> <b>Settings › Devices &amp; Licence</b> shows this installation's link to the cloud, <b>Waiting to sync</b> and <b>Failed items</b>. Failed items are tried again on every sync.</li>
-        <li>Sync runs only when the Main PC is linked to the cloud, by its licence or by a device token. TibuLab support does this.</li>
+        <li><b>First time:</b> the whole database goes to the cloud copy. <b>Then every minute:</b> only what changed. <b>Every 6 hours:</b> each table is compared with the cloud and a table that differs is sent again.</li>
+        <li><b>No internet / wrong key:</b> nothing is lost; the changes wait on the PC and go when it works again.</li>
+        <li><b>The online copy</b> opens at the hospital's own address with the same logins as the PC, read-only (a "Cloud copy: view only" bar).</li>
+        <li><b>Patient registry</b> (one patient across hospitals) is sent separately every minute: new patients get their global number, finished reports reach the patient app. Other hospitals' patients are not copied to the PC: reception finds them by mobile number when needed.</li>
+        <li><b>Other hospitals' doctors</b> see a patient's history only when TibuLab is sure it is the same person. The patient can switch sharing off, and every look is logged.</li>
+    </ul>
+    <h3>Watch it</h3>
+    <ul>
+        <li>On the PC: <b>Settings › Devices &amp; Licence</b>, box <b>Cloud sync</b>: address, key saved, <b>Last copy</b> (time and result, red = the reason) and <b>Changes waiting</b> (1 or 2 is normal: they go the next minute).</li>
+        <li>For all hospitals: <b>Central › Labs &amp; hospitals › Sync &amp; held entries</b>: each Main PC's last sync. Old during working hours = the PC is off, offline or its key is wrong.</li>
     </ul>
 </section>
 

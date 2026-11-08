@@ -162,6 +162,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
     <a href="#patientportal">Patient portal</a>
     <div class="grp">Owner / admin</div>
     <a href="#settings">Settings (every screen)</a>
+    <a href="#roles">Roles &amp; Permissions</a>
     <a href="#system">System health, downtime, kiosk</a>
     <a href="#central">Central back office</a>
 </nav>
@@ -257,8 +258,27 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Write-offs, Stock Count, Stock Ledger</td><td>Damaged / expired / lost stock by batch; count a store batch by batch and post the differences; every movement.</td></tr>
         <tr><td>Bulk Price Change</td><td>A DRAP notice: pick medicines, the new MRP per pack and the date it starts. Future dates wait for the day. <b>Price History</b> (Settings › Pharmacy) keeps the old prices.</td></tr>
         <tr><td>Purchasing</td><td>Purchase Orders, Goods Received (the distributor's bill at the door), Purchase Returns, Distributors, Distributor Payments.</td></tr>
+        <tr><td>Patient requests</td><td>The nurses' requests for an <b>admitted patient's</b> medicines. <b>Issue</b> = from this pharmacy's stock and on the patient's bill. See <a href="portals.html#dispensary-requests">Patient requests</a>.</td></tr>
         <tr><td>Reports (Pharmacy › More › Reports)</td><td>Sales by day / medicine / cashier, stock valuation, expiry, reorder / low stock, fast &amp; slow movers, margins, price changes, purchase register, distributor dues, requisitions &amp; fill rate, transfers, controlled drugs.</td></tr>
     </table>
+    <h3 id="pharmacy-which">Patient request, Requisition or Transfer?</h3>
+    <p>All three move medicines inside the hospital. They differ in who starts it and who pays.</p>
+    <table>
+        <tr><th></th><th>Patient request</th><th>Requisition</th><th>Transfer</th></tr>
+        <tr><td>For</td><td>one admitted patient (with name)</td><td>a ward's cupboard (stock for everyone)</td><td>moving stock between stores</td></tr>
+        <tr><td>Who starts</td><td>the nurse asks</td><td>the ward / store asks</td><td>the store that has it sends</td></tr>
+        <tr><td>Steps</td><td>ask → pharmacy issues</td><td>ask → approve → issue → receive</td><td>send → receive</td></tr>
+        <tr><td>On the patient's bill</td><td><b>yes</b></td><td>no</td><td>no</td></tr>
+        <tr><td>Where</td><td>IPD patient › MAR › <b>Request from pharmacy</b>; pharmacy: <b>Patient requests</b></td><td>Pharmacy › Requisitions</td><td>Pharmacy › Transfers</td></tr>
+    </table>
+    <h3 id="pharmacy-no-requisitions">A hospital without ward cupboards: switch Requisitions off</h3>
+    <p>When every patient's medicine comes from the pharmacy by name, nobody needs <b>Requisitions</b>. Take it off the menu, role by role:</p>
+    <ol class="steps">
+        <li><b>Settings › Roles &amp; Permissions</b>, open the role (<b>Nurse</b>, <b>Pharmacist</b>, <b>Pharmacy Assistant</b>, <b>Dialysis Nurse</b>).</li>
+        <li>In <b>2. Pages and actions</b> type <b>requisition</b> in the find box. Under <b>Pharmacy › Requisitions</b> switch off <b>Make requisitions</b> and <b>Approve and issue requisitions / transfers</b>, then <b>Save role</b>.
+            <figure><a href="img/admin-roles-requisition.jpg" target="_blank"><img loading="lazy" src="img/admin-roles-requisition.jpg" alt="Requisition switches on the role page"></a><figcaption>Step 2: the Nurse role, found by "requisition".</figcaption></figure></li>
+    </ol>
+    <div class="tip">Nurses can still <b>Request from pharmacy</b> for a patient (that uses their nursing permission), and the pharmacist can still issue patient requests (that uses <b>Sell medicines</b>). Keep <b>Approve and issue … transfers</b> on for a pharmacist who still sends stock between stores.</div>
     <h3>Problems</h3>
     <table>
         <tr><th>The screen says</th><th>Do this</th></tr>
@@ -412,7 +432,7 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Business</td><td>Hospital / lab name, phone, address, NTN, licence no., logo, header and footer for receipts, labels and reports.</td></tr>
         <tr><td>Locations</td><td>Each branch or campus; open one to add its labs (per floor), pharmacies, radiology rooms and counters.</td></tr>
         <tr><td>Users</td><td>Logins: name, email, phone, password, role (decides the <a href="portals.html#whichportal">portal</a>), home location, discount limit, active. See <a href="portals.html#account">Give a login / reset a password</a>.</td></tr>
-        <tr><td>Roles &amp; Permissions</td><td>What each role can do, and its discount limit.</td></tr>
+        <tr><td>Roles &amp; Permissions</td><td>What each role can do, page by page in the order of the menu, its discount limit and its users. See <a href="#roles">Roles &amp; Permissions</a>.</td></tr>
         <tr><td>Report Layout, Signatures</td><td>Letterhead, paper size, and the pathologist's / radiologist's signature.</td></tr>
         <tr><td>Print designs</td><td>Every printed document of the switched-on modules, its designs per business, location, department, doctor or user, and the designer.</td></tr>
         <tr><td>My print design</td><td>Your own design: a doctor's prescription, a user's lab report.</td></tr>
@@ -437,6 +457,22 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <figure><a href="img/set-devices.jpg" target="_blank"><img loading="lazy" src="img/set-devices.jpg" alt="Devices and licence"></a><figcaption>Devices &amp; Licence.</figcaption></figure>
         <figure><a href="img/set-subscription.jpg" target="_blank"><img loading="lazy" src="img/set-subscription.jpg" alt="Subscription"></a><figcaption>Subscription.</figcaption></figure>
     </div>
+</section>
+
+<section class="doc" id="roles">
+    <h2>Roles &amp; Permissions</h2>
+    <span class="where">Settings › Roles &amp; Permissions</span>
+    <p class="lead">A role is what a group of staff may open and do. Each user has one role (<b>Settings › Users</b>). The permissions are shown in the <b>same order as the menu</b>: module, then its pages.</p>
+    <ol class="steps">
+        <li><b>The list</b> shows every role with its users and how many pages it opens. Click a role to open it, or press <b>New role</b>.
+            <figure><a href="img/admin-roles-list.jpg" target="_blank"><img loading="lazy" src="img/admin-roles-list.jpg" alt="Roles list"></a><figcaption>Step 1: Settings › Roles &amp; Permissions.</figcaption></figure></li>
+        <li><b>1. Role name.</b> For a new role, <b>Copy the permissions of</b> a similar role (for example Pharmacist), then change only what differs.
+            <figure><a href="img/admin-roles-edit.jpg" target="_blank"><img loading="lazy" src="img/admin-roles-edit.jpg" alt="A role page"></a><figcaption>Step 2: a role opens as its own page.</figcaption></figure></li>
+        <li><b>2. Pages and actions.</b> Every module of the menu with its pages. A page's switch turns on everything on it ("2 of 3 allowed" = some). Click the page to switch each permission one by one. <b>Other actions</b> are things done inside a screen (discount, sale on credit, change price). Type in the find box to go straight to a page or permission.</li>
+        <li><b>3. Limits:</b> the highest discount this role may give. <b>4. Users:</b> who has this role; <b>Add</b> moves a user to it when you save.</li>
+        <li><b>Save role.</b> "Unsaved changes" shows until you save. The user sees the new menu at the next page they open.</li>
+    </ol>
+    <div class="tip">The <b>Owner</b> can do everything and cannot be changed. Built-in roles cannot be deleted; a role you made can be deleted when it has no users.</div>
 </section>
 
 <section class="doc" id="system">

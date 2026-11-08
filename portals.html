@@ -376,6 +376,15 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Handover</td><td>Give the end-of-shift handover and accept the one given to you.</td></tr>
         <tr><td>Requests</td><td>Pharmacy requisition, store requisition, linen, CSSD, equipment complaint, housekeeping, report an incident, duty swaps (only the ones your hospital uses).</td></tr>
     </table>
+    <h3 id="nurse-pharmacy">Medicines from the pharmacy for a patient</h3>
+    <ol class="steps">
+        <li>Open the patient, tab <b>MAR</b>. Under the medicines, in <b>Medicines from the pharmacy</b>, press <b>Request from pharmacy</b>.</li>
+        <li>The doctor's running medicine orders are filled in (one day's doses). Change a <b>Quantity</b> or <b>Pack</b>, or remove a line with <b>x</b>. Choose the <b>Pharmacy</b>, tick <b>Urgent</b> if needed, and press <b>Send to pharmacy</b>.
+            <figure><a href="img/nurse-mr-form.jpg" target="_blank"><img loading="lazy" src="img/nurse-mr-form.jpg" alt="Request medicines form"></a><figcaption>Step 2: the request, filled from the doctor's orders.</figcaption></figure></li>
+        <li>The request shows <b>Waiting at pharmacy</b>, then <b>Issued</b> (or <b>Partly issued</b> / <b>Cancelled</b> with the reason). Issued medicines are on the patient's bill.
+            <figure><a href="img/nurse-mr-status.jpg" target="_blank"><img loading="lazy" src="img/nurse-mr-status.jpg" alt="Request status"></a><figcaption>Step 3: the request's status on the patient's MAR tab.</figcaption></figure></li>
+    </ol>
+    <div class="tip">"No running medicine orders": the doctor has not ordered the medicine from the medicine list yet. Medicines for the ward's cupboard (no patient name) are a <a href="admin.html#pharmacy-which">Requisition</a>.</div>
     <figure><a href="img/portal-nurse-shift.jpg" target="_blank"><img loading="lazy" src="img/portal-nurse-shift.jpg" alt="Nurse My shift"></a><figcaption>My shift: an ICU nurse's worklist from the roster.</figcaption></figure>
     <h3>A shift, step by step</h3>
     <ol class="vflow" aria-label="Nurse shift flow">
@@ -659,6 +668,15 @@ mark { background: #fde68a; color: #0f172a; border-radius: 3px; }
         <tr><td>Sales</td><td>Bills of your pharmacies: view, reprint, take back.</td></tr>
         <tr><td>Patients</td><td>Find and register patients.</td></tr>
     </table>
+    <h3 id="dispensary-requests">Patient requests</h3>
+    <span class="where">Home (To dispense) · Pharmacy › Patient requests</span>
+    <ol class="steps">
+        <li>The nurses' requests for admitted patients, urgent first: patient, MRN, ward / bed, the medicines.
+            <figure><a href="img/pharmacy-patient-requests.jpg" target="_blank"><img loading="lazy" src="img/pharmacy-patient-requests.jpg" alt="Patient requests"></a><figcaption>Step 1: Pharmacy › Patient requests.</figcaption></figure></li>
+        <li>Press <b>Issue</b>. Give less if short (0 = not given), then <b>Issue</b>. The medicines leave this pharmacy's stock (first expiry first) and go on the <b>patient's bill</b>. Something not given leaves the request <b>Partly issued</b>.
+            <figure><a href="img/pharmacy-patient-requests-issue.jpg" target="_blank"><img loading="lazy" src="img/pharmacy-patient-requests-issue.jpg" alt="Issue to a patient"></a><figcaption>Step 2: Issue, with the quantity to give.</figcaption></figure></li>
+        <li>Not giving it at all: <b>Cancel request</b> and write why; the nurse sees the reason.</li>
+    </ol>
     <figure><a href="img/portal-pharmacy-home.jpg" target="_blank"><img loading="lazy" src="img/portal-pharmacy-home.jpg" alt="To dispense"></a><figcaption>To dispense: discharge Rx first, then OPD Rx.</figcaption></figure>
     <h3>Prescription to sale</h3>
     <ol class="vflow" aria-label="Pharmacy flow">
